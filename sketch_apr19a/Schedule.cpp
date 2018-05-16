@@ -20,7 +20,7 @@ void Schedule(TCB* taskList) {
 
   // for testing
 
-  *computeData.measurementSelection = systemTimeBase % 4;
+  *computeData.measurementSelection = NONE; // systemTimeBase % 4;
   if (systemTimeBase % 8 == 0) {
     alarmAcknowledge = TRUE;
   } else {

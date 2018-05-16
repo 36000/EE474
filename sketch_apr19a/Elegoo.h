@@ -3,6 +3,7 @@
 
 #include <Elegoo_GFX.h>    // Core graphics library
 #include <Elegoo_TFTLCD.h> // Hardware-specific library
+#include <TouchScreen.h>
 
 //from project1-d
 
@@ -96,10 +97,13 @@
 #define STATUS_X 65
 #define STATUS_Y 10
 
-
+#define MAX_STRING_SIZE 20
+#define MINPRESSURE 10
+#define MAXPRESSURE 1000
 
 
 extern Elegoo_TFTLCD tft;
-//extern Elegoo_GFX_Button buttons[5];
+extern Elegoo_GFX_Button buttons[5];
+extern TouchScreen ts;
 
 #endif //_ELEGOO_H_

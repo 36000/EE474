@@ -7,12 +7,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Touch Screen and Buttons initialization
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
-//TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
-//Elegoo_GFX_Button buttons[5];
-
-//char buttonlabels[5][MAX_STRING_SIZE] = {"Select Data", "Warnings O/F", "Temp", "Blood Pres.", "Pulse Rate" };
-//uint16_t buttoncolors[5] = {ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE};                    
+TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
+Elegoo_GFX_Button buttons[5];
+char buttonlabels[5][MAX_STRING_SIZE] = {"Select Data", "Warnings O/F", "Temp", "Blood Pres.", "Pulse Rate" };
+uint16_t buttoncolors[5] = {ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE};                    
 
 // warning / alarms
 Bool bpHigh;
@@ -149,15 +149,16 @@ void setup() {
     taskList[i].prev = NULL;
   }
 
-  insert(&taskList[2]);
-  insert(&taskList[3]);
+  //insert(&taskList[2]);
+  //insert(&taskList[3]);
   insert(&taskList[5]);
 
   tft.fillScreen(BLACK);
 
-  // create buttons
-  //buttons[0].initButton(&tft, 100, 200, 50, 20, ILI9341_WHITE, buttoncolors[0], ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
-  //buttons[0].drawButton();
+  // Create buttons
+  
+  buttons[0].initButton(&tft, 100, 200, 50, 20, ILI9341_WHITE, buttoncolors[0], ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
+  buttons[0].drawButton();
 }
 
 
