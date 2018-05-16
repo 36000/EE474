@@ -50,7 +50,7 @@ Bool alarmAcknowledge;
 
 static MeasureData measureData;
 static CommunicateData communicateData;
-ComputeData computeData; // static , removed for temporary
+ComputeData computeData; // static , removed for temporary REMOVE WHEN KEYPAD IS USED
 static DisplayData displayData;
 static WarningAlarmData warningAlarmData;
 static StatusData statusData;
@@ -151,7 +151,7 @@ void setup() {
 
   insert(&taskList[2]);
   insert(&taskList[3]);
-  //insert(&taskList[5]);
+  insert(&taskList[5]);
 
   tft.fillScreen(BLACK);
 
