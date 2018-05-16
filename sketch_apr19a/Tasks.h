@@ -1,0 +1,14 @@
+
+#ifndef _TASKS_H_
+#define _TASKS_H_
+
+void Measure (void* data);
+
+void Compute (void* data);
+
+void WarningAlarm (void* data);
+
+void Status (void* data);
+
+
+#endif // _SCHEDULE_H_
