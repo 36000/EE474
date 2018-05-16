@@ -1,9 +1,6 @@
 #include "Communicate.h"
 #include "DataStructs.h"
 
-
-extern "C"{
-
 void Measure (void* data) {
   MeasureData* measureData = (MeasureData*) data;
 
@@ -24,6 +21,4 @@ void Measure (void* data) {
   }
 
   Communicate(data);
-}
-
 }
