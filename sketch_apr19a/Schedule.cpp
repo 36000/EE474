@@ -6,33 +6,25 @@
 unsigned long systemTimeBaseOld[1];
 
 void Schedule(TCB* taskList) {
-  unsigned long currentTime = millis() - startingTime;
+  systemTimeBase = (millis() - startingTime) / 1000;
 
-  // Always respond to touch input
-  taskList[5].myTask(taskList[5].taskDataPtr);
-  // Only do something every second
-  if (currentTime % 1000 != 0)
+  if (systemTimeBase > systemTimeBaseOld[0]) {
+    insert(&taskList[2]);
+    insert(&taskList[3]);
+    systemTimeBaseOld[0] = systemTimeBase;
+  } else {
+    taskList[5].myTask(taskList[5].taskDataPtr);
     return;
-  
-  systemTimeBase = currentTime / 1000;
-
-  if (systemTimeBase == systemTimeBaseOld[0])
-    return;
-
-  systemTimeBaseOld[0] = systemTimeBase;
+  }
 
   // for testing
-
   *computeData.measurementSelection = NONE; // systemTimeBase % 4;
   if (systemTimeBase % 8 == 0) {
     alarmAcknowledge = TRUE;
   } else {
     alarmAcknowledge = FALSE;
   }
-
-  // for testing
-
-  //insert(&taskList[5]);
+  
   if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
     insert(&taskList[0]);
     insert(&taskList[1]);
@@ -56,11 +48,12 @@ void Schedule(TCB* taskList) {
   }
   while ((current = current->next) != NULL);
 
-  //delete(&taskList[5]);
+  del(&taskList[2]);
+  del(&taskList[3]);
   if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
-    del(&taskList[0]);
-    del(&taskList[1]);
-    del(&taskList[4]);
+    insert(&taskList[0]);
+    insert(&taskList[1]);
+    insert(&taskList[4]);
     measurementSelection = NONE;
   }
 }

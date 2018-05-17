@@ -160,10 +160,8 @@ void setup() {
     taskList[i].next = NULL;
     taskList[i].prev = NULL;
   }
-
-  //insert(&taskList[2]);
-  //insert(&taskList[3]);
-  //insert(&taskList[5]);
+  
+  insert(&taskList[5]);
 
   // create buttons
   for (uint8_t row=0; row<5; row++) {
