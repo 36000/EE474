@@ -123,5 +123,6 @@ void Display (void* data) {
     tft.setTextColor(GREEN);
     tft.print("none");
   }
+  tft.fillScreen(BLACK);
 }
 

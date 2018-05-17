@@ -9,7 +9,7 @@ void Schedule(TCB* taskList) {
   systemTimeBase = (millis() - startingTime) / 1000;
 
   if (systemTimeBase > systemTimeBaseOld[0]) {
-    insert(&taskList[2]);
+    //insert(&taskList[2]);
     insert(&taskList[3]);
     systemTimeBaseOld[0] = systemTimeBase;
   } else {
