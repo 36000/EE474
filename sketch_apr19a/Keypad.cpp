@@ -2,26 +2,7 @@
 #include "Boolean.h"
 #include "Elegoo.h"
 
-// Print something in the mini status bar with either flashstring
-void status(const __FlashStringHelper *msg) {
-  tft.fillRect(STATUS_X, STATUS_Y, 240, 8, ILI9341_BLACK);
-  tft.setCursor(STATUS_X, STATUS_Y);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.print(msg);
-}
-
-// or charstring
-void status(char *msg) {
-  tft.fillRect(STATUS_X, STATUS_Y, 240, 8, ILI9341_BLACK);
-  tft.setCursor(STATUS_X, STATUS_Y);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.print(msg);
-}
-
 void Keypad (void* data) {
-  
   KeypadData* keypadData = (KeypadData*) data;
 
   digitalWrite(13, HIGH);
@@ -95,20 +76,85 @@ void Keypad (void* data) {
 
         // its always OK to just hang up
         if (b == 0) {
-          status(F("Hanging up"));
-        }
-        // we dont really check that the text field makes sense
-        // just try to call
-        if (b == 2) {
           status(F("Calling"));
-          Serial.print("Calling "); Serial.print(textfield);
-          
-          //fona.callPhone(textfield);
         }
+
+        if (b == 2) {
+          status(F("Hanging Up"));
+        }
+        
         delay(100); // UI debouncing
     }
   }
+  /*
+  digitalWrite(13, HIGH);
+  TSPoint p = ts.getPoint();
+  digitalWrite(13, LOW);
+  
+  pinMode(XM, OUTPUT);
+  pinMode(YP, OUTPUT);
+  
+  if (p.z > MINPRESSURE && p.z < MAXPRESSURE) {
+    p.x = tft.width() - map(p.x, TS_MINX, TS_MAXX, tft.width(), 0);
+    p.y = map(p.y, TS_MINY, TS_MAXY, tft.height(), 0);
+  }
+  
+  for (int b=0; b<1; b++) {
+    if (buttons[b].contains(p.x, p.y)) {
+      buttons[b].press(true);
+    } else {
+      buttons[b].press(false);
+    }
+    delay(10);
+    
+    if (buttons[b].justReleased()) {
+      // Serial.print("Released: "); Serial.println(b);
+      buttons[b].drawButton();  // draw normal
+    }
+    
+    if (buttons[b].justPressed()) {
+        buttons[b].drawButton(true);  // draw invert!
+        
+        // data menu button
+        if (b == 0) {
+          *keypadData->dataMenu = TRUE;
+          *keypadData->displayMenu = FALSE;
+        }
+        // toggle alarms button
+        if (b == 1 && *keypadData->displayMenu) {
+          *keypadData->alarmAcknowledge = (Bool)(1 - (int)*keypadData->alarmAcknowledge);
+        } 
+        if (b <= 2 && *keypadData->dataMenu) {
+          *keypadData->displayMenu = TRUE;
+          *keypadData->dataMenu = FALSE;
+          if (b == 2) *keypadData->measurementSelection = TEMP;
+          if (b == 3) *keypadData->measurementSelection = BLOOD;
+          if (b == 4) *keypadData->measurementSelection = PULSE;
+        }
+        
+    }
+  }
+  */
 }
+
+// Print something in the mini status bar with either flashstring
+void status(const __FlashStringHelper *msg) {
+  tft.fillRect(STATUS_X, STATUS_Y, 240, 8, ILI9341_BLACK);
+  tft.setCursor(STATUS_X, STATUS_Y);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(1);
+  tft.print(msg);
+}
+
+// or charstring
+void status(char *msg) {
+  tft.fillRect(STATUS_X, STATUS_Y, 240, 8, ILI9341_BLACK);
+  tft.setCursor(STATUS_X, STATUS_Y);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(1);
+  tft.print(msg);
+}
+
 
 
 
