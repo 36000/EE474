@@ -9,7 +9,6 @@ void ElegooSetup() {
   Serial.begin(9600);
   Serial.println(F("TFT LCD test"));
 
-
 #ifdef USE_Elegoo_SHIELD_PINOUT
   Serial.println(F("Using Elegoo 2.4\" TFT Arduino Shield Pinout"));
 #else
@@ -56,6 +55,8 @@ void ElegooSetup() {
 
   }
   tft.begin(identifier);
+  tft.setRotation(1);
+  tft.fillScreen(BLACK);
 }
 
 

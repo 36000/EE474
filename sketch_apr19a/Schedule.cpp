@@ -8,6 +8,9 @@ unsigned long systemTimeBaseOld[1];
 void Schedule(TCB* taskList) {
   unsigned long currentTime = millis() - startingTime;
 
+  // Always respond to touch input
+  taskList[5].myTask(taskList[5].taskDataPtr);
+  // Only do something every second
   if (currentTime % 1000 != 0)
     return;
   
@@ -29,6 +32,7 @@ void Schedule(TCB* taskList) {
 
   // for testing
 
+  //insert(&taskList[5]);
   if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
     insert(&taskList[0]);
     insert(&taskList[1]);
@@ -52,6 +56,7 @@ void Schedule(TCB* taskList) {
   }
   while ((current = current->next) != NULL);
 
+  //delete(&taskList[5]);
   if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
     del(&taskList[0]);
     del(&taskList[1]);

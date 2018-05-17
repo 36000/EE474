@@ -5,7 +5,6 @@
 #include <Elegoo_TFTLCD.h> // Hardware-specific library
 #include <TouchScreen.h>
 
-//from project1-d
 
 // The control pins for the LCD can be assigned to any digital or
 // analog pins...but we'll use the analog pins as this allows us to
@@ -31,7 +30,7 @@
 // (on the 2-row header at the end of the board).
 
 // Assign human-readable names to some common 16-bit color values:
-#define  BLACK   0x0000
+#define BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800
 #define GREEN   0x07E0
@@ -79,8 +78,7 @@
 #define TEXT_TCOLOR ILI9341_MAGENTA
 // the data (phone #) we store in the textfield
 #define TEXT_LEN 16
-//char textfield[TEXT_LEN+1] = "";
-//uint8_t textfield_i=0;
+
 
 #define YP A2  // must be an analog pin, use "An" notation!
 #define XM A3  // must be an analog pin, use "An" notation!
@@ -97,13 +95,17 @@
 #define STATUS_X 65
 #define STATUS_Y 10
 
-#define MAX_STRING_SIZE 20
 #define MINPRESSURE 10
 #define MAXPRESSURE 1000
 
 
+
 extern Elegoo_TFTLCD tft;
-extern Elegoo_GFX_Button buttons[5];
+extern Elegoo_GFX_Button buttons[15];
 extern TouchScreen ts;
+extern char buttonlabels[15][5];
+extern uint16_t buttoncolors[15];
+extern char textfield[TEXT_LEN+1]; // = "";
+extern uint8_t textfield_i; //=0;
 
 #endif //_ELEGOO_H_

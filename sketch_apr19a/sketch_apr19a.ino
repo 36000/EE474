@@ -10,9 +10,23 @@
 // Touch Screen and Buttons initialization
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
+/*
 Elegoo_GFX_Button buttons[5];
 char buttonlabels[5][MAX_STRING_SIZE] = {"Select Data", "Warnings O/F", "Temp", "Blood Pres.", "Pulse Rate" };
 uint16_t buttoncolors[5] = {ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE};                    
+*/
+
+Elegoo_GFX_Button buttons[15];
+/* create 15 buttons, in classic candybar phone style */
+char buttonlabels[15][5] = {"Send", "Clr", "End", "1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#" };
+uint16_t buttoncolors[15] = {ILI9341_DARKGREEN, ILI9341_DARKGREY, ILI9341_RED, 
+                             ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, 
+                             ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, 
+                             ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, 
+                             ILI9341_ORANGE, ILI9341_BLUE, ILI9341_ORANGE};
+char textfield[TEXT_LEN+1] = "";
+uint8_t textfield_i = 0;
+                             
 
 // warning / alarms
 Bool bpHigh;
@@ -60,9 +74,7 @@ void ElegooSetup();
 
 void setup() {
   ElegooSetup();
-
-  Serial1.begin(9600);
-  Serial.begin(9600);
+  
   ll.head = NULL;
   ll.tail = NULL;
 
@@ -151,14 +163,23 @@ void setup() {
 
   //insert(&taskList[2]);
   //insert(&taskList[3]);
-  insert(&taskList[5]);
+  //insert(&taskList[5]);
 
-  tft.fillScreen(BLACK);
+  // create buttons
+  for (uint8_t row=0; row<5; row++) {
+    for (uint8_t col=0; col<3; col++) {
+      buttons[col + row*3].initButton(&tft, BUTTON_X+col*(BUTTON_W+BUTTON_SPACING_X), 
+                 BUTTON_Y+row*(BUTTON_H+BUTTON_SPACING_Y),    // x, y, w, h, outline, fill, text
+                  BUTTON_W, BUTTON_H, ILI9341_WHITE, buttoncolors[col+row*3], ILI9341_WHITE,
+                  buttonlabels[col + row*3], BUTTON_TEXTSIZE); 
+      buttons[col + row*3].drawButton();
+    }
+  }
+  // create 'text field'
+  tft.drawRect(TEXT_X, TEXT_Y, TEXT_W, TEXT_H, ILI9341_WHITE);
 
-  // Create buttons
-  
-  buttons[0].initButton(&tft, 100, 200, 50, 20, ILI9341_WHITE, buttoncolors[0], ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
-  buttons[0].drawButton();
+
+
 }
 
 
