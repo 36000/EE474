@@ -116,8 +116,8 @@ void Display (void* data) {
         values[3] = ' ';
         break;
      case RESP:
-        measType = "RESP: ";
-        units = " RESP\n";
+        measType = "Resp Rate: ";
+        units = " RR\n";
         warning = TRUE;
         for (int i = 0; i < 4; i++)
           values[i] = ' '; 
@@ -135,7 +135,7 @@ void Display (void* data) {
     tft.print(measType);
     // Set warning
     if (warning) {
-      tft.setTextColor(RED);
+      tft.setTextColor(ORANGE);
     } else {
       tft.setTextColor(GREEN);
     }
