@@ -172,6 +172,9 @@ void setup() {
   insert(&taskList[5]);
   insert(&taskList[2]);
   insert(&taskList[3]);
+  insert(&taskList[0]);
+  insert(&taskList[1]);
+  insert(&taskList[4]);
   
   buttons[0].initButton(&tft, 160, 80, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
   buttons[1].initButton(&tft, 160, 146, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[1], BUTTON_TEXTSIZE);

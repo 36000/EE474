@@ -14,12 +14,6 @@ void Schedule(TCB* taskList) {
     taskList[5].myTask(taskList[5].taskDataPtr);
     return;
   }
-  
-  if (systemTimeBase % 5 == 0) {
-    insert(&taskList[0]);
-    insert(&taskList[1]);
-    insert(&taskList[4]);
-  }
 
   TCB* current = ll.head;
 
@@ -37,12 +31,6 @@ void Schedule(TCB* taskList) {
     Serial.println();*/
   }
   while ((current = current->next) != NULL);
-
-  if (systemTimeBase % 5 == 0) {
-    del(&taskList[0]);
-    del(&taskList[1]);
-    del(&taskList[4]);
-  }
 }
 
 void insert(TCB* node) {
