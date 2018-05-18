@@ -60,10 +60,10 @@ void loop()
   rrhigh = sampleFreq(pinResp, rrhigh, &rrcount);
 
   if (currentTime - lastFreqtime > 5000) {
-    prcount = 0;
-    rrcount = 0;
     prfreq = ((float) prcount) / 5;
     rrfreq = ((float) rrcount) / 5;
+    prcount = 0;
+    rrcount = 0;
     lastFreqtime = currentTime;
   }
   
