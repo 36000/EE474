@@ -37,6 +37,8 @@ void Communicate(void* data) {
     }
     isCuffReady = 1;
   } else {
+    Serial1.read();
+    Serial1.read();
     isCuffReady = 0;
   }
 
