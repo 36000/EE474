@@ -16,10 +16,9 @@ void Communicate(void* data) {
   Serial1.write(select);
   Serial1.write(COMMUNICATE_ID);
   Serial1.write('\0'); // no data required
-  Serial1.write('\0'); // no data required
   Serial1.write(END);
 
-  while (Serial1.available() < 6);
+  while (Serial1.available() < 5);
 
   Serial1.read();
   Serial1.read();
@@ -27,7 +26,8 @@ void Communicate(void* data) {
 
   switch (*communicateData->measurementSelection) {
     case NONE:
-      return;
+      Serial1.read();
+      break;
     case BLOOD1:
       communicateData->bloodPressRawBuf[bp1RawId] = (unsigned int) Serial1.read();
       break;
@@ -45,10 +45,10 @@ void Communicate(void* data) {
       communicateData->respRateRawBuf[rrRawId] = (unsigned int) Serial1.read();
       break;  
     default:
-      return;
+      Serial1.read();
+      break;
   }
-
-  Serial1.read();
+  
   Serial1.read();
 }
 

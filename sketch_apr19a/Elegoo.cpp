@@ -7,6 +7,7 @@
 
 void ElegooSetup() {
   Serial.begin(9600);
+  Serial1.begin(9600);
   Serial.println(F("TFT LCD test"));
 
 #ifdef USE_Elegoo_SHIELD_PINOUT

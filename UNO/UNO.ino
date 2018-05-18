@@ -10,6 +10,7 @@ unsigned int temperatureRaw = 0;
 unsigned int systolicPressRaw = 0;
 unsigned int diastolicPressRaw = 0;
 unsigned int pulseRateRaw = 0;
+unsigned int respRateRaw = 0;
 
 void Measure();
 
@@ -28,10 +29,12 @@ void setup()
   systolicPressRaw = 80;
   diastolicPressRaw = 80;
   pulseRateRaw = 50;
+  respRateRaw = 50;
 
 
 }
 
+typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 
 unsigned long lastTime = 0;
 void loop()
@@ -43,38 +46,38 @@ void loop()
     Measure();
     lastTime = currentTime;
   }
+  
   //  read incoming byte from the mega
   if (Serial.read() != startOfMessage) return;
-
   while (Serial.available() < 5);
-
   char taskIdentifier = Serial.read();
   char functionName = Serial.read();
   Serial.read(); // not needed
   Serial.read(); // not needed
   Serial.read();
   
-  char data1 = 0;
-  char data2 = 0;
-
-  if (taskIdentifier == 1) {
-    //temperature
-    data1 = temperatureRaw;
-  
-  } else if (taskIdentifier == 2) {
-    //pressure
-    data1 = systolicPressRaw;
-    data2 = diastolicPressRaw;
-  } else {
-    data1 = pulseRateRaw;
+  char data = 0;
+  switch (taskIdentifier) { //NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP
+    case TEMP:
+      data = temperatureRaw;
+      break;
+    case BLOOD1:
+      data = systolicPressRaw;
+      break;
+    case BLOOD2:
+      data = diastolicPressRaw;
+      break;
+    case PULSE:
+      data = pulseRateRaw;
+      break;
+    case RESP:
+      data = respRateRaw;
   }
-
   
   Serial.write(startOfMessage);
   Serial.write(taskIdentifier);
   Serial.write(functionName);
-  Serial.write((char) data1);
-  Serial.write((char) data2);
+  Serial.write((char) data);
   Serial.write(endOfMessage);
 }
 
