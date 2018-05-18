@@ -59,12 +59,12 @@ static unsigned char respRateCorrectedBuf[8 * 3];
 
 static unsigned short batteryState;
 
-dt measurementSelection;
-dt alarmAcknowledge;
+static dt measurementSelection;
+static dt alarmAcknowledge;
 
 static MeasureData measureData;
 static CommunicateData communicateData;
-ComputeData computeData; // static , removed for temporary REMOVE WHEN KEYPAD IS USED
+static ComputeData computeData;
 static DisplayData displayData;
 static WarningAlarmData warningAlarmData;
 static StatusData statusData;
@@ -170,17 +170,9 @@ void setup() {
   }
   
   insert(&taskList[5]);
-
-  // create buttons
-  /*for (uint8_t row=0; row<5; row++) {
-    for (uint8_t col=0; col<3; col++) {
-      buttons[col + row*3].initButton(&tft, BUTTON_X+col*(BUTTON_W+BUTTON_SPACING_X), 
-                 BUTTON_Y+row*(BUTTON_H+BUTTON_SPACING_Y),    // initButtons(*tft, x, y, w, h, outline, fill, text)
-                  BUTTON_W, BUTTON_H, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE,
-                  buttonlabels[col + row*3], BUTTON_TEXTSIZE);
-      buttons[col + row*3].drawButton();
-    }
-  }*/
+  insert(&taskList[2]);
+  insert(&taskList[3]);
+  
   buttons[0].initButton(&tft, 160, 80, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
   buttons[1].initButton(&tft, 160, 146, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[1], BUTTON_TEXTSIZE);
   buttons[2].initButton(&tft, 90, 113, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[2], BUTTON_TEXTSIZE);

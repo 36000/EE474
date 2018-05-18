@@ -9,27 +9,17 @@ void Schedule(TCB* taskList) {
   systemTimeBase = (millis() - startingTime) / 1000;
 
   if (systemTimeBase > systemTimeBaseOld[0]) {
-    insert(&taskList[2]);
-    insert(&taskList[3]);
     systemTimeBaseOld[0] = systemTimeBase;
   } else {
     taskList[5].myTask(taskList[5].taskDataPtr);
     return;
   }
-
-  // for testing
-  /**computeData.measurementSelection = NONE; // systemTimeBase % 4;
-  if (systemTimeBase % 8 == 0) {
-    alarmAcknowledge = NONE;
-  } else {
-    alarmAcknowledge = FALSE;
-  }*/
   
-  /*if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
+  if (systemTimeBase % 5 == 0) {
     insert(&taskList[0]);
     insert(&taskList[1]);
     insert(&taskList[4]);
-  }*/
+  }
 
   TCB* current = ll.head;
 
@@ -48,13 +38,10 @@ void Schedule(TCB* taskList) {
   }
   while ((current = current->next) != NULL);
 
-  del(&taskList[2]);
-  del(&taskList[3]);
-  if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
-    insert(&taskList[0]);
-    insert(&taskList[1]);
-    insert(&taskList[4]);
-    measurementSelection = NONE;
+  if (systemTimeBase % 5 == 0) {
+    del(&taskList[0]);
+    del(&taskList[1]);
+    del(&taskList[4]);
   }
 }
 

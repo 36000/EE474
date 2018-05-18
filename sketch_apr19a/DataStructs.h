@@ -52,8 +52,8 @@ typedef struct {
 
 typedef MeasureData CommunicateData; // they are the same
 
-extern dt measurementSelection; // for scheduler, REMOVE LATER
-extern dt alarmAcknowledge; // for scheduler, REMOVE LATER
+//extern dt measurementSelection; // for scheduler, REMOVE LATER
+//extern dt alarmAcknowledge; // for scheduler, REMOVE LATER
 
 extern dt menuMeas;
 extern menu Menu;
@@ -71,7 +71,7 @@ typedef struct {
   dt* measurementSelection;
 } ComputeData;
 
-extern ComputeData computeData; // delete this later, USED FOR RANDOMLY SELECTING MEASUREMENT TO UPDATE
+//extern ComputeData computeData; // delete this later, USED FOR RANDOMLY SELECTING MEASUREMENT TO UPDATE
 
 typedef struct {
   unsigned char* tempCorrectedBuff;

@@ -35,5 +35,7 @@ void Compute (void* data) {
     default:
       return;
   }
+
+  *computeData->measurementSelection = NONE;
 }
 

@@ -7,6 +7,7 @@
 
 
 void Communicate(void* data) {
+  return; // FOR TESTING, DELETE
   CommunicateData* communicateData = (CommunicateData*) data;
   
   char select = (char) *communicateData->measurementSelection;
