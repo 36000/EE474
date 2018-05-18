@@ -63,6 +63,8 @@ void loop()
   if (currentTime - lastFreqtime > 5000) {
     prfreq = prcount;
     rrfreq = rrcount;
+    prhigh = 0;
+    rrhigh = 0;
     prcount = 0;
     rrcount = 0;
     lastFreqtime = currentTime;
