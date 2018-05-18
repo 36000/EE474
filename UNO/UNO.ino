@@ -86,6 +86,8 @@ void Measure () {
 
 void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
   unsigned int val = analogRead(pin);
+
+  val /= 8;
   
   unsigned int dif;
   if (buf[*index] > val) 
