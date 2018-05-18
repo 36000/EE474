@@ -94,7 +94,7 @@ void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
     dif = (val - buf[*index])*100/buf[*index];
 
   if (dif > 15) {
-    (*index)++;
+    (*index)++; (*index) %= 8;
     buf[*index] = val;
   }
 }
