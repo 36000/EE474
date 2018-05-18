@@ -47,7 +47,7 @@ void Display (void* data) {
   if (Menu == ANUN) {
     tft.print("Annunciating ");
   } else {
-    tft.print("Measuring ");
+    tft.print("SEL to measure ");
   }
   switch (menuMeas) { // TEMP, BLOOD1, BLOOD2, PULSE, RESP
     case TEMP:
