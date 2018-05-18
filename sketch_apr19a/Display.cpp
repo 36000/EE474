@@ -186,6 +186,7 @@ void Display (void* data) {
   tft.print(*displayData->batteryState);
   tft.setTextColor(WHITE); tft.print("/200\n");
 
-  tft.print("Cuff Stuff Here\n");
+  tft.print("Cuff Inflation: ");
+  tft.print(cuffInflation);
 }
 
