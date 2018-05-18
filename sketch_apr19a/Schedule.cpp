@@ -18,12 +18,12 @@ void Schedule(TCB* taskList) {
   }
 
   // for testing
-  *computeData.measurementSelection = NONE; // systemTimeBase % 4;
+  /**computeData.measurementSelection = NONE; // systemTimeBase % 4;
   if (systemTimeBase % 8 == 0) {
-    alarmAcknowledge = TRUE;
+    alarmAcknowledge = NONE;
   } else {
     alarmAcknowledge = FALSE;
-  }
+  }*/
   
   /*if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
     insert(&taskList[0]);

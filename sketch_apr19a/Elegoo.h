@@ -108,7 +108,4 @@ extern uint16_t buttoncolors[15];
 extern char textfield[TEXT_LEN+1]; // = "";
 extern uint8_t textfield_i; //=0;
 
-void status(const __FlashStringHelper *msg);
-void status(char *msg);
-
 #endif //_ELEGOO_H_

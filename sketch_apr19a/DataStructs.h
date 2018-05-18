@@ -17,8 +17,6 @@ extern unsigned char bpOutOfRange;
 extern unsigned char tempOutOfRange;
 extern unsigned char pulseOutOfRange;
 
-extern Bool alarmAcknowledge;
-
 typedef struct TCB TCB;
 typedef struct TCB_ll TCB_ll;
 extern TCB_ll ll;
@@ -51,6 +49,8 @@ typedef struct {
 typedef MeasureData CommunicateData; // they are the same
 
 extern dt measurementSelection; // for scheduler, REMOVE LATER
+extern dt alarmAcknowledge; // for scheduler, REMOVE LATER
+
 extern dt menuMeas;
 extern menu Menu;
 

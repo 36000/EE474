@@ -7,8 +7,11 @@ void Measure (void* data) {
   switch (*measureData->measurementSelection) {
     case NONE:
       return;
-    case BLOOD:
-      bp1RawId++; bp1RawId %= 8; bp2RawId++; bp2RawId %= 8;
+    case BLOOD1:
+      bp1RawId++; bp1RawId %= 8;
+      break;
+    case BLOOD2:
+      bp2RawId++; bp2RawId %= 8;
       break;
     case TEMP:
       tRawId++; tRawId %= 8;

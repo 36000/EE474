@@ -72,9 +72,9 @@ void Keypad (void* data) {
             break;
           case 4:
             if (Menu == MEAS) {
-              *data->measurementSelection = menuMeas;
+              *keypadData->measurementSelection = menuMeas;
             } else {
-              *data->alarmAcknowledge = menuMeas;
+              *keypadData->alarmAcknowledge = menuMeas;
             }
             break;
           default:
@@ -134,25 +134,6 @@ void Keypad (void* data) {
   }
   */
 }
-
-// Print something in the mini status bar with either flashstring
-void status(const __FlashStringHelper *msg) {
-  tft.fillRect(STATUS_X, STATUS_Y, 240, 8, ILI9341_BLACK);
-  tft.setCursor(STATUS_X, STATUS_Y);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.print(msg);
-}
-
-// or charstring
-void status(char *msg) {
-  tft.fillRect(STATUS_X, STATUS_Y, 240, 8, ILI9341_BLACK);
-  tft.setCursor(STATUS_X, STATUS_Y);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(1);
-  tft.print(msg);
-}
-
 
 
 

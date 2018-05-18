@@ -55,7 +55,6 @@ static unsigned char pulseRateCorrectedBuf[8 * 3];
 static unsigned short batteryState;
 
 dt measurementSelection;
-
 dt alarmAcknowledge;
 
 static MeasureData measureData;
