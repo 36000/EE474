@@ -49,7 +49,7 @@ void loop()
   
   //  read incoming byte from the mega
   if (Serial.read() != startOfMessage) return;
-  while (Serial.available() < 5);
+  while (Serial.available() < 4);
   char taskIdentifier = Serial.read();
   char functionName = Serial.read();
   Serial.read(); // not needed
