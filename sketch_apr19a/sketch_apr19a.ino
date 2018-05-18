@@ -171,11 +171,11 @@ void setup() {
       buttons[col + row*3].drawButton();
     }
   }*/
-  buttons[0].initButton(&tft, 160, 90, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
-  buttons[1].initButton(&tft, 160, 156, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[1], BUTTON_TEXTSIZE);
-  buttons[2].initButton(&tft, 50, 123, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[2], BUTTON_TEXTSIZE);
-  buttons[3].initButton(&tft, 270, 123, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[3], BUTTON_TEXTSIZE);
-  buttons[4].initButton(&tft, 270, 156, 80, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[4], BUTTON_TEXTSIZE);
+  buttons[0].initButton(&tft, 160, 80, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
+  buttons[1].initButton(&tft, 160, 146, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[1], BUTTON_TEXTSIZE);
+  buttons[2].initButton(&tft, 90, 113, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[2], BUTTON_TEXTSIZE);
+  buttons[3].initButton(&tft, 230, 113, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[3], BUTTON_TEXTSIZE);
+  buttons[4].initButton(&tft, 160, 113, 80, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[4], BUTTON_TEXTSIZE);
   for (int i = 0; i < 5; i++){
     buttons[i].drawButton();
   }

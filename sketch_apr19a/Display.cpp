@@ -3,6 +3,10 @@
 #include "Boolean.h"
 // Note: Lines that are 20 characters wide will automatically overflow to next line, so sometimes no \n character is needed.
 
+dt prevMenuMeas = TEMP;
+menu prevMenu = MEAS;
+Bool hasChanged = FALSE;
+
 void Display (void* data) {
   Bool anyAlarm = FALSE;
   DisplayData* displayData = (DisplayData*) data;
@@ -28,6 +32,49 @@ void Display (void* data) {
   tft.print(" Pocket Doctor (TM)\n");
   tft.print("--------------------\n");
 
+  if (prevMenuMeas == menuMeas && prevMenu == Menu) {
+    hasChanged = FALSE;
+  } else {
+    prevMenuMeas = menuMeas;
+    prevMenu = Menu;
+    hasChanged = TRUE;
+  }
+
+  // print header
+  if (hasChanged)
+    tft.fillRect(0 * 12, 2 * 16, 25 * 12, 1 * 16, BLACK);
+  tft.setTextColor(YELLOW);
+  if (Menu == ANUN) {
+    tft.print("Annunciating ");
+  } else {
+    tft.print("Measuring ");
+  }
+  switch (menuMeas) { // TEMP, BLOOD1, BLOOD2, PULSE, RESP
+    case TEMP:
+      tft.print("Body Temp\n");
+      break;
+    case BLOOD1:
+      tft.print("Sys Press\n");
+      break;
+    case BLOOD2:
+      tft.print("Dias Press\n");
+      break;
+    case PULSE:
+      tft.print("Pulse Rate\n");
+      break;
+    case RESP:
+      tft.print("Resp Rate\n");
+      break;
+    default:
+      tft.print("\n");
+      break;
+  }
+
+  if (hasChanged)
+    tft.fillRect(0 * 12, 3 * 16, 25 * 12, 1 * 16, BLACK);
+  else
+     tft.fillRect(11 * 12, 3 * 16, 25 * 12, 1 * 16, BLACK);
+     
   if (Menu == ANUN) {
     const char* measType;
     const char* units;
@@ -84,7 +131,6 @@ void Display (void* data) {
         break;
     }
     
-    tft.fillRect(0 * 12, 2 * 16, 25 * 12, 1 * 16, BLACK);
     tft.setTextColor(WHITE);
     tft.print(measType);
     // Set warning
@@ -97,10 +143,36 @@ void Display (void* data) {
       tft.print(values[i]);
     tft.setTextColor(WHITE); tft.print(units);
   }
+  
+  //warning and alarms
+  tft.setCursor(0, 161-16);
+  tft.fillRect(0 * 12, 10 * 16, 26 * 12, 2 * 16, BLACK);
+  // Print alarms
+  tft.setTextColor(WHITE); tft.print("Alarms: \n");
+  tft.setTextColor(RED);
+  if (tempOutOfRange != 0) {
+    tft.print("TEMPERATURE, ");
+    anyAlarm = TRUE;
+  }
+  if (bpOutOfRange != 0) {
+    tft.print("PRESSURE, ");
+    anyAlarm = TRUE;
+  }
 
-  /*
-  tft.fillRect(11 * 12, 7 * 16, 3 * 12, 1 * 16, BLACK);
-  tft.print("Battery:   ");
+  if (pulseOutOfRange != 0) {
+    tft.print("PULSE RATE, ");
+    anyAlarm = TRUE;
+  }
+
+  if (anyAlarm == FALSE) {
+    tft.setTextColor(GREEN);
+    tft.print("none");
+  } // try to keep warnings / alarms to two lines
+
+  // battery
+  tft.setCursor(0, 161+32);
+  tft.fillRect(11 * 12, 12 * 16, 3 * 12, 1 * 16, BLACK);
+  tft.setTextColor(WHITE); tft.print("Battery:   ");
   // Print battery status
   if (batteryLow) {
     tft.setTextColor(RED);
@@ -111,30 +183,8 @@ void Display (void* data) {
   if (*displayData->batteryState < 100)
     tft.print("0");
   tft.print(*displayData->batteryState);
-  tft.setTextColor(WHITE); tft.print("/200\n");*/
+  tft.setTextColor(WHITE); tft.print("/200\n");
 
-
-  /*tft.fillRect(0 * 12, 9 * 16, 20 * 12, 3 * 16, BLACK);
-  // Print alarms
-  tft.print("Alarms:\n");
-  tft.setTextColor(RED);
-  if (tempOutOfRange != 0 && tempOutOfRange < 10) {
-    tft.print("BODY TEMP ALARM\n");
-    anyAlarm = TRUE;
-  }
-  if (bpOutOfRange != 0 && bpOutOfRange < 10) {
-    tft.print("BLOOD PRESSURE ALARM");
-    anyAlarm = TRUE;
-  }
-
-  if (pulseOutOfRange != 0 && pulseOutOfRange < 10) {
-    tft.print("PULSE RATE ALARM\n");
-    anyAlarm = TRUE;
-  }
-
-  if (anyAlarm == FALSE) {
-    tft.setTextColor(GREEN);
-    tft.print("none");
-  }*/
+  tft.print("Cuff Stuff Here\n");
 }
 
