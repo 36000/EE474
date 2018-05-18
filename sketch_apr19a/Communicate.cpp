@@ -21,7 +21,7 @@ void Communicate(void* data) {
   while (Serial1.available() < 5);
 
   Serial1.read();
-  Serial1.read();
+  cuffInflation = Serial1.read();
   Serial1.read();
 
   switch (*communicateData->measurementSelection) {

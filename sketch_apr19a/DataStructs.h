@@ -15,6 +15,9 @@ extern Bool respLow;
 extern Bool batteryLow;
 extern Bool batteryDead;
 
+
+extern unsigned char cuffInflation;
+
 extern unsigned char bpOutOfRange;
 extern unsigned char tempOutOfRange;
 extern unsigned char pulseOutOfRange;
