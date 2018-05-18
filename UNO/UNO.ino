@@ -8,8 +8,6 @@ static unsigned int bloodPress2RawBuf[8];
 static unsigned int pulseRateRawBuf[8];
 static unsigned int respRateRawBuf[8];
 
-unsigned char cuffInflation = 0;
-
 const char startOfMessage = 0x2A;
 const char endOfMessage = 0x4B;
 
@@ -17,6 +15,9 @@ const char pinTemp = 3;
 const char pinPulse = 0;
 const char pinResp = 1;
 // 4 is cuff bulb, 5 is cuff switcher
+
+//AudioFrequencyMeter meterp;
+//AudioFrequencyMeter meterr;
 
 void Measure();
 
@@ -26,6 +27,11 @@ void setup()
   // start serial port at 9600 bps and wait for serial port on the uno to open:
   Serial.begin(9600);
 
+  /*meterp.setBandwidth(0, 4);
+  meterp.begin(pinPulse, 20);  
+  meterr.setBandwidth(0, 4);
+  meterr.begin(pinResp, 20);  */
+  
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
   temperatureRawBuf[0] = 0;
@@ -45,7 +51,7 @@ void loop()
     Measure();
     lastTime = currentTime;
   }
-
+  
   //  read incoming byte from the mega
   if (Serial.read() != startOfMessage) return;
   while (Serial.available() < 4);
@@ -54,7 +60,7 @@ void loop()
   Serial.read(); // not needed
   Serial.read(); // not needed
   Serial.read();
-
+  
   char data = 0;
   switch (taskIdentifier) { //NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP
     case TEMP:
@@ -72,31 +78,33 @@ void loop()
     case RESP:
       data = respRateRawBuf[rrRawId];
   }
-
+  
   Serial.write(startOfMessage);
-  Serial.write(cuffInflation);
+  Serial.write(taskIdentifier);
   Serial.write(functionName);
   Serial.write((char) data);
   Serial.write(endOfMessage);
 }
 
 void Measure () {
-  measureHelper(pinTemp, temperatureRawBuf, &tRawId);
+  measureHelperTemp(pinTemp, temperatureRawBuf, &tRawId);
   measureHelper(pinPulse, pulseRateRawBuf, &prRawId);
   measureHelper(pinResp, respRateRawBuf, &rrRawId);
-  cuffMeasurement();
 }
 
 void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
-  unsigned int val = analogRead(pin);
+  /*unsigned int val = meter.getFrequency();
 
-  val /= 8;
+  
 
+  val /= 8;*/
+  unsigned int val = 0;
+  
   unsigned int dif;
-  if (buf[*index] > val)
-    dif = (buf[*index] - val) * 100 / buf[*index];
+  if (buf[*index] > val) 
+    dif = (buf[*index] - val)*100/buf[*index];
   else
-    dif = (val - buf[*index]) * 100 / buf[*index];
+    dif = (val - buf[*index])*100/buf[*index];
 
   if (dif > 15) {
     (*index)++; (*index) %= 8;
@@ -104,17 +112,23 @@ void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
   }
 }
 
-void cuffMeasurement() {
-  unsigned int cuffButton = analogRead(4);
-  unsigned int cuffSwitch = analogRead(5);
+void measureHelperTemp(int pin, unsigned int* buf, unsigned int* index) {
+  float valf = analogRead(pin);
 
-  if (cuffButton < 200) {
-    if (cuffSwitch < 200 && cuffInflation < 10)
-      cuffInflation--;
-    else if (cuffSwitch >= 200 && cuffInflation > 0)
-      cuffInflation++;
+  valf*=32;
+
+  unsigned int val = (unsigned int) valf;
+  
+  unsigned int dif;
+  if (buf[*index] > val) 
+    dif = (buf[*index] - val)*100/buf[*index];
+  else
+    dif = (val - buf[*index])*100/buf[*index];
+
+  if (dif > 15) {
+    (*index)++; (*index) %= 8;
+    buf[*index] = val;
   }
-
 }
 
 
