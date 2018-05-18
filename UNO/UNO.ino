@@ -79,16 +79,14 @@ void loop()
 }
 
 void Measure () {
-  measureHelper(pinTemp, temperatureRawBuf, &tRawId, 350, 380);
-  measureHelper(pinPulse, pulseRateRawBuf, &prRawId, 10, 200);
-  measureHelper(pinResp, respRateRawBuf, &rrRawId, 10, 50);
+  measureHelper(pinTemp, temperatureRawBuf, &tRawId);
+  measureHelper(pinPulse, pulseRateRawBuf, &prRawId);
+  measureHelper(pinResp, respRateRawBuf, &rrRawId);
 }
 
-void measureHelper(int pin, unsigned int* buf, unsigned int* index, int minScale, int maxScale) {
+void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
   unsigned int val = analogRead(pin);
   
-  val = val*(maxScale - minScale)/1023 + minScale;
-
   unsigned int dif;
   if (buf[*index] > val) 
     dif = (buf[*index] - val)*100/buf[*index];

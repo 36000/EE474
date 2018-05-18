@@ -10,11 +10,11 @@ void WarningAlarm (void* data) {
   unsigned int resp = warningAlarmData->respRateRawBuf[rrRawId];
 
 
-  temp = 50 + 7.5 * temp;
-  sysPress = 9 + 2 * sysPress;
-  diasPress = 6 + 1.5 * diasPress;
-  pulse = 8 + 3 * pulse;
-  resp = 0;
+  temp = temp*(500 - 250)/1023 + 250;
+  sysPress = sysPress;
+  diasPress = diasPress;
+  pulse = pulse*(200 - 10)/1023 + 10;
+  resp = resp*(50 - 10)/1023 + 10;
 
   // warnings
   if (temp <= 361*1.05 || temp >= 378*1.05) // check if out of warning range
