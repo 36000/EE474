@@ -50,6 +50,7 @@ int rrcount = 0;
 float prfreq = 0;
 float rrfreq = 0;
 
+unsigned char cuffInflation;
 unsigned long lastTime = 0;
 unsigned long lastFreqtime = 0;
 void loop()
@@ -101,7 +102,7 @@ void loop()
   }
   
   Serial.write(startOfMessage);
-  Serial.write(taskIdentifier);
+  Serial.write(cuffInflation);
   Serial.write(functionName);
   Serial.write((char) data);
   Serial.write(endOfMessage);
@@ -124,6 +125,8 @@ int sampleFreq(int pin, int high, int *count){
 }
 
 void Measure () {
+  float cuffButton = analogRead(4);
+  float cuffSwitch = analogRead(5);
   if (cuffButton < 200) {
     if ((cuffSwitch < 200) && (cuffInflation > 0))
       cuffInflation--;
