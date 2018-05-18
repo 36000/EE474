@@ -22,29 +22,29 @@ void WarningAlarm (void* data) {
   else
     tempHigh = FALSE;
 
-  if (sysPress <= 120*1.2 || sysPress >= 130*1.2) // check if out of warning range
+  if (sysPress <= 120/1.2 || sysPress >= 130*1.2) // check if out of warning range
     bpHigh1 = TRUE;
   else
     bpHigh1 = FALSE;
 
-  if (sysPress <= 120*1.2 || sysPress >= 130*1.2) // check if out of warning range
+  if (sysPress <= 120/1.2 || sysPress >= 130*1.2) // check if out of warning range
     bpHigh2 = TRUE;
   else
     bpHigh2 = FALSE;
 
-  if (pulse <= 60*1.05 || pulse >= 100*1.05) // check if out of warning range
+  if (pulse <= 60/1.05 || pulse >= 100*1.05) // check if out of warning range
     pulseLow = TRUE;
   else
     pulseLow = FALSE;
 
-  if (resp <= 12*1.05 || resp >= 25*1.05) // check if out of warning range
+  if (resp <= 12/1.05 || resp >= 25*1.05) // check if out of warning range
     respLow = TRUE;
   else
     respLow = FALSE;
 
   // alarms
 
-  if (sysPress <= 120*1.2 || sysPress >= 130*1.2) { //check if out of alarm range
+  if (sysPress <= 120/1.2 || sysPress >= 130*1.2) { //check if out of alarm range
     if (bpOutOfRange == 0)
       bpOutOfRange = 1;
 
@@ -59,7 +59,7 @@ void WarningAlarm (void* data) {
     bpOutOfRange = 0; // indicate alarm has not been thrown yet
   }
 
-  if (temp <= 361*1.15 || temp >= 378*1.15) { //check if out of alarm range
+  if (temp <= 361/1.15 || temp >= 378*1.15) { //check if out of alarm range
     if (tempOutOfRange == 0)
       tempOutOfRange = 1;
 
@@ -74,7 +74,7 @@ void WarningAlarm (void* data) {
     tempOutOfRange = 0; // indicate alarm has not been thrown yet
   }
 
-  if (pulse <= 60*1.15 || pulse >= 100*1.15) { //check if out of alarm range
+  if (pulse <= 60/1.15 || pulse >= 100*1.15) { //check if out of alarm range
     if (pulseOutOfRange == 0)
       pulseOutOfRange = 1;
 
@@ -89,7 +89,7 @@ void WarningAlarm (void* data) {
     pulseOutOfRange = 0; // indicate alarm has not been thrown yet
   }
 
-  if (resp <= 12*1.15 || resp >= 25*1.15) { //check if out of alarm range
+  if (resp <= 12/1.15 || resp >= 25*1.15) { //check if out of alarm range
     if (respOutOfRange == 0)
       respOutOfRange = 1;
 
