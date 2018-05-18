@@ -73,7 +73,7 @@ void Display (void* data) {
   if (hasChanged)
     tft.fillRect(0 * 12, 3 * 16, 25 * 12, 1 * 16, BLACK);
   else
-     tft.fillRect(11 * 12, 3 * 16, 25 * 12, 1 * 16, BLACK);
+     tft.fillRect(11 * 12, 3 * 16, 5 * 12, 1 * 16, BLACK);
      
   if (Menu == ANUN) {
     const char* measType;
