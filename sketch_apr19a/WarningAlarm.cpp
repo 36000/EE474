@@ -17,7 +17,7 @@ void WarningAlarm (void* data) {
   resp = resp*(50 - 10)/128 + 10;
 
   // warnings
-  if (temp <= 379 || temp >= 397) // check if out of warning range
+  if (temp <= 361/1.05 || temp >= 397) // check if out of warning range
     tempHigh = TRUE;
   else
     tempHigh = FALSE;
