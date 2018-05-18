@@ -3,5 +3,6 @@
 void Status (void* data) {
   StatusData* statusData = (StatusData*) data;
 
-  *statusData->batteryState -= 1;
+  if (systemTimeBase % 5 == 0)
+    *statusData->batteryState -= 1;
 }
