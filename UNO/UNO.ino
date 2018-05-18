@@ -124,6 +124,13 @@ int sampleFreq(int pin, int high, int *count){
 }
 
 void Measure () {
+  if (cuffButton < 200) {
+    if ((cuffSwitch < 200) && (cuffInflation > 0))
+      cuffInflation--;
+    else if ((cuffSwitch >= 200) && (cuffInflation < 10))
+      cuffInflation++;
+  }
+  
   measureHelperTemp(pinTemp, temperatureRawBuf, &tRawId);
   measureHelper(pinPulse, pulseRateRawBuf, &prRawId, 0.5, 2, prfreq);
   measureHelper(pinResp, respRateRawBuf, &rrRawId, 0.2, 0.5, rrfreq);
@@ -148,12 +155,6 @@ void measureHelperTemp(int pin, unsigned int* buf, unsigned int* index) {
   float valf = analogRead(pin);
 
   valf/=8;
-  if (cuffButton < 200) {
-    if ((cuffSwitch < 200) && (cuffInflation > 0))
-      cuffInflation--;
-    else if ((cuffSwitch >= 200) && (cuffInflation < 10))
-      cuffInflation++;
-  }
 
   unsigned int val = (unsigned int) valf;
   
