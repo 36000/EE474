@@ -150,16 +150,16 @@ void Display (void* data) {
   // Print alarms
   tft.setTextColor(WHITE); tft.print("Alarms: \n");
   tft.setTextColor(RED);
-  if (tempOutOfRange != 0) {
+  if (tempOutOfRange == 1) {
     tft.print("TEMPERATURE, ");
     anyAlarm = TRUE;
   }
-  if (bpOutOfRange != 0) {
+  if (bpOutOfRange == 1) {
     tft.print("PRESSURE, ");
     anyAlarm = TRUE;
   }
 
-  if (pulseOutOfRange != 0) {
+  if (pulseOutOfRange == 1) {
     tft.print("PULSE RATE, ");
     anyAlarm = TRUE;
   }

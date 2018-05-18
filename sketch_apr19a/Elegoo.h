@@ -38,6 +38,7 @@
 #define MAGENTA 0xF81F
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
+#define ORANGE 0xFD20
 
 // Color definitions
 #define ILI9341_BLACK       0x0000      /*   0,   0,   0 */

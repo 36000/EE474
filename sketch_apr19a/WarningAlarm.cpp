@@ -13,39 +13,27 @@ void WarningAlarm (void* data) {
   diasPress = 6 + 1.5 * diasPress;
   pulse = 8 + 3 * pulse;
 
-
-  if (sysPress > 120 || diasPress > 80) {
-    if (!bpOutOfRange)
-      bpOutOfRange = 89; // signal for alarm
-    else
-      bpOutOfRange -= 2; // alarm timer, eventually shuts off when under 0
-    bpHigh = TRUE;
+  // example for syspress
+  if (sysPress >= 0) { //check if out of alarm range
+    if (bpOutOfRange == 0)
+      bpOutOfRange = 1;
+      
+    if (bpOutOfRange != 1)
+      bpOutOfRange -= 2; // alarm timer, eventuallly turns back on
+        
+    if (*warningAlarmData->alarmAcknowledge == BLOOD1) {
+        bpOutOfRange = 89; // turn alarm off, set high number for timer which steadily decrements
+        *warningAlarmData->alarmAcknowledge = NONE;
+    }
   } else {
-    bpHigh = FALSE;
     bpOutOfRange = 0; // indicate alarm has not been thrown yet
   }
+  if (sysPress >= 0) // check if out of warning range
+    bpHigh = TRUE;
+  else
+    bpHigh = FALSE;
 
-  if (temp < 361 || temp > 378) {
-    if (!tempOutOfRange)
-      tempOutOfRange = 89; // signal for alarm
-    else
-      tempOutOfRange -= 2; // alarm timer, eventually shuts off when under 0
-    tempHigh = TRUE;
-  } else {
-    tempHigh = FALSE;
-    tempOutOfRange = 0; // indicate alarm has not been thrown yet
-  }
-
-  if (pulse < 60 || pulse > 100) {
-    if (!pulseOutOfRange)
-      pulseOutOfRange = 89; // signal for alarm
-    else
-      pulseOutOfRange -= 2; // alarm timer, eventually shuts off when under 0
-    pulseLow = TRUE;
-  } else {
-    pulseLow = FALSE;
-    pulseOutOfRange = 0; // indicate alarm has not been thrown yet
-  }
+  //end syspress example
 
   if (*warningAlarmData->batteryState < 40)
     batteryLow = TRUE;
