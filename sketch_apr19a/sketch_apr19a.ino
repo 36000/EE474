@@ -29,6 +29,8 @@ Bool respLow;
 Bool batteryLow;
 Bool batteryDead;
 
+unsigned char cuffInflation;
+
 TCB_ll ll;
 
 // which menu are we in?

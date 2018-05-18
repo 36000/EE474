@@ -8,6 +8,8 @@ static unsigned int bloodPress2RawBuf[8];
 static unsigned int pulseRateRawBuf[8];
 static unsigned int respRateRawBuf[8];
 
+unsigned char cuffInflation = 0;
+
 const char startOfMessage = 0x2A;
 const char endOfMessage = 0x4B;
 
@@ -72,7 +74,7 @@ void loop()
   }
   
   Serial.write(startOfMessage);
-  Serial.write(taskIdentifier);
+  Serial.write(cuffInflation);
   Serial.write(functionName);
   Serial.write((char) data);
   Serial.write(endOfMessage);
