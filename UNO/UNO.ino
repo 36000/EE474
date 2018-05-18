@@ -144,6 +144,9 @@ void Measure () {
 void measureHelper(int pin, unsigned int* buf, unsigned int* index, float freq) {
   unsigned int val = freq;
 
+  if (val > 16)
+    val = 16;
+
   unsigned int dif;
   if (buf[*index] > val)
     dif = (buf[*index] - val) * 100 / buf[*index];
