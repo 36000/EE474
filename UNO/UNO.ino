@@ -12,6 +12,11 @@ unsigned int diastolicPressRaw = 0;
 unsigned int pulseRateRaw = 0;
 unsigned int respRateRaw = 0;
 
+const char startOfMessage = 0x2A;
+const char endOfMessage = 0x4B;
+
+const char pinTemp = 1;
+
 void Measure();
 
 void setup()
@@ -39,8 +44,9 @@ typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 unsigned long lastTime = 0;
 void loop()
 {
-  char startOfMessage = 0x2A;
-  char endOfMessage = 0x4B;
+  int val = analogRead(pinTemp);     // read the input pin
+  Serial.print(val); // TESTING
+ 
   unsigned long currentTime = millis();
   if (currentTime - lastTime > 5000) {
     Measure();
