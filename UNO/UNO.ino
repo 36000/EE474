@@ -47,8 +47,8 @@ int prhigh = 0;
 int rrhigh = 0;
 int prcount = 0;
 int rrcount = 0;
-float prfreq = 0;
-float rrfreq = 0;
+int prfreq = 0;
+int rrfreq = 0;
 
 unsigned char cuffInflation;
 unsigned long lastTime = 0;
@@ -61,8 +61,8 @@ void loop()
   rrhigh = sampleFreq(pinResp, rrhigh, &rrcount);
 
   if (currentTime - lastFreqtime > 5000) {
-    prfreq = ((float) prcount) / 5;
-    rrfreq = ((float) rrcount) / 5;
+    prfreq = prcount;
+    rrfreq = rrcount;
     prcount = 0;
     rrcount = 0;
     lastFreqtime = currentTime;
