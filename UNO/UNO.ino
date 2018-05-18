@@ -105,8 +105,8 @@ void loop()
 
   Serial.write(startOfMessage);
   Serial.write(cuffInflation);
-  Serial.write(bloodPress1RawBuf[bp1RawId]);
-  Serial.write(bloodPress2RawBuf[bp2RawId]);
+  Serial.write((char)bloodPress1RawBuf[bp1RawId]);
+  Serial.write((char)bloodPress2RawBuf[bp2RawId]);
   Serial.write(functionName);
   Serial.write((char) data);
   Serial.write(endOfMessage);
