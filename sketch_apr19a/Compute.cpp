@@ -18,19 +18,19 @@ void Compute (void* data) {
       return;
     case BLOOD1:
       bp1CorrId++; bp1CorrId %= 8;
-      itoa(computeData->bloodPressCorrectedBuf, computeData->bloodPressRawBuf[bp1RawId], bp1CorrId * 3);
+      itoa(computeData->bloodPressCorrectedBuf, (computeData->bloodPressRawBuf[bp1RawId] / 10) * cuffInflation, bp1CorrId * 3);
       return;
     case BLOOD2:
       bp2CorrId++; bp2CorrId %= 8;
-      itoa(computeData->bloodPressCorrectedBuf, (unsigned int) (computeData->bloodPressRawBuf[8 + bp2RawId]), bp2CorrId * 3 + 8 * 3);
+      itoa(computeData->bloodPressCorrectedBuf, ((unsigned int) (computeData->bloodPressRawBuf[8 + bp2RawId]) /10) * cuffInflation, bp2CorrId * 3 + 8 * 3);
       return;
     case PULSE:
       prCorrId++; prCorrId %= 8;
-      itoa(computeData->pulseRateCorrectedBuf, computeData->pulseRateRawBuf[prRawId]*12, prCorrId * 3);   
+      itoa(computeData->pulseRateCorrectedBuf, computeData->pulseRateRawBuf[prRawId]*(200 - 10)/128 + 10, prCorrId * 3);   
       return;    
     case RESP:
       rrCorrId++; rrCorrId %= 8;
-      itoa(computeData->respRateCorrectedBuf, computeData->respRateRawBuf[rrRawId]*12, rrCorrId * 3);   
+      itoa(computeData->respRateCorrectedBuf, computeData->respRateRawBuf[rrRawId]*(50 - 10)/128 + 10, rrCorrId * 3);   
       return;
     default:
       return;
