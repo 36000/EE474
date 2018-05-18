@@ -22,7 +22,7 @@ void Compute (void* data) {
       return;
     case BLOOD2:
       bp2CorrId++; bp2CorrId %= 8;
-      itoa(computeData->bloodPressCorrectedBuf, (unsigned int) (computeData->bloodPressRawBuf[8 + bp2RawId]*(100 - 50)/128 + 50)), bp2CorrId * 3 + 8 * 3);
+      itoa(computeData->bloodPressCorrectedBuf, (unsigned int) (computeData->bloodPressRawBuf[8 + bp2RawId]*(100 - 50)/128 + 50), bp2CorrId * 3 + 8 * 3);
       return;
     case PULSE:
       prCorrId++; prCorrId %= 8;
