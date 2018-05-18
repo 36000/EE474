@@ -26,11 +26,11 @@ void Compute (void* data) {
       return;
     case PULSE:
       prCorrId++; prCorrId %= 8;
-      itoa(computeData->pulseRateCorrectedBuf, computeData->pulseRateRawBuf[prRawId], prCorrId * 3);   
+      itoa(computeData->pulseRateCorrectedBuf, computeData->pulseRateRawBuf[prRawId]*60, prCorrId * 3);   
       return;    
     case RESP:
       rrCorrId++; rrCorrId %= 8;
-      itoa(computeData->respRateCorrectedBuf, computeData->respRateRawBuf[rrRawId], rrCorrId * 3);   
+      itoa(computeData->respRateCorrectedBuf, computeData->respRateRawBuf[rrRawId]*60, rrCorrId * 3);   
       return;
     default:
       return;

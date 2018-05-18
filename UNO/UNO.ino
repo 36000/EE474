@@ -61,10 +61,10 @@ void loop()
   rrhigh = sampleFreq(pinResp, rrhigh, &rrcount);
 
   if (currentTime - lastFreqtime > 5000) {
-    prcount = 0;
-    rrcount = 0;
     prfreq = ((float) prcount) / 5;
     rrfreq = ((float) rrcount) / 5;
+    prcount = 0;
+    rrcount = 0;
     lastFreqtime = currentTime;
   }
   
@@ -135,12 +135,12 @@ void Measure () {
   }
   
   measureHelperTemp(pinTemp, temperatureRawBuf, &tRawId);
-  measureHelper(pinPulse, pulseRateRawBuf, &prRawId, 0.5, 2, prfreq);
-  measureHelper(pinResp, respRateRawBuf, &rrRawId, 0.2, 0.5, rrfreq);
+  measureHelper(pinPulse, pulseRateRawBuf, &prRawId, prfreq);
+  measureHelper(pinResp, respRateRawBuf, &rrRawId, rrfreq);
 }
 
-void measureHelper(int pin, unsigned int* buf, unsigned int* index, float minvalue, float maxvalue, float freq) {
-  unsigned int val = (freq - minvalue)*127/(maxvalue-minvalue);
+void measureHelper(int pin, unsigned int* buf, unsigned int* index, float freq) {
+  unsigned int val = freq;
   
   unsigned int dif;
   if (buf[*index] > val) 
