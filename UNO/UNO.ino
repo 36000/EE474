@@ -11,9 +11,10 @@ static unsigned int respRateRawBuf[8];
 const char startOfMessage = 0x2A;
 const char endOfMessage = 0x4B;
 
-const char pinTemp = 0;
+const char pinTemp = 3;
 const char pinPulse = 0;
-const char pinResp = 0;
+const char pinResp = 1;
+// 4 is cuff bulb, 5 is cuff switcher
 
 void Measure();
 
