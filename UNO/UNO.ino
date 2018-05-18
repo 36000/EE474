@@ -69,6 +69,7 @@ void loop()
   
   if (currentTime - lastTime > 500) {
     Measure();
+    //Serial.println(cuffInflation);
     lastTime = currentTime;
   }
   
@@ -147,6 +148,12 @@ void measureHelperTemp(int pin, unsigned int* buf, unsigned int* index) {
   float valf = analogRead(pin);
 
   valf/=8;
+  if (cuffButton < 200) {
+    if ((cuffSwitch < 200) && (cuffInflation > 0))
+      cuffInflation--;
+    else if ((cuffSwitch >= 200) && (cuffInflation < 10))
+      cuffInflation++;
+  }
 
   unsigned int val = (unsigned int) valf;
   
