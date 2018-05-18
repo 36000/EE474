@@ -136,12 +136,14 @@ void Measure () {
       cuffInflation++;
   }
 
-  measureHelperTemp(pinTemp, temperatureRawBuf, &tRawId);
-  measureHelper(pinPulse, pulseRateRawBuf, &prRawId, prfreq);
-  measureHelper(pinResp, respRateRawBuf, &rrRawId, rrfreq);
+  measureHelper(pinTemp, temperatureRawBuf, &tRawId);
+  measureHelper(pinTemp, bloodPress1RawBuf, &bp1RawId);
+  measureHelper(pinTemp, bloodPress2RawBuf, &bp2RawId);
+  measureHelperRate(pinPulse, pulseRateRawBuf, &prRawId, prfreq);
+  measureHelperRate(pinResp, respRateRawBuf, &rrRawId, rrfreq);
 }
 
-void measureHelper(int pin, unsigned int* buf, unsigned int* index, float freq) {
+void measureHelperRate(int pin, unsigned int* buf, unsigned int* index, float freq) {
   unsigned int val = freq;
 
   if (val > 16)
@@ -159,7 +161,7 @@ void measureHelper(int pin, unsigned int* buf, unsigned int* index, float freq) 
   }
 }
 
-void measureHelperTemp(int pin, unsigned int* buf, unsigned int* index) {
+void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
   float valf = analogRead(pin);
 
   valf /= 8;

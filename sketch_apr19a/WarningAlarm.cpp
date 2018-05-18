@@ -11,8 +11,8 @@ void WarningAlarm (void* data) {
 
 
   temp = temp*(500 - 250)/128 + 250;
-  sysPress = sysPress;
-  diasPress = diasPress;
+  sysPress = sysPress*(150 - 100)/128 + 100;
+  diasPress = diasPress*(100 - 50)/128 + 50;
   pulse *= 12;
   resp *= 12;
 
