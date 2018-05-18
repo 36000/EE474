@@ -18,16 +18,8 @@ uint16_t buttoncolors[5] = {ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, ILI9341_BL
 
 Elegoo_GFX_Button buttons[15];
 /* create 15 buttons, in classic candybar phone style */
-char buttonlabels[15][5] = {"Send", "Clr", "End", "1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#" };
-uint16_t buttoncolors[15] = {ILI9341_DARKGREEN, ILI9341_DARKGREY, ILI9341_RED, 
-                             ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, 
-                             ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, 
-                             ILI9341_BLUE, ILI9341_BLUE, ILI9341_BLUE, 
-                             ILI9341_ORANGE, ILI9341_BLUE, ILI9341_ORANGE};
-char textfield[TEXT_LEN+1] = "";
-uint8_t textfield_i = 0;
+char buttonlabels[5][5] = {"^", "v", "<", ">", "SEL"};
                              
-
 // warning / alarms
 Bool bpHigh;
 Bool tempHigh;
@@ -36,6 +28,10 @@ Bool batteryLow;
 Bool batteryDead;
 
 TCB_ll ll;
+
+// which menu are we in?
+dt menuMeas;
+menu Menu;
 
 unsigned char bpOutOfRange;
 unsigned char tempOutOfRange;
@@ -60,7 +56,7 @@ static unsigned short batteryState;
 
 dt measurementSelection;
 
-Bool alarmAcknowledge;
+dt alarmAcknowledge;
 
 static MeasureData measureData;
 static CommunicateData communicateData;
@@ -74,6 +70,9 @@ void ElegooSetup();
 
 void setup() {
   ElegooSetup();
+
+  menuMeas = TEMP;
+  Menu = MEAS;
   
   ll.head = NULL;
   ll.tail = NULL;
@@ -106,7 +105,7 @@ void setup() {
   batteryState = 200;
 
   measurementSelection = NONE;
-  alarmAcknowledge = TRUE;
+  alarmAcknowledge = NONE;
 
   measureData.temperatureRawBuf = temperatureRawBuf;
   measureData.bloodPressRawBuf = bloodPressRawBuf;
@@ -164,20 +163,23 @@ void setup() {
   insert(&taskList[5]);
 
   // create buttons
-  for (uint8_t row=0; row<5; row++) {
+  /*for (uint8_t row=0; row<5; row++) {
     for (uint8_t col=0; col<3; col++) {
       buttons[col + row*3].initButton(&tft, BUTTON_X+col*(BUTTON_W+BUTTON_SPACING_X), 
-                 BUTTON_Y+row*(BUTTON_H+BUTTON_SPACING_Y),    // x, y, w, h, outline, fill, text
-                  BUTTON_W, BUTTON_H, ILI9341_WHITE, buttoncolors[col+row*3], ILI9341_WHITE,
-                  buttonlabels[col + row*3], BUTTON_TEXTSIZE); 
+                 BUTTON_Y+row*(BUTTON_H+BUTTON_SPACING_Y),    // initButtons(*tft, x, y, w, h, outline, fill, text)
+                  BUTTON_W, BUTTON_H, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE,
+                  buttonlabels[col + row*3], BUTTON_TEXTSIZE);
       buttons[col + row*3].drawButton();
     }
+  }*/
+  buttons[0].initButton(&tft, 160, 90, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
+  buttons[1].initButton(&tft, 160, 156, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[1], BUTTON_TEXTSIZE);
+  buttons[2].initButton(&tft, 50, 123, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[2], BUTTON_TEXTSIZE);
+  buttons[3].initButton(&tft, 270, 123, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[3], BUTTON_TEXTSIZE);
+  buttons[4].initButton(&tft, 270, 156, 80, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[4], BUTTON_TEXTSIZE);
+  for (int i = 0; i < 5; i++){
+    buttons[i].drawButton();
   }
-  // create 'text field'
-  tft.drawRect(TEXT_X, TEXT_Y, TEXT_W, TEXT_H, ILI9341_WHITE);
-
-
-
 }
 
 

@@ -9,14 +9,7 @@
 void Communicate(void* data) {
   CommunicateData* communicateData = (CommunicateData*) data;
   
-  char select = 0;
-  if (*communicateData->measurementSelection == TEMP) {
-    select = 1;
-  } else if (*communicateData->measurementSelection == BLOOD) {
-    select = 2;
-  } else if (*communicateData->measurementSelection == PULSE) {
-    select = 3;
-  }
+  char select = (char) *communicateData->measurementSelection;
 
   //Serial.println('A');
   Serial1.write(START);
@@ -35,23 +28,24 @@ void Communicate(void* data) {
   switch (*communicateData->measurementSelection) {
     case NONE:
       return;
-    case BLOOD:
+    case BLOOD1:
       communicateData->bloodPressRawBuf[bp1RawId] = (unsigned int) Serial1.read();
+      break;
+    case BLOOD2:
       communicateData->bloodPressRawBuf[bp2RawId + 8] = (unsigned int) Serial1.read();
       break;
     case TEMP:
       communicateData->temperatureRawBuf[tRawId] = (unsigned int) Serial1.read();
-      Serial1.read();
       //Serial.println(communicateData->temperatureRawBuf[tRawId]);
       break;
     case PULSE:
       communicateData->pulseRateRawBuf[prRawId] = (unsigned int) Serial1.read();
-      Serial1.read();
       break;   
     default:
       return;
   }
 
+  Serial1.read();
   Serial1.read();
 }
 

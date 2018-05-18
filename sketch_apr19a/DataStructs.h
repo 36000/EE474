@@ -36,7 +36,8 @@ struct TCB {
 };
 
 
-typedef enum {NONE = 0, TEMP = 1, BLOOD = 2, PULSE = 3} dt;
+typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
+typedef enum {MEAS, ANUN} menu;
 
 extern unsigned int tRawId, bp1RawId, bp2RawId, prRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId;
 
@@ -49,7 +50,10 @@ typedef struct {
 
 typedef MeasureData CommunicateData; // they are the same
 
-extern dt measurementSelection; // for scheduler
+extern dt measurementSelection; // for scheduler, REMOVE LATER
+extern dt menuMeas;
+extern menu Menu;
+
 
 typedef struct {
   unsigned int* temperatureRawBuf;
@@ -75,7 +79,7 @@ typedef struct {
   unsigned int* bloodPressRawBuf;
   unsigned int* pulseRateRawBuf;
   unsigned short* batteryState;
-  Bool* alarmAcknowledge;
+  dt* alarmAcknowledge;
 } WarningAlarmData;
 
 typedef struct {
@@ -84,10 +88,7 @@ typedef struct {
 
 typedef struct {
   dt* measurementSelection;
-  Bool* displayMenu;
-  Bool* dataMenu;
-  Bool* alarmAcknowledge;
-  
+  dt* alarmAcknowledge;
 } KeypadData;
 
 #endif // _DATA_STRUCTS_H_

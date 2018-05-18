@@ -10,7 +10,7 @@ void Schedule(TCB* taskList) {
 
   if (systemTimeBase > systemTimeBaseOld[0]) {
     //insert(&taskList[2]);
-    insert(&taskList[3]);
+    //insert(&taskList[3]);
     systemTimeBaseOld[0] = systemTimeBase;
   } else {
     taskList[5].myTask(taskList[5].taskDataPtr);
@@ -25,11 +25,11 @@ void Schedule(TCB* taskList) {
     alarmAcknowledge = FALSE;
   }
   
-  if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
+  /*if (systemTimeBase % 5 == 0 && measurementSelection != NONE) {
     insert(&taskList[0]);
     insert(&taskList[1]);
     insert(&taskList[4]);
-  }
+  }*/
 
   TCB* current = ll.head;
 

@@ -103,7 +103,7 @@
 extern Elegoo_TFTLCD tft;
 extern Elegoo_GFX_Button buttons[15];
 extern TouchScreen ts;
-extern char buttonlabels[15][5];
+extern char buttonlabels[5][5];
 extern uint16_t buttoncolors[15];
 extern char textfield[TEXT_LEN+1]; // = "";
 extern uint8_t textfield_i; //=0;

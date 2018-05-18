@@ -24,20 +24,16 @@ void Keypad (void* data) {
    }
    
   // go thru all the buttons, checking if they were pressed
-  for (uint8_t b=0; b<15; b++) {
+  for (uint8_t b=0; b<5; b++) {
     if (buttons[b].contains(p.x, p.y)) {
-      //Serial.print("Pressing: "); Serial.println(b);
       buttons[b].press(true);  // tell the button it is pressed
-      //Serial.print(p.x);
-      //Serial.print(", ");
-      //Serial.println(p.y);
     } else {
       buttons[b].press(false);  // tell the button it is NOT pressed
     }
   }
 
   // now we can ask the buttons if their state has changed
-  for (uint8_t b=0; b<15; b++) {
+  for (uint8_t b=0; b<5; b++) {
     if (buttons[b].justReleased()) {
       // Serial.print("Released: "); Serial.println(b);
       buttons[b].drawButton();  // draw normal
@@ -45,48 +41,50 @@ void Keypad (void* data) {
     
     if (buttons[b].justPressed()) {
         buttons[b].drawButton(true);  // draw invert!
-        // if a numberpad button, append the relevant # to the textfield
-        if (b >= 3) {
-          if (textfield_i < TEXT_LEN) {
-            textfield[textfield_i] = buttonlabels[b][0];
-            textfield_i++;
-            textfield[textfield_i] = 0; // zero terminate
-          }
-        }
-
-        // clr button! delete char
-        if (b == 1) {
-          
-          textfield[textfield_i] = 0;
-          if (textfield_i > 0) {
-            textfield_i--;
-            if(textfield_i < 0){
-                textfield_i = 0;
+        // if a numberpad button, append the relevant # to the textfield 
+        int idt; // integer to represenet data type
+        switch(b) { // up, down, left, right, select
+          case 0:
+            if (Menu == MEAS)
+              Menu = ANUN;
+            else
+              Menu = MEAS;
+            break;
+          case 1:
+            if (Menu == MEAS)
+              Menu = ANUN;
+            else
+              Menu = MEAS;
+            break;
+          case 2:
+            idt = (int) menuMeas;
+            idt--;
+            if (idt == 0)
+              idt = 5;
+            menuMeas = (dt) idt;
+            break;
+          case 3:
+            idt = (int) menuMeas;
+            idt++;
+            if (idt == 6)
+              idt = 1;
+            menuMeas = (dt) idt;
+            break;
+          case 4:
+            if (Menu == MEAS) {
+              *data->measurementSelection = menuMeas;
+            } else {
+              *data->alarmAcknowledge = menuMeas;
             }
-            textfield[textfield_i] = ' ';
-          }
+            break;
+          default:
+            break;
         }
-
-        // update the current text field
-        //Serial.println(textfield);
-        tft.setCursor(TEXT_X + 2, TEXT_Y+10);
-        tft.setTextColor(TEXT_TCOLOR, ILI9341_BLACK);
-        tft.setTextSize(TEXT_TSIZE);
-        tft.print(textfield);
-
-        // its always OK to just hang up
-        if (b == 0) {
-          status(F("Calling"));
-        }
-
-        if (b == 2) {
-          status(F("Hanging Up"));
-        }
-        
         delay(100); // UI debouncing
     }
   }
   /*
+   * assume there are only 5 buttons for this commented code
   digitalWrite(13, HIGH);
   TSPoint p = ts.getPoint();
   digitalWrite(13, LOW);
