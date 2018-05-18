@@ -85,7 +85,10 @@ void Display (void* data) {
       case TEMP:
         measType = "Body Temp: ";
         units = " C\n";
-        warning = tempHigh;
+        if (systemTimeBase % 2 == 0)
+          warning = tempHigh;
+        else
+          warning = FALSE;
         values[0] = (char) displayData->tempCorrectedBuff[tCorrId * 3];
         values[1] = (char) displayData->tempCorrectedBuff[tCorrId * 3 + 1];
         values[2] = '.';
@@ -94,7 +97,10 @@ void Display (void* data) {
      case BLOOD1:
         measType = "Syst Pres: ";
         units = " mm Hg\n";
-        warning = bpHigh1;
+        if (systemTimeBase % 2 == 0)
+          warning = bpHigh1;
+        else
+          warning = FALSE;
         for (int i = 0; i < 3; i++)
           values[i] = (char) displayData->bloodPressCorrectedBuf[bp1CorrId * 3 + i];
         values[3] = ' ';
@@ -102,7 +108,10 @@ void Display (void* data) {
      case BLOOD2:
         measType = "Dias Pres: ";
         units = " mm Hg\n";
-        warning = bpHigh2;
+        if (systemTimeBase % 2 == 0)
+          warning = bpHigh2;
+        else
+          warning = FALSE;
         for (int i = 0; i < 3; i++)
           values[i] = (char) displayData->bloodPressCorrectedBuf[bp2CorrId * 3 + i + 8 * 3];
         values[3] = ' ';
@@ -110,7 +119,10 @@ void Display (void* data) {
      case PULSE:
         measType = "Pulse Rate:";
         units = " BPM\n";
-        warning = pulseLow;
+        if (systemTimeBase % 2 == 0)
+          warning = pulseLow;
+        else
+          warning = FALSE;
         for (int i = 0; i < 3; i++)
           values[i] = (char) displayData->pulseRateCorrectedBuf[prCorrId * 3 + i];
         values[3] = ' ';
