@@ -28,10 +28,10 @@ void setup()
   Serial.begin(9600);
 
   /*meterp.setBandwidth(0, 4);
-  meterp.begin(pinPulse, 20);  
-  meterr.setBandwidth(0, 4);
-  meterr.begin(pinResp, 20);  */
-  
+    meterp.begin(pinPulse, 20);
+    meterr.setBandwidth(0, 4);
+    meterr.begin(pinResp, 20);  */
+
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
   temperatureRawBuf[0] = 0;
@@ -61,19 +61,21 @@ void loop()
   rrhigh = sampleFreq(pinResp, rrhigh, &rrcount);
 
   if (currentTime - lastFreqtime > 5000) {
-    prfreq = prcount+1;
-    rrfreq = rrcount+1;
+    prfreq = prcount;
+    rrfreq = rrcount;
+    prhigh = 0;
+    rrhigh = 0;
     prcount = 0;
     rrcount = 0;
     lastFreqtime = currentTime;
   }
-  
+
   if (currentTime - lastTime > 500) {
     Measure();
     //Serial.println(cuffInflation);
     lastTime = currentTime;
   }
-  
+
   //  read incoming byte from the mega
   if (Serial.read() != startOfMessage) return;
   while (Serial.available() < 4);
@@ -82,7 +84,7 @@ void loop()
   Serial.read(); // not needed
   Serial.read(); // not needed
   Serial.read();
-  
+
   char data = 0;
   switch (taskIdentifier) { //NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP
     case TEMP:
@@ -100,7 +102,7 @@ void loop()
     case RESP:
       data = respRateRawBuf[rrRawId];
   }
-  
+
   Serial.write(startOfMessage);
   Serial.write(cuffInflation);
   Serial.write(functionName);
@@ -110,7 +112,7 @@ void loop()
 
 // range of 0.5 to 2 hertz
 // range of 0.2 to 0.5 hertz
-int sampleFreq(int pin, int high, int *count){
+int sampleFreq(int pin, int high, int *count) {
   float valf = analogRead(pin);
   if (high && valf < 200) {
     return 0;
@@ -133,7 +135,7 @@ void Measure () {
     else if ((cuffSwitch >= 200) && (cuffInflation < 10))
       cuffInflation++;
   }
-  
+
   measureHelperTemp(pinTemp, temperatureRawBuf, &tRawId);
   measureHelper(pinPulse, pulseRateRawBuf, &prRawId, prfreq);
   measureHelper(pinResp, respRateRawBuf, &rrRawId, rrfreq);
@@ -141,12 +143,12 @@ void Measure () {
 
 void measureHelper(int pin, unsigned int* buf, unsigned int* index, float freq) {
   unsigned int val = freq;
-  
+
   unsigned int dif;
-  if (buf[*index] > val) 
-    dif = (buf[*index] - val)*100/buf[*index];
+  if (buf[*index] > val)
+    dif = (buf[*index] - val) * 100 / buf[*index];
   else
-    dif = (val - buf[*index])*100/buf[*index];
+    dif = (val - buf[*index]) * 100 / buf[*index];
 
   if (dif > 15) {
     (*index)++; (*index) %= 8;
@@ -157,15 +159,15 @@ void measureHelper(int pin, unsigned int* buf, unsigned int* index, float freq) 
 void measureHelperTemp(int pin, unsigned int* buf, unsigned int* index) {
   float valf = analogRead(pin);
 
-  valf/=8;
+  valf /= 8;
 
   unsigned int val = (unsigned int) valf;
-  
+
   unsigned int dif;
-  if (buf[*index] > val) 
-    dif = (buf[*index] - val)*100/buf[*index];
+  if (buf[*index] > val)
+    dif = (buf[*index] - val) * 100 / buf[*index];
   else
-    dif = (val - buf[*index])*100/buf[*index];
+    dif = (val - buf[*index]) * 100 / buf[*index];
 
   if (dif > 15) {
     (*index)++; (*index) %= 8;
