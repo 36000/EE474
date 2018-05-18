@@ -1,21 +1,19 @@
 #include "Boolean.h"
 
-static Bool evenCall = TRUE;
-static Bool tempRising = FALSE;
-static Bool sysComplete = FALSE;
-static Bool diasComplete = FALSE;
-static Bool pulseRising = FALSE;
+unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId;
 
-unsigned int temperatureRaw = 0;
-unsigned int systolicPressRaw = 0;
-unsigned int diastolicPressRaw = 0;
-unsigned int pulseRateRaw = 0;
-unsigned int respRateRaw = 0;
+static unsigned int temperatureRawBuf[8];
+static unsigned int bloodPress1RawBuf[8];
+static unsigned int bloodPress2RawBuf[8];
+static unsigned int pulseRateRawBuf[8];
+static unsigned int respRateRawBuf[8];
 
 const char startOfMessage = 0x2A;
 const char endOfMessage = 0x4B;
 
-const char pinTemp = 1;
+const char pinTemp = 0;
+const char pinPulse = 0;
+const char pinResp = 0;
 
 void Measure();
 
@@ -24,19 +22,14 @@ void setup()
   // running on the uno - connect to tx1 and rx1 on the mega and to rx and tx on the uno
   // start serial port at 9600 bps and wait for serial port on the uno to open:
   Serial.begin(9600);
-  evenCall = TRUE;
-  tempRising = FALSE;
-  sysComplete = FALSE;
-  diasComplete = FALSE;
-  pulseRising = FALSE;
+  
+  tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
-  temperatureRaw = 75;
-  systolicPressRaw = 80;
-  diastolicPressRaw = 80;
-  pulseRateRaw = 50;
-  respRateRaw = 50;
-
-
+  temperatureRawBuf[0] = 0;
+  bloodPress1RawBuf[0] = 0;
+  bloodPress2RawBuf[0] = 0;
+  pulseRateRawBuf[0] = 0;
+  respRateRawBuf[0] = 0;
 }
 
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
@@ -44,9 +37,6 @@ typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 unsigned long lastTime = 0;
 void loop()
 {
-  int val = analogRead(pinTemp);     // read the input pin
-  Serial.print(val); // TESTING
- 
   unsigned long currentTime = millis();
   if (currentTime - lastTime > 5000) {
     Measure();
@@ -65,19 +55,19 @@ void loop()
   char data = 0;
   switch (taskIdentifier) { //NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP
     case TEMP:
-      data = temperatureRaw;
+      data = temperatureRawBuf[tRawId];
       break;
     case BLOOD1:
-      data = systolicPressRaw;
+      data = bloodPress1RawBuf[bp1RawId];
       break;
     case BLOOD2:
-      data = diastolicPressRaw;
+      data = bloodPress2RawBuf[bp2RawId];
       break;
     case PULSE:
-      data = pulseRateRaw;
+      data = pulseRateRawBuf[prRawId];
       break;
     case RESP:
-      data = respRateRaw;
+      data = respRateRawBuf[rrRawId];
   }
   
   Serial.write(startOfMessage);
@@ -88,75 +78,27 @@ void loop()
 }
 
 void Measure () {
-
-  if (tempRising) {
-    if (evenCall) {
-      temperatureRaw += 2;
-      if (temperatureRaw > 50)
-        tempRising = FALSE;
-    } else {
-      temperatureRaw -= 1;
-    }
-  } else {
-    if (evenCall) {
-      temperatureRaw -= 2;
-      if (temperatureRaw < 15)
-        tempRising = TRUE;
-    } else {
-      temperatureRaw += 1;
-    }
-  }
-
-  if (diasComplete && sysComplete) {
-    sysComplete = FALSE;
-    diasComplete = FALSE;
-    systolicPressRaw = 80;
-    diastolicPressRaw = 80;
-  }
-
-  if (!sysComplete) {
-    if (evenCall) {
-      systolicPressRaw += 3;
-      if (systolicPressRaw > 100)
-        sysComplete = TRUE;
-    } else {
-      systolicPressRaw -= 1;
-    }
-  }
-
-  if (!diasComplete) {
-    if (evenCall) {
-      diastolicPressRaw -= 2;
-      if (diastolicPressRaw < 40)
-        diasComplete = TRUE;
-    } else {
-      diastolicPressRaw += 1;
-    }
-  }
-
-  if (pulseRising) {
-    if (evenCall) {
-      pulseRateRaw -= 1;
-    } else {
-      pulseRateRaw += 3;
-      if (pulseRateRaw > 40)
-        pulseRising = FALSE;
-    }
-  } else {
-    if (evenCall) {
-      pulseRateRaw += 1;
-    } else {
-      pulseRateRaw -= 3;
-      if (pulseRateRaw < 15)
-        pulseRising = TRUE;
-    }
-  }
-
-  evenCall = 1 - evenCall;
+  measureHelper(pinTemp, temperatureRawBuf, &tRawId, 350, 380);
+  measureHelper(pinPulse, pulseRateRawBuf, &prRawId, 10, 200);
+  measureHelper(pinResp, respRateRawBuf, &rrRawId, 10, 50);
 }
 
+void measureHelper(int pin, unsigned int* buf, unsigned int* index, int minScale, int maxScale) {
+  unsigned int val = analogRead(pin);
+  
+  val = val*(maxScale - minScale)/1023 + minScale;
 
+  unsigned int dif;
+  if (buf[*index] > val) 
+    dif = (buf[*index] - val)*100/buf[*index];
+  else
+    dif = (val - buf[*index])*100/buf[*index];
 
+  if (dif > 15) {
+    *index++;
+    buf[*index] = val;
+  }
+}
 
 
 
