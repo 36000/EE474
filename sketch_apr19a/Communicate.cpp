@@ -5,6 +5,7 @@
 #define COMMUNICATE_ID 10
 #define END 0x4B
 
+int isCuffReady = 0;
 
 void Communicate(void* data) {
   CommunicateData* communicateData = (CommunicateData*) data;
@@ -21,7 +22,14 @@ void Communicate(void* data) {
   while (Serial1.available() < 5);
 
   Serial1.read();
+  
   cuffInflation = Serial1.read();
+  if (cuffInflation >= 8) {
+    isCuffReady = 1;
+  } else {
+    isCuffReady = 0;
+  }
+
   Serial1.read();
 
   switch (*communicateData->measurementSelection) {
@@ -29,10 +37,16 @@ void Communicate(void* data) {
       Serial1.read();
       break;
     case BLOOD1:
-      communicateData->bloodPressRawBuf[bp1RawId] = (unsigned int) Serial1.read();
+      if(isCuffReady)
+        communicateData->bloodPressRawBuf[bp1RawId] = (unsigned int) Serial1.read();
+      else
+        Serial1.read();
       break;
     case BLOOD2:
-      communicateData->bloodPressRawBuf[bp2RawId + 8] = (unsigned int) Serial1.read();
+      if(isCuffReady)
+        communicateData->bloodPressRawBuf[bp2RawId + 8] = (unsigned int) Serial1.read();
+      else
+        Serial1.read();
       break;
     case TEMP:
       communicateData->temperatureRawBuf[tRawId] = (unsigned int) Serial1.read();
