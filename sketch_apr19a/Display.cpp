@@ -28,64 +28,77 @@ void Display (void* data) {
   tft.print(" Pocket Doctor (TM)\n");
   tft.print("--------------------\n");
 
+  if (Menu == ANUN) {
+    const char* measType;
+    const char* units;
+    char values[4];
+    Bool warning;
 
-  tft.fillRect(11 * 12, 3 * 16, 4 * 12, 1 * 16, BLACK);
-  tft.setTextColor(WHITE);
-  tft.print("Body Temp: ");
-  // Set color of text for body temp warning, similar use in all other sections
-  if (tempHigh) {
-    tft.setTextColor(RED);
-  } else {
-    tft.setTextColor(GREEN);
+    switch (menuMeas) { // TEMP, BLOOD1, BLOOD2, PULSE, RESP
+      case TEMP:
+        measType = "Body Temp: ";
+        units = " C\n";
+        warning = tempHigh;
+        values[0] = (char) displayData->tempCorrectedBuff[tCorrId * 3];
+        values[1] = (char) displayData->tempCorrectedBuff[tCorrId * 3 + 1];
+        values[2] = '.';
+        values[3] = (char) displayData->tempCorrectedBuff[tCorrId * 3 + 2];
+        break;
+     case BLOOD1:
+        measType = "Syst Pres: ";
+        units = " mm Hg\n";
+        warning = bpHigh;
+        for (int i = 0; i < 3; i++)
+          values[i] = (char) displayData->bloodPressCorrectedBuf[bp1CorrId * 3 + i];
+        values[3] = ' ';
+        break;
+     case BLOOD2:
+        measType = "Dias Pres: ";
+        units = " mm Hg\n";
+        warning = bpHigh;
+        for (int i = 0; i < 3; i++)
+          values[i] = (char) displayData->bloodPressCorrectedBuf[bp2CorrId * 3 + i + 8 * 3];
+        values[3] = ' ';
+        break;
+     case PULSE:
+        measType = "Pulse Rate:";
+        units = " BPM\n";
+        warning = pulseLow;
+        for (int i = 0; i < 3; i++)
+          values[i] = (char) displayData->pulseRateCorrectedBuf[prCorrId * 3 + i];
+        values[3] = ' ';
+        break;
+     case RESP:
+        measType = "RESP: ";
+        units = " RESP\n";
+        warning = TRUE;
+        for (int i = 0; i < 4; i++)
+          values[i] = ' '; 
+        break;
+     default:
+        measType = "ERROR";
+        units = "ERROR";
+        warning = TRUE;
+        for (int i = 0; i < 4; i++)
+          values[i] = ' ';
+        break;
+    }
+    
+    tft.fillRect(0 * 12, 2 * 16, 25 * 12, 1 * 16, BLACK);
+    tft.setTextColor(WHITE);
+    tft.print(measType);
+    // Set warning
+    if (warning) {
+      tft.setTextColor(RED);
+    } else {
+      tft.setTextColor(GREEN);
+    }
+    for (int i = 0; i < 4; i++)
+      tft.print(values[i]);
+    tft.setTextColor(WHITE); tft.print(units);
   }
-  // Print body temperature data
-  for (int i = 0; i < 3; i++) {
-    if (i == 2) tft.print('.');
-    tft.print((char) displayData->tempCorrectedBuff[tCorrId * 3 + i]);
-    Serial.print(displayData->tempCorrectedBuff[tCorrId * 3]);
-  }
-  tft.setTextColor(WHITE); tft.print(" C\n");
 
-
-  tft.fillRect(11 * 12, 4 * 16, 3 * 12, 1 * 16, BLACK);
-  tft.print("Syst Pres: ");
-  // Print blood pressure data
-  if (bpHigh) {
-    tft.setTextColor(RED);
-  } else {
-    tft.setTextColor(GREEN);
-  }
-
-  for (int i = 0; i < 3; i++)
-    tft.print((char) displayData->bloodPressCorrectedBuf[bp1CorrId * 3 + i]);
-  tft.setTextColor(WHITE); tft.print(" mm Hg");
-
-
-  tft.fillRect(11 * 12, 5 * 16, 3 * 12, 1 * 16, BLACK);
-  tft.print("Dias Pres: ");
-  if (bpHigh) {
-    tft.setTextColor(RED);
-  } else {
-    tft.setTextColor(GREEN);
-  }
-  for (int i = 0; i < 3; i++)
-    tft.print((char) displayData->bloodPressCorrectedBuf[bp2CorrId * 3 + i + 8 * 3]);
-  tft.setTextColor(WHITE); tft.print(" mm Hg");
-
-
-  tft.fillRect(11 * 12, 6 * 16, 3 * 12, 1 * 16, BLACK);
-  tft.print("Pulse Rate:");
-  // Print pulse rate data
-  if (pulseLow) {
-    tft.setTextColor(RED);
-  } else {
-    tft.setTextColor(GREEN);
-  }
-  for (int i = 0; i < 3; i++)
-    tft.print((char) displayData->pulseRateCorrectedBuf[prCorrId * 3 + i]);
-  tft.setTextColor(WHITE); tft.print(" BPM\n");
-
-
+  /*
   tft.fillRect(11 * 12, 7 * 16, 3 * 12, 1 * 16, BLACK);
   tft.print("Battery:   ");
   // Print battery status
@@ -98,10 +111,10 @@ void Display (void* data) {
   if (*displayData->batteryState < 100)
     tft.print("0");
   tft.print(*displayData->batteryState);
-  tft.setTextColor(WHITE); tft.print("/200\n");
+  tft.setTextColor(WHITE); tft.print("/200\n");*/
 
 
-  tft.fillRect(0 * 12, 9 * 16, 20 * 12, 3 * 16, BLACK);
+  /*tft.fillRect(0 * 12, 9 * 16, 20 * 12, 3 * 16, BLACK);
   // Print alarms
   tft.print("Alarms:\n");
   tft.setTextColor(RED);
@@ -122,7 +135,6 @@ void Display (void* data) {
   if (anyAlarm == FALSE) {
     tft.setTextColor(GREEN);
     tft.print("none");
-  }
-  tft.fillScreen(BLACK);
+  }*/
 }
 
