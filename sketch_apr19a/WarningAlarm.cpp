@@ -13,8 +13,6 @@ void WarningAlarm (void* data) {
   temp = temp*(500 - 250)/128 + 250;
   sysPress = sysPress;
   diasPress = diasPress;
-  pulse = pulse*(200 - 10)/128 + 10;
-  resp = resp*(50 - 10)/128 + 10;
 
   // warnings
   if (temp <= 361/1.05 || temp >= 397) // check if out of warning range

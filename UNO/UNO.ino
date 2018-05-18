@@ -50,7 +50,6 @@ int rrcount = 0;
 float prfreq = 0;
 float rrfreq = 0;
 
-unsigned char cuffInflation;
 unsigned long lastTime = 0;
 unsigned long lastFreqtime = 0;
 void loop()
@@ -102,7 +101,7 @@ void loop()
   }
   
   Serial.write(startOfMessage);
-  Serial.write(cuffInflation);
+  Serial.write(taskIdentifier);
   Serial.write(functionName);
   Serial.write((char) data);
   Serial.write(endOfMessage);
@@ -125,8 +124,6 @@ int sampleFreq(int pin, int high, int *count){
 }
 
 void Measure () {
-  float cuffButton = analogRead(4);
-  float cuffSwitch = analogRead(5);
   if (cuffButton < 200) {
     if ((cuffSwitch < 200) && (cuffInflation > 0))
       cuffInflation--;
@@ -135,12 +132,12 @@ void Measure () {
   }
   
   measureHelperTemp(pinTemp, temperatureRawBuf, &tRawId);
-  measureHelper(pinPulse, pulseRateRawBuf, &prRawId, 0.5, 2, prfreq);
-  measureHelper(pinResp, respRateRawBuf, &rrRawId, 0.2, 0.5, rrfreq);
+  measureHelper(pinPulse, pulseRateRawBuf, &prRawId, prfreq);
+  measureHelper(pinResp, respRateRawBuf, &rrRawId, rrfreq);
 }
 
-void measureHelper(int pin, unsigned int* buf, unsigned int* index, float minvalue, float maxvalue, float freq) {
-  unsigned int val = (freq - minvalue)*127/(maxvalue-minvalue);
+void measureHelper(int pin, unsigned int* buf, unsigned int* index, float freq) {
+  unsigned int val = freq*60;
   
   unsigned int dif;
   if (buf[*index] > val) 
