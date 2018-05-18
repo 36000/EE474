@@ -28,6 +28,10 @@ void Compute (void* data) {
       prCorrId++; prCorrId %= 8;
       itoa(computeData->pulseRateCorrectedBuf, 8 + 3 * computeData->pulseRateRawBuf[prRawId], prCorrId * 3);   
       return;    
+    case RESP:
+      rrCorrId++; rrCorrId %= 8;
+      itoa(computeData->respRateCorrectedBuf, 8 + 3 * computeData->respRateRawBuf[rrRawId], rrCorrId * 3);   
+      return;
     default:
       return;
   }

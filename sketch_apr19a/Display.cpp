@@ -94,7 +94,7 @@ void Display (void* data) {
      case BLOOD1:
         measType = "Syst Pres: ";
         units = " mm Hg\n";
-        warning = bpHigh;
+        warning = bpHigh1;
         for (int i = 0; i < 3; i++)
           values[i] = (char) displayData->bloodPressCorrectedBuf[bp1CorrId * 3 + i];
         values[3] = ' ';
@@ -102,7 +102,7 @@ void Display (void* data) {
      case BLOOD2:
         measType = "Dias Pres: ";
         units = " mm Hg\n";
-        warning = bpHigh;
+        warning = bpHigh2;
         for (int i = 0; i < 3; i++)
           values[i] = (char) displayData->bloodPressCorrectedBuf[bp2CorrId * 3 + i + 8 * 3];
         values[3] = ' ';
@@ -118,9 +118,10 @@ void Display (void* data) {
      case RESP:
         measType = "Resp Rate: ";
         units = " RR\n";
-        warning = TRUE;
-        for (int i = 0; i < 4; i++)
-          values[i] = ' '; 
+        warning = respLow;
+        for (int i = 0; i < 3; i++)
+          values[i] = (char) displayData->respRateCorrectedBuf[rrCorrId * 3 + i];
+        values[3] = ' ';
         break;
      default:
         measType = "ERROR";

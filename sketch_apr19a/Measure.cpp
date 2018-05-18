@@ -18,7 +18,10 @@ void Measure (void* data) {
       break;
     case PULSE:
       prRawId++; prRawId %= 8;
-      break;   
+      break;
+    case RESP:
+      rrRawId++; rrRawId %= 8;
+      break;
     default:
       return;
   }

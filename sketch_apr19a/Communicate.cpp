@@ -40,7 +40,10 @@ void Communicate(void* data) {
       break;
     case PULSE:
       communicateData->pulseRateRawBuf[prRawId] = (unsigned int) Serial1.read();
-      break;   
+      break; 
+    case RESP:
+      communicateData->respRateRawBuf[rrRawId] = (unsigned int) Serial1.read();
+      break;  
     default:
       return;
   }

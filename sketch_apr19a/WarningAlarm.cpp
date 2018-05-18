@@ -29,9 +29,9 @@ void WarningAlarm (void* data) {
     bpOutOfRange = 0; // indicate alarm has not been thrown yet
   }
   if (sysPress >= 0) // check if out of warning range
-    bpHigh = TRUE;
+    bpHigh1 = TRUE;
   else
-    bpHigh = FALSE;
+    bpHigh1 = FALSE;
 
   //end syspress example
 

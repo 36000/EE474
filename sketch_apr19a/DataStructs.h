@@ -6,9 +6,11 @@
 extern unsigned long startingTime;
 extern unsigned long systemTimeBase;
 
-extern Bool bpHigh;
+extern Bool bpHigh1;
+extern Bool bpHigh2;
 extern Bool tempHigh;
 extern Bool pulseLow;
+extern Bool respLow;
 
 extern Bool batteryLow;
 extern Bool batteryDead;
@@ -16,6 +18,7 @@ extern Bool batteryDead;
 extern unsigned char bpOutOfRange;
 extern unsigned char tempOutOfRange;
 extern unsigned char pulseOutOfRange;
+extern unsigned char respOutOfRange;
 
 typedef struct TCB TCB;
 typedef struct TCB_ll TCB_ll;
@@ -37,12 +40,13 @@ struct TCB {
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 typedef enum {MEAS, ANUN} menu;
 
-extern unsigned int tRawId, bp1RawId, bp2RawId, prRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId;
+extern unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId, rrCorrId;
 
 typedef struct {
   unsigned int* temperatureRawBuf;
   unsigned int* bloodPressRawBuf;
   unsigned int* pulseRateRawBuf;
+  unsigned int* respRateRawBuf;
   dt* measurementSelection;
 } MeasureData;
 
@@ -59,9 +63,11 @@ typedef struct {
   unsigned int* temperatureRawBuf;
   unsigned int* bloodPressRawBuf;
   unsigned int* pulseRateRawBuf;
+  unsigned int* respRateRawBuf;
   unsigned char* tempCorrectedBuff;
   unsigned char* bloodPressCorrectedBuf;
   unsigned char* pulseRateCorrectedBuf;
+  unsigned char* respRateCorrectedBuf;
   dt* measurementSelection;
 } ComputeData;
 
@@ -71,6 +77,7 @@ typedef struct {
   unsigned char* tempCorrectedBuff;
   unsigned char* bloodPressCorrectedBuf;
   unsigned char* pulseRateCorrectedBuf;
+  unsigned char* respRateCorrectedBuf;
   unsigned short* batteryState;
 } DisplayData;
 
@@ -78,6 +85,7 @@ typedef struct {
   unsigned int* temperatureRawBuf;
   unsigned int* bloodPressRawBuf;
   unsigned int* pulseRateRawBuf;
+  unsigned int* respRateRawBuf;
   unsigned short* batteryState;
   dt* alarmAcknowledge;
 } WarningAlarmData;

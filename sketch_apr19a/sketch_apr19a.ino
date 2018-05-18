@@ -21,9 +21,11 @@ Elegoo_GFX_Button buttons[15];
 char buttonlabels[5][5] = {"^", "v", "<", ">", "SEL"};
                              
 // warning / alarms
-Bool bpHigh;
+Bool bpHigh1;
+Bool bpHigh2;
 Bool tempHigh;
 Bool pulseLow;
+Bool respLow;
 Bool batteryLow;
 Bool batteryDead;
 
@@ -36,21 +38,24 @@ menu Menu;
 unsigned char bpOutOfRange;
 unsigned char tempOutOfRange;
 unsigned char pulseOutOfRange;
+unsigned char respOutOfRange;
 
 unsigned long systemTimeBase;
 unsigned long startingTime;
 
 static TCB taskList[6];
 
-unsigned int tRawId, bp1RawId, bp2RawId, prRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId;
+unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId, rrCorrId;
 
 static unsigned int temperatureRawBuf[8];
 static unsigned int bloodPressRawBuf[16];
 static unsigned int pulseRateRawBuf[8];
+static unsigned int respRateRawBuf[8];
 
 static unsigned char tempCorrectedBuff[8 * 3];
 static unsigned char bloodPressCorrectedBuf[16 * 3];
 static unsigned char pulseRateCorrectedBuf[8 * 3];
+static unsigned char respRateCorrectedBuf[8 * 3];
 
 static unsigned short batteryState;
 
@@ -79,27 +84,32 @@ void setup() {
   startingTime = millis();
   systemTimeBase = 0;
 
-  bpHigh = FALSE;
+  bpHigh1 = FALSE;
+  bpHigh2 = FALSE;
   tempHigh = FALSE;
   pulseLow = FALSE;
+  respLow = FALSE;
   batteryLow = FALSE;
   batteryDead = FALSE;
 
   bpOutOfRange = 0;
   tempOutOfRange = 0;
   pulseOutOfRange = 0;
+  respOutOfRange = 0;
 
-  tRawId = bp1RawId = bp2RawId = prRawId = tCorrId = bp1CorrId = bp2CorrId = prCorrId = 0;
+  tRawId = bp1RawId = bp2RawId = prRawId = rrRawId = tCorrId = bp1CorrId = bp2CorrId = prCorrId = rrCorrId = 0;
 
   temperatureRawBuf[0] = 75;
   bloodPressRawBuf[0] = 80;
   bloodPressRawBuf[8] = 80;
   pulseRateRawBuf[0] = 50;
+  respRateRawBuf[0] = 50;
 
   tempCorrectedBuff[0] = tempCorrectedBuff[1] = tempCorrectedBuff[2] = '0';
   bloodPressCorrectedBuf[0] = bloodPressCorrectedBuf[1] = bloodPressCorrectedBuf[2] = '0';
   bloodPressCorrectedBuf[8 * 3 + 0] =  bloodPressCorrectedBuf[8 * 3 + 1] = bloodPressCorrectedBuf[8 * 3 + 2] = '0';
   pulseRateCorrectedBuf[0] = pulseRateCorrectedBuf[1] = pulseRateCorrectedBuf[2] = '0';
+  respRateCorrectedBuf[0] = respRateCorrectedBuf[1] = respRateCorrectedBuf[2] = '0';
 
   batteryState = 200;
 
@@ -109,29 +119,29 @@ void setup() {
   measureData.temperatureRawBuf = temperatureRawBuf;
   measureData.bloodPressRawBuf = bloodPressRawBuf;
   measureData.pulseRateRawBuf = pulseRateRawBuf;
+  measureData.respRateRawBuf = respRateRawBuf;
   measureData.measurementSelection = &measurementSelection;
 
   computeData.temperatureRawBuf = temperatureRawBuf;
   computeData.bloodPressRawBuf = bloodPressRawBuf;
   computeData.pulseRateRawBuf = pulseRateRawBuf;
+  computeData.respRateRawBuf = respRateRawBuf;
   computeData.measurementSelection = &measurementSelection;
-
-  computeData.temperatureRawBuf = temperatureRawBuf;
-  computeData.bloodPressRawBuf = bloodPressRawBuf;
-  computeData.pulseRateRawBuf = pulseRateRawBuf;
   computeData.tempCorrectedBuff = tempCorrectedBuff;
   computeData.bloodPressCorrectedBuf = bloodPressCorrectedBuf;
   computeData.pulseRateCorrectedBuf = pulseRateCorrectedBuf;
-  computeData.measurementSelection = &measurementSelection;
+  computeData.respRateCorrectedBuf = respRateCorrectedBuf;
 
   displayData.tempCorrectedBuff = tempCorrectedBuff;
   displayData.bloodPressCorrectedBuf = bloodPressCorrectedBuf;
   displayData.pulseRateCorrectedBuf = pulseRateCorrectedBuf;
+  displayData.respRateCorrectedBuf = respRateCorrectedBuf;
   displayData.batteryState = &batteryState;
 
   warningAlarmData.temperatureRawBuf = temperatureRawBuf;
   warningAlarmData.bloodPressRawBuf = bloodPressRawBuf;
   warningAlarmData.pulseRateRawBuf = pulseRateRawBuf;
+  warningAlarmData.respRateRawBuf = respRateRawBuf;
   warningAlarmData.batteryState = &batteryState;
   warningAlarmData.alarmAcknowledge = &alarmAcknowledge;
 
