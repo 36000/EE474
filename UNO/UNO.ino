@@ -43,10 +43,30 @@ void setup()
 
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 
+int prhigh = 0;
+int rrhigh = 0;
+int prcount = 0;
+int rrcount = 0;
+float prfreq = 0;
+float rrfreq = 0;
+
 unsigned long lastTime = 0;
+unsigned long lastFreqtime = 0;
 void loop()
 {
   unsigned long currentTime = millis();
+
+  prhigh = sampleFreq(pinPulse, prhigh, &prcount);
+  rrhigh = sampleFreq(pinResp, rrhigh, &rrcount);
+
+  if (currentTime - lastFreqtime > 5000) {
+    prcount = 0;
+    rrcount = 0;
+    prfreq = ((float) prcount) / 5;
+    rrfreq = ((float) rrcount) / 5;
+    lastFreqtime = currentTime;
+  }
+  
   if (currentTime - lastTime > 500) {
     Measure();
     lastTime = currentTime;
@@ -86,19 +106,30 @@ void loop()
   Serial.write(endOfMessage);
 }
 
-void Measure () {
-  measureHelperTemp(pinTemp, temperatureRawBuf, &tRawId);
-  measureHelper(pinPulse, pulseRateRawBuf, &prRawId);
-  measureHelper(pinResp, respRateRawBuf, &rrRawId);
+// range of 0.5 to 2 hertz
+// range of 0.2 to 0.5 hertz
+int sampleFreq(int pin, int high, int *count){
+  float valf = analogRead(pin);
+  if (high && valf < 200) {
+    return 0;
+  }
+
+  if (!high && valf > 800) {
+    (*count)++;
+    return 1;
+  }
+
+  return high;
 }
 
-void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
-  /*unsigned int val = meter.getFrequency();
+void Measure () {
+  measureHelperTemp(pinTemp, temperatureRawBuf, &tRawId);
+  measureHelper(pinPulse, pulseRateRawBuf, &prRawId, 0.5, 2, prfreq);
+  measureHelper(pinResp, respRateRawBuf, &rrRawId, 0.2, 0.5, rrfreq);
+}
 
-  
-
-  val /= 8;*/
-  unsigned int val = 0;
+void measureHelper(int pin, unsigned int* buf, unsigned int* index, float minvalue, float maxvalue, float freq) {
+  unsigned int val = (freq - minvalue)*127/(maxvalue-minvalue);
   
   unsigned int dif;
   if (buf[*index] > val) 
@@ -115,7 +146,7 @@ void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
 void measureHelperTemp(int pin, unsigned int* buf, unsigned int* index) {
   float valf = analogRead(pin);
 
-  valf*=32;
+  valf/=8;
 
   unsigned int val = (unsigned int) valf;
   
