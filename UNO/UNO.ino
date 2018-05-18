@@ -39,7 +39,7 @@ unsigned long lastTime = 0;
 void loop()
 {
   unsigned long currentTime = millis();
-  if (currentTime - lastTime > 5000) {
+  if (currentTime - lastTime > 500) {
     Measure();
     lastTime = currentTime;
   }
@@ -94,7 +94,7 @@ void measureHelper(int pin, unsigned int* buf, unsigned int* index) {
     dif = (val - buf[*index])*100/buf[*index];
 
   if (dif > 15) {
-    *index++;
+    (*index)++;
     buf[*index] = val;
   }
 }
