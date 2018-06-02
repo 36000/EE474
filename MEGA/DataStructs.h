@@ -25,7 +25,7 @@ extern Bool keypadFlag;
 extern Bool batteryLow;
 extern Bool batteryDead;
 
-extern unsigned int debounce;
+extern unsigned long debounce;
 extern unsigned char cuffInflation;
 
 extern unsigned char bpOutOfRange;

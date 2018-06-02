@@ -37,7 +37,7 @@ Bool warningAlarmFlag;
 Bool statusFlag = TRUE;
 Bool keypadFlag = TRUE;
 
-unsigned int debounce = 0;
+unsigned long debounce;
 
 unsigned char cuffInflation;
 
@@ -95,6 +95,7 @@ void setup() {
 
   startingTime = millis();
   systemTimeBase = 0;
+  debounce = 0;
 
   bpHigh1 = FALSE;
   bpHigh2 = FALSE;

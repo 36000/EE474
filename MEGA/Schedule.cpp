@@ -8,7 +8,7 @@ unsigned long systemTimeBaseOld[1];
 void Schedule(TCB* taskList) {
   systemTimeBase = (millis() - startingTime) / 1000;
 
-  if (keypadFlag == FALSE && millis() - 250 > debounce) {
+  if (keypadFlag == FALSE && millis() > debounce + 300) {
     debounce = 0;
     keypadFlag = TRUE;
   }
