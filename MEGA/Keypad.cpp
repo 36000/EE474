@@ -84,7 +84,8 @@ void Keypad (void* data) {
           default:
             break;
         }
-        delay(300); // UI debouncing
+        keypadFlag = FALSE;
+        debounce = millis();
     }
   }
 }

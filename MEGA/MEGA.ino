@@ -37,6 +37,8 @@ Bool warningAlarmFlag;
 Bool statusFlag = TRUE;
 Bool keypadFlag = TRUE;
 
+unsigned int debounce = 0;
+
 unsigned char cuffInflation;
 
 TCB_ll ll;

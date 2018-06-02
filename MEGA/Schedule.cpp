@@ -8,6 +8,11 @@ unsigned long systemTimeBaseOld[1];
 void Schedule(TCB* taskList) {
   systemTimeBase = (millis() - startingTime) / 1000;
 
+  if (keypadFlag == FALSE && millis() - 250 > debounce) {
+    debounce = 0;
+    keypadFlag = TRUE;
+  }
+
   if (systemTimeBase > systemTimeBaseOld[0]) {
     systemTimeBaseOld[0] = systemTimeBase;
   } else {
