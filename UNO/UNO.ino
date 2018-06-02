@@ -76,7 +76,6 @@ void loop()
   char taskIdentifier = Serial.read();
   char functionName = Serial.read();
   Serial.read(); // not needed
-  Serial.read(); // not needed
   if (Serial.read() != endOfMessage)
     Serial.print("Message Validation Error");
 
