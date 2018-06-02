@@ -46,7 +46,7 @@ void Communicate(void* data) {
   
     Serial1.read();
   
-    switch (*communicateData->measurementSelection) {
+    switch (select) {
       case NONE:
         Serial1.read();
         break;

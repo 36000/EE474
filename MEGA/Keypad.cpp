@@ -72,7 +72,7 @@ void Keypad (void* data) {
             break;
           case 4:
             if (Menu == MEAS) {
-              insert(&dataList[(int) menuMeas], &llData);
+              insert(&dataList[menuMeas], &llData);
               measureFlag = TRUE;
               computeFlag = TRUE;
               warningAlarmFlag = TRUE;
