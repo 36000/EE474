@@ -42,6 +42,7 @@ unsigned long debounce;
 unsigned char cuffInflation;
 
 TCB_ll llTCB;
+TCB_ll llData;
 
 // which menu are we in?
 dt menuMeas;
@@ -56,6 +57,8 @@ unsigned long systemTimeBase;
 unsigned long startingTime;
 
 static TCB taskList[6];
+TCB dataList[6];
+static dt data[6];
 
 unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId, rrCorrId;
 
@@ -92,6 +95,8 @@ void setup() {
   
   llTCB.head = NULL;
   llTCB.tail = NULL;
+  llData.head = NULL;
+  llData.tail = NULL;
 
   startingTime = millis();
   systemTimeBase = 0;
@@ -169,6 +174,14 @@ void setup() {
 
   keypadData.measurementSelection = &measurementSelection;
   keypadData.alarmAcknowledge = &alarmAcknowledge;
+
+  for (int i = 0; i < 6; i++) {
+    data[i] = (dt) i;
+    dataList[i].taskDataPtr = &data[i];
+    dataList[i].next = NULL;
+    dataList[i].prev = NULL;
+    dataList[i].myTask = NULL;
+  }
 
   taskList[0].taskDataPtr = &measureData;
   taskList[1].taskDataPtr = &computeData;

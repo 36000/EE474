@@ -36,6 +36,11 @@ extern unsigned char respOutOfRange;
 typedef struct TCB TCB;
 typedef struct TCB_ll TCB_ll;
 extern TCB_ll llTCB;
+extern TCB_ll llData;
+extern TCB dataList[6];
+
+void del(TCB* node, TCB_ll* ll);
+void insert(TCB* node, TCB_ll* ll);
 
 struct TCB_ll {
   TCB* head;
@@ -70,7 +75,6 @@ typedef MeasureData CommunicateData; // they are the same
 
 extern dt menuMeas;
 extern menu Menu;
-
 
 typedef struct {
   unsigned int* temperatureRawBuf;
