@@ -80,7 +80,7 @@ void Keypad (void* data) {
           default:
             break;
         }
-        delay(100); // UI debouncing
+        delay(500); // UI debouncing
     }
   }
 }
