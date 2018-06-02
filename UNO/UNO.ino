@@ -13,6 +13,7 @@ static unsigned int respRateRawBuf[8];
 const char startOfMessage = 0x2A;
 
 Bool commError;
+Bool cuffDeflatingRapidly;
 
 const char pinTemp = 3;
 const char pinPulse = 0;
@@ -42,6 +43,7 @@ void setup()
   respRateRawBuf[0] = 0;
 
   commError = FALSE;
+  cuffDeflatingRapidly = FALSE;
 }
 
 int prcount = 0;
@@ -114,11 +116,22 @@ void loop()
 void Measure () {
   float cuffButton = analogRead(4);
   float cuffSwitch = analogRead(5);
-  if (cuffButton < 200) {
+  
+  if(cuffDeflatingRapidly && cuffInflation > 0)
+    cuffInflation--;
+  
+  if(cuffInflation == 0)
+    cuffDeflatingRapidly = FALSE;
+    
+  if (cuffButton < 200 && !cuffDeflatingRapidly) {
     if ((cuffSwitch < 200) && (cuffInflation > 0))
       cuffInflation--;
-    else if ((cuffSwitch >= 200) && (cuffInflation < 10))
+    else if ((cuffSwitch >= 200) && (cuffInflation < 10)){
       cuffInflation++;
+      if(cuffInflation == 10){
+        cuffDeflatingRapidly = TRUE;
+      }
+    }
   }
 
   measureHelper(pinTemp, temperatureRawBuf, &tRawId);
