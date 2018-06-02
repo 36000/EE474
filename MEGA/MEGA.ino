@@ -32,16 +32,16 @@ Bool batteryDead;
 // scheduler flags
 Bool measureFlag;
 Bool computeFlag;
-Bool displayFlag = TRUE;
+Bool displayFlag;
 Bool warningAlarmFlag;
-Bool statusFlag = TRUE;
-Bool keypadFlag = TRUE;
+Bool statusFlag;
+Bool keypadFlag;
 
-unsigned int debounce = 0;
+unsigned long debounce;
 
 unsigned char cuffInflation;
 
-TCB_ll ll;
+TCB_ll llTCB;
 
 // which menu are we in?
 dt menuMeas;
@@ -90,11 +90,19 @@ void setup() {
   menuMeas = TEMP;
   Menu = MEAS;
   
-  ll.head = NULL;
-  ll.tail = NULL;
+  llTCB.head = NULL;
+  llTCB.tail = NULL;
 
   startingTime = millis();
   systemTimeBase = 0;
+  debounce = 0;
+
+  measureFlag = FALSE;
+  computeFlag = FALSE;
+  displayFlag = TRUE;
+  warningAlarmFlag = FALSE;
+  statusFlag = TRUE;
+  keypadFlag = TRUE;
 
   bpHigh1 = FALSE;
   bpHigh2 = FALSE;
