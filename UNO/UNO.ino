@@ -39,13 +39,8 @@ void setup()
   respRateRawBuf[0] = 0;
 }
 
-void incrementPulse() {
-  prcount++;
-}
-
-void incrementResp() {
-  rrcount++;
-}
+void incrementPulse() { prcount++; }
+void incrementResp() { rrcount++; }
 
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 
