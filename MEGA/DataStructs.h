@@ -35,7 +35,7 @@ extern unsigned char respOutOfRange;
 
 typedef struct TCB TCB;
 typedef struct TCB_ll TCB_ll;
-extern TCB_ll ll;
+extern TCB_ll llTCB;
 
 struct TCB_ll {
   TCB* head;
@@ -111,6 +111,11 @@ typedef struct {
   dt* measurementSelection;
   dt* alarmAcknowledge;
 } KeypadData;
+
+typedef struct {
+  dt* measurementSelection;
+  dt* alarmAcknowledge;
+} remoteCommData;
 
 #endif // _DATA_STRUCTS_H_
 

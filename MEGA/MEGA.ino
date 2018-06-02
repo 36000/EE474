@@ -41,7 +41,7 @@ unsigned long debounce;
 
 unsigned char cuffInflation;
 
-TCB_ll ll;
+TCB_ll llTCB;
 
 // which menu are we in?
 dt menuMeas;
@@ -90,8 +90,8 @@ void setup() {
   menuMeas = TEMP;
   Menu = MEAS;
   
-  ll.head = NULL;
-  ll.tail = NULL;
+  llTCB.head = NULL;
+  llTCB.tail = NULL;
 
   startingTime = millis();
   systemTimeBase = 0;

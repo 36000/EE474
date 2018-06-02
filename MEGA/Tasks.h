@@ -16,7 +16,7 @@ void Keypad(void* data);
 
 void Schedule (TCB* taskList);
 
-void del(TCB* node);
-void insert(TCB* node);
+void del(TCB* node, TCB_ll* ll);
+void insert(TCB* node, TCB_ll* ll);
 
 #endif // _SCHEDULE_H_
