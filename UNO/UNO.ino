@@ -1,5 +1,7 @@
 #include "Boolean.h"
 
+#define endOfMessage 0x4B
+
 unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId;
 
 static unsigned int temperatureRawBuf[8];
@@ -9,7 +11,8 @@ static unsigned int pulseRateRawBuf[8];
 static unsigned int respRateRawBuf[8];
 
 const char startOfMessage = 0x2A;
-const char endOfMessage = 0x4B;
+
+Bool commError;
 
 const char pinTemp = 3;
 const char pinPulse = 0;
@@ -37,6 +40,8 @@ void setup()
   bloodPress2RawBuf[0] = 0;
   pulseRateRawBuf[0] = 0;
   respRateRawBuf[0] = 0;
+
+  commError = FALSE;
 }
 
 int prcount = 0;
@@ -77,7 +82,7 @@ void loop()
   char functionName = Serial.read();
   Serial.read(); // not needed
   if (Serial.read() != endOfMessage)
-    Serial.print("Message Validation Error");
+    commError = TRUE;
 
   char data = 0;
   switch (taskIdentifier) { //NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP
