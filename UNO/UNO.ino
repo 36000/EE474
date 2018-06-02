@@ -28,7 +28,7 @@ void setup()
   Serial.begin(9600);
 
   attachInterrupt(pinPulse, incrementPulse, RISING);
-  attachInterrupt(respPulse, incrementResp, RISING);
+  attachInterrupt(pinResp, incrementResp, RISING);
 
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
@@ -39,15 +39,15 @@ void setup()
   respRateRawBuf[0] = 0;
 }
 
-void incrementPulse() { prcount++; }
-void incrementResp() { rrcount++; }
-
-typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
-
 int prcount = 0;
 int rrcount = 0;
 int prfreq = 0;
 int rrfreq = 0;
+
+void incrementPulse() { prcount++; }
+void incrementResp() { rrcount++; }
+
+typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 
 unsigned char cuffInflation;
 unsigned long lastTime = 0;
