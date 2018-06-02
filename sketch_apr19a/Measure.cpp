@@ -1,4 +1,3 @@
-#include "Communicate.h"
 #include "DataStructs.h"
 
 void Measure (void* data) {

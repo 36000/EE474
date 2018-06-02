@@ -3,6 +3,8 @@
 
 #include "Boolean.h"
 
+void Communicate(void* data); // for measure
+
 extern unsigned long startingTime;
 extern unsigned long systemTimeBase;
 
