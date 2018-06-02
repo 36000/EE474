@@ -27,10 +27,8 @@ void setup()
   // start serial port at 9600 bps and wait for serial port on the uno to open:
   Serial.begin(9600);
 
-  /*meterp.setBandwidth(0, 4);
-    meterp.begin(pinPulse, 20);
-    meterr.setBandwidth(0, 4);
-    meterr.begin(pinResp, 20);  */
+  attachInterrupt(pinPulse, incrementPulse, RISING);
+  attachInterrupt(respPulse, incrementResp, RISING);
 
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
@@ -41,10 +39,16 @@ void setup()
   respRateRawBuf[0] = 0;
 }
 
+void incrementPulse() {
+  prcount++;
+}
+
+void incrementResp() {
+  rrcount++;
+}
+
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 
-int prhigh = 0;
-int rrhigh = 0;
 int prcount = 0;
 int rrcount = 0;
 int prfreq = 0;
@@ -57,14 +61,9 @@ void loop()
 {
   unsigned long currentTime = millis();
 
-  prhigh = sampleFreq(pinPulse, prhigh, &prcount);
-  rrhigh = sampleFreq(pinResp, rrhigh, &rrcount);
-
   if (currentTime - lastFreqtime > 5000) {
     prfreq = prcount;
     rrfreq = rrcount;
-    prhigh = 0;
-    rrhigh = 0;
     prcount = 0;
     rrcount = 0;
     lastFreqtime = currentTime;
@@ -83,7 +82,8 @@ void loop()
   char functionName = Serial.read();
   Serial.read(); // not needed
   Serial.read(); // not needed
-  Serial.read();
+  if (Serial1.read() != endOfMessage)
+    Serial.print("Message Validation Error");
 
   char data = 0;
   switch (taskIdentifier) { //NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP
@@ -110,22 +110,6 @@ void loop()
   Serial.write(functionName);
   Serial.write((char) data);
   Serial.write(endOfMessage);
-}
-
-// range of 0.5 to 2 hertz
-// range of 0.2 to 0.5 hertz
-int sampleFreq(int pin, int high, int *count) {
-  float valf = analogRead(pin);
-  if (high && valf < 200) {
-    return 0;
-  }
-
-  if (!high && valf > 800) {
-    (*count)++;
-    return 1;
-  }
-
-  return high;
 }
 
 void Measure () {
