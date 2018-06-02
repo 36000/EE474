@@ -73,8 +73,12 @@ void Keypad (void* data) {
           case 4:
             if (Menu == MEAS) {
               *keypadData->measurementSelection = menuMeas;
+              measureFlag = TRUE;
+              computeFlag = TRUE;
+              warningAlarmFlag = TRUE;
             } else {
               *keypadData->alarmAcknowledge = menuMeas;
+              warningAlarmFlag = TRUE;
             }
             break;
           default:

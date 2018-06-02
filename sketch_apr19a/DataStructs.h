@@ -12,6 +12,14 @@ extern Bool tempHigh;
 extern Bool pulseLow;
 extern Bool respLow;
 
+extern Bool measureFlag;
+extern Bool computeFlag;
+extern Bool displayFlag;
+extern Bool warningAlarmFlag;
+extern Bool statusFlag;
+extern Bool keypadFlag;
+
+
 extern Bool batteryLow;
 extern Bool batteryDead;
 

@@ -11,12 +11,23 @@ void Schedule(TCB* taskList) {
   if (systemTimeBase > systemTimeBaseOld[0]) {
     systemTimeBaseOld[0] = systemTimeBase;
   } else {
-    taskList[5].myTask(taskList[5].taskDataPtr);
+    if (keypadFlag == TRUE)
+      taskList[5].myTask(taskList[5].taskDataPtr);
     return;
   }
-
+  
+  if (measureFlag == TRUE)
+    insert(&taskList[0]);
+  if (computeFlag == TRUE)
+    insert(&taskList[1]);
+  if (displayFlag == TRUE)
+    insert(&taskList[2]);
+  if (warningAlarmFlag == TRUE)
+    insert(&taskList[3]);
+  if (statusFlag == TRUE)
+    insert(&taskList[4]);
+    
   TCB* current = ll.head;
-
   do {
     current->myTask(current->taskDataPtr);
     /*Serial.println(computeData.temperatureRawBuf[tRawId]);
@@ -31,6 +42,27 @@ void Schedule(TCB* taskList) {
     Serial.println();*/
   }
   while ((current = current->next) != NULL);
+
+  if (measureFlag == TRUE) {
+    del(&taskList[0]);
+    measureFlag = FALSE;
+  }
+  if (computeFlag == TRUE) {
+    del(&taskList[1]);
+    computeFlag = FALSE;
+  }
+  if (displayFlag == TRUE) {
+    del(&taskList[2]);
+    displayFlag = FALSE;
+  }
+  if (warningAlarmFlag == TRUE) {
+    del(&taskList[3]);
+    warningAlarmFlag = FALSE;
+  }
+  if (statusFlag == TRUE) {
+    del(&taskList[4]);
+    statusFlag = FALSE;
+  }
 }
 
 void insert(TCB* node) {

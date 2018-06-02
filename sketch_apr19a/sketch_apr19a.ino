@@ -29,6 +29,14 @@ Bool respLow;
 Bool batteryLow;
 Bool batteryDead;
 
+// scheduler flags
+Bool measureFlag;
+Bool computeFlag;
+Bool displayFlag = TRUE;
+Bool warningAlarmFlag;
+Bool statusFlag = TRUE;
+Bool keypadFlag = TRUE;
+
 unsigned char cuffInflation;
 
 TCB_ll ll;
@@ -170,13 +178,6 @@ void setup() {
     taskList[i].next = NULL;
     taskList[i].prev = NULL;
   }
-  
-  insert(&taskList[5]);
-  insert(&taskList[2]);
-  insert(&taskList[3]);
-  insert(&taskList[0]);
-  insert(&taskList[1]);
-  insert(&taskList[4]);
   
   buttons[0].initButton(&tft, 160, 80, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
   buttons[1].initButton(&tft, 160, 146, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[1], BUTTON_TEXTSIZE);
