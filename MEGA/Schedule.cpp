@@ -58,7 +58,6 @@ void Schedule(TCB* taskList) {
   }
   if (displayFlag == TRUE) {
     del(&taskList[2]);
-    displayFlag = FALSE;
   }
   if (warningAlarmFlag == TRUE) {
     del(&taskList[3]);
@@ -66,7 +65,6 @@ void Schedule(TCB* taskList) {
   }
   if (statusFlag == TRUE) {
     del(&taskList[4]);
-    statusFlag = FALSE;
   }
 }
 

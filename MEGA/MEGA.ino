@@ -32,10 +32,10 @@ Bool batteryDead;
 // scheduler flags
 Bool measureFlag;
 Bool computeFlag;
-Bool displayFlag = TRUE;
+Bool displayFlag;
 Bool warningAlarmFlag;
-Bool statusFlag = TRUE;
-Bool keypadFlag = TRUE;
+Bool statusFlag;
+Bool keypadFlag;
 
 unsigned long debounce;
 
@@ -96,6 +96,13 @@ void setup() {
   startingTime = millis();
   systemTimeBase = 0;
   debounce = 0;
+
+  measureFlag = FALSE;
+  computeFlag = FALSE;
+  displayFlag = TRUE;
+  warningAlarmFlag = FALSE;
+  statusFlag = TRUE;
+  keypadFlag = TRUE;
 
   bpHigh1 = FALSE;
   bpHigh2 = FALSE;
