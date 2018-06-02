@@ -69,7 +69,8 @@ void Communicate(void* data) {
       break;
   }
   
-  Serial1.read();
+  if (Serial1.read() != END)
+    Serial.print("Message Validation Error");
 }
 
 
