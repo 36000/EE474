@@ -77,7 +77,7 @@ void loop()
   char functionName = Serial.read();
   Serial.read(); // not needed
   Serial.read(); // not needed
-  if (Serial1.read() != endOfMessage)
+  if (Serial.read() != endOfMessage)
     Serial.print("Message Validation Error");
 
   char data = 0;
