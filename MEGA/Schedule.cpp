@@ -53,14 +53,12 @@ void Schedule(TCB* taskList) {
   }
   if (computeFlag == TRUE) {
     del(&taskList[1], &llTCB);
-    computeFlag = FALSE;
   }
   if (displayFlag == TRUE) {
     del(&taskList[2], &llTCB);
   }
   if (warningAlarmFlag == TRUE) {
     del(&taskList[3], &llTCB);
-    warningAlarmFlag = FALSE;
   }
   if (statusFlag == TRUE) {
     del(&taskList[4], &llTCB);
