@@ -20,7 +20,7 @@ extern Bool displayFlag;
 extern Bool warningAlarmFlag;
 extern Bool statusFlag;
 extern Bool keypadFlag;
-
+extern Bool remoteDispFlag;
 
 extern Bool batteryLow;
 extern Bool batteryDead;
@@ -97,6 +97,8 @@ typedef struct {
   unsigned char* respRateCorrectedBuf;
   unsigned short* batteryState;
 } DisplayData;
+
+typedef DisplayData RemoteDispData; // they are the same
 
 typedef struct {
   unsigned int* temperatureRawBuf;

@@ -16,4 +16,6 @@ void Keypad(void* data);
 
 void Schedule (TCB* taskList);
 
+void RemoteDisp (void* data);
+
 #endif // _SCHEDULE_H_
