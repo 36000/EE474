@@ -8,18 +8,18 @@ unsigned long systemTimeBaseOld[1];
 void Schedule(TCB* taskList) {
   systemTimeBase = (millis() - startingTime) / 500;
 
-  if (keypadFlag == FALSE && millis() > debounce + 300) {
+  if (keypadFlag == FALSE && millis() > debounce + 250) {
     debounce = 0;
     keypadFlag = TRUE;
   }
 
-  if (systemTimeBase > systemTimeBaseOld[0]) {
+  if (keypadFlag == TRUE)
+    taskList[5].myTask(taskList[5].taskDataPtr);
+
+  if (systemTimeBase > systemTimeBaseOld[0])
     systemTimeBaseOld[0] = systemTimeBase;
-  } else {
-    if (keypadFlag == TRUE)
-      taskList[5].myTask(taskList[5].taskDataPtr);
+  else
     return;
-  }
 
   if (measureFlag == TRUE)
     insert(&taskList[0], &llTCB);
