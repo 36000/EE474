@@ -8,6 +8,8 @@ void Communicate(void* data); // for measure
 extern unsigned long startingTime;
 extern unsigned long systemTimeBase;
 
+extern int isCuffReady;
+
 extern Bool bpHigh1;
 extern Bool bpHigh2;
 extern Bool tempHigh;

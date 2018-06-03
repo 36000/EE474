@@ -92,6 +92,8 @@ void setup() {
 
   menuMeas = TEMP;
   Menu = MEAS;
+
+  isCuffReady = 0;
   
   llTCB.head = NULL;
   llTCB.tail = NULL;

@@ -6,7 +6,7 @@
 #define COMMUNICATE_ID 10
 #define END 0x4B
 
-int isCuffReady = 0;
+int isCuffReady;
 
 void Communicate(void* data) {
   CommunicateData* communicateData = (CommunicateData*) data;
