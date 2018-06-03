@@ -85,7 +85,7 @@ void Display (void* data) {
       case TEMP:
         measType = "Body Temp: ";
         units = " C\n";
-        if (systemTimeBase % 2 == 0)
+        if (systemTimeBase % 4 < 2)
           warning = tempHigh;
         else
           warning = FALSE;
@@ -119,7 +119,7 @@ void Display (void* data) {
      case PULSE:
         measType = "Pulse Rate:";
         units = " BPM\n";
-        if (systemTimeBase % 2 == 0)
+        if (systemTimeBase % 8 < 4)
           warning = pulseLow;
         else
           warning = FALSE;
