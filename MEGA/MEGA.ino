@@ -102,10 +102,10 @@ void setup() {
   systemTimeBase = 0;
   debounce = 0;
 
-  measureFlag = FALSE;
-  computeFlag = FALSE;
+  measureFlag = TRUE;
+  computeFlag = TRUE;
   displayFlag = TRUE;
-  warningAlarmFlag = FALSE;
+  warningAlarmFlag = TRUE;
   statusFlag = TRUE;
   keypadFlag = TRUE;
 

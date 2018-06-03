@@ -72,8 +72,10 @@ void Keypad (void* data) {
             break;
           case 4:
             if (Menu == MEAS) {
-              insert(&dataList[menuMeas], &llData);
-              Serial.print('c');
+              if(check(&dataList[menuMeas], &llData))
+                del(&dataList[menuMeas], &llData);
+              else
+                insert(&dataList[menuMeas], &llData);
               measureFlag = TRUE;
               computeFlag = TRUE;
               warningAlarmFlag = TRUE;

@@ -6,7 +6,7 @@
 unsigned long systemTimeBaseOld[1];
 
 void Schedule(TCB* taskList) {
-  systemTimeBase = (millis() - startingTime) / 1000;
+  systemTimeBase = (millis() - startingTime) / 500;
 
   if (keypadFlag == FALSE && millis() > debounce + 300) {
     debounce = 0;
@@ -21,21 +21,19 @@ void Schedule(TCB* taskList) {
     return;
   }
 
-  if (displayFlag == TRUE)
-    insert(&taskList[2], &llTCB);
+  if (measureFlag == TRUE)
+    insert(&taskList[0], &llTCB);
   if (computeFlag == TRUE)
     insert(&taskList[1], &llTCB);
-  if (measureFlag == TRUE){
-    Serial.print('d');
-    insert(&taskList[0], &llTCB);}
   if (warningAlarmFlag == TRUE)
     insert(&taskList[3], &llTCB);
+  if (displayFlag == TRUE)
+    insert(&taskList[2], &llTCB);
   if (statusFlag == TRUE)
     insert(&taskList[4], &llTCB);
     
   TCB* current = llTCB.head;
   do {
-    Serial.print('e');
     current->myTask(current->taskDataPtr);
     /*Serial.println(computeData.temperatureRawBuf[tRawId]);
     /Serial.println(computeData.bloodPressRawBuf[bp1RawId]);
@@ -49,11 +47,9 @@ void Schedule(TCB* taskList) {
     Serial.println();*/
   }
   while ((current = current->next) != NULL);
-  Serial.println('l');
   
   if (measureFlag == TRUE) {
     del(&taskList[0], &llTCB);
-    measureFlag = FALSE;
   }
   if (computeFlag == TRUE) {
     del(&taskList[1], &llTCB);
@@ -71,14 +67,19 @@ void Schedule(TCB* taskList) {
   }
 }
 
-void insert(TCB* node, TCB_ll* ll) {
+bool check(TCB* node, TCB_ll* ll) {
   TCB* current = ll->head;
   while (current != NULL) {
-    Serial.print('k');
     if (current == node) 
-      return;
+      return true;
     current = current->next;
   }
+  return false;
+}
+
+void insert(TCB* node, TCB_ll* ll) {
+  if(check(node, ll))
+    return;
   if (ll->tail == NULL || ll->head == NULL) {
     ll->head = node;
     ll->tail = node;
@@ -93,7 +94,6 @@ void insert(TCB* node, TCB_ll* ll) {
 void del(TCB* node, TCB_ll* ll) {
   TCB* current = ll->head;
   while (current != NULL) {
-    Serial.print('k');
     if (current == node) 
       break;
     current = current->next;

@@ -4,13 +4,11 @@
 void Measure (void* data) {
   MeasureData* measureData = (MeasureData*) data;
   TCB* current = llData.head;
-  Serial.print('a');
-  do {
-    Serial.print('w');
+  while(current != NULL) {
     switch (*(dt*)current->taskDataPtr) {
       case NONE:
         //Serial.print(*(dt*)current->taskDataPtr);
-        return;
+        break;
       case BLOOD1:
         bp1RawId++; bp1RawId %= 8;
         break;
@@ -30,9 +28,8 @@ void Measure (void* data) {
         //Serial.print(*(dt*)current->taskDataPtr);
         return;
     }
+    current = current->next;
   }
-  while ((current = current->next) != NULL);
 
-    Serial.print('b');
   Communicate(data);
 }

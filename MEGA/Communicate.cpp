@@ -12,10 +12,9 @@ void Communicate(void* data) {
   CommunicateData* communicateData = (CommunicateData*) data;
 
   TCB* current = llData.head;
-  do {
+  while (current != NULL) {
     char select = (char) *(dt*)current->taskDataPtr;
   
-    //Serial.println('A');
     Serial1.write(START);
     Serial1.write(select);
     Serial1.write(COMMUNICATE_ID);
@@ -73,7 +72,8 @@ void Communicate(void* data) {
     
     if (Serial1.read() != END)
       Serial.print("Message Validation Error");
-  }  while((current = current->next) != NULL);
+    current = current->next;
+  }
 }
 
 
