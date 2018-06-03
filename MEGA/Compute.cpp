@@ -10,6 +10,8 @@ void itoa(unsigned char* a, unsigned int i, unsigned int index) {
 void Compute (void* data) {
   ComputeData* computeData = (ComputeData*) data;
 
+  Serial.print('f');
+
   TCB* current = llData.head;
   do {
     switch (*(dt*)current->taskDataPtr) {
@@ -39,7 +41,7 @@ void Compute (void* data) {
         return;
     }
   } while((current = current->next) != NULL);
-  llData.head = NULL;
-  llData.tail = NULL; // reset things 
+  //llData.head = NULL;
+  //llData.tail = NULL; // reset things 
 }
 

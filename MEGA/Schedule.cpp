@@ -20,13 +20,14 @@ void Schedule(TCB* taskList) {
       taskList[5].myTask(taskList[5].taskDataPtr);
     return;
   }
-  
-  if (measureFlag == TRUE)
-    insert(&taskList[0], &llTCB);
-  if (computeFlag == TRUE)
-    insert(&taskList[1], &llTCB);
+
   if (displayFlag == TRUE)
     insert(&taskList[2], &llTCB);
+  if (computeFlag == TRUE)
+    insert(&taskList[1], &llTCB);
+  if (measureFlag == TRUE){
+    Serial.print('d');
+    insert(&taskList[0], &llTCB);}
   if (warningAlarmFlag == TRUE)
     insert(&taskList[3], &llTCB);
   if (statusFlag == TRUE)
@@ -34,6 +35,7 @@ void Schedule(TCB* taskList) {
     
   TCB* current = llTCB.head;
   do {
+    Serial.print('e');
     current->myTask(current->taskDataPtr);
     /*Serial.println(computeData.temperatureRawBuf[tRawId]);
     /Serial.println(computeData.bloodPressRawBuf[bp1RawId]);
@@ -47,7 +49,8 @@ void Schedule(TCB* taskList) {
     Serial.println();*/
   }
   while ((current = current->next) != NULL);
-
+  Serial.println('l');
+  
   if (measureFlag == TRUE) {
     del(&taskList[0], &llTCB);
     measureFlag = FALSE;
@@ -69,7 +72,14 @@ void Schedule(TCB* taskList) {
 }
 
 void insert(TCB* node, TCB_ll* ll) {
-  if (ll->tail == NULL) {
+  TCB* current = ll->head;
+  while (current != NULL) {
+    Serial.print('k');
+    if (current == node) 
+      return;
+    current = current->next;
+  }
+  if (ll->tail == NULL || ll->head == NULL) {
     ll->head = node;
     ll->tail = node;
   }
@@ -83,9 +93,10 @@ void insert(TCB* node, TCB_ll* ll) {
 void del(TCB* node, TCB_ll* ll) {
   TCB* current = ll->head;
   while (current != NULL) {
-    current = current->next;
+    Serial.print('k');
     if (current == node) 
       break;
+    current = current->next;
   }
 
   if (current == NULL)
@@ -100,6 +111,9 @@ void del(TCB* node, TCB_ll* ll) {
     ll->head = current->next;
   else
     current->prev->next = current->next;
+
+  current->prev = NULL;
+  current->next = NULL;
 }
 
 

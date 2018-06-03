@@ -73,6 +73,7 @@ void Keypad (void* data) {
           case 4:
             if (Menu == MEAS) {
               insert(&dataList[menuMeas], &llData);
+              Serial.print('c');
               measureFlag = TRUE;
               computeFlag = TRUE;
               warningAlarmFlag = TRUE;

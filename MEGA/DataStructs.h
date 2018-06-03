@@ -39,9 +39,6 @@ extern TCB_ll llTCB;
 extern TCB_ll llData;
 extern TCB dataList[6];
 
-void del(TCB* node, TCB_ll* ll);
-void insert(TCB* node, TCB_ll* ll);
-
 struct TCB_ll {
   TCB* head;
   TCB* tail;
@@ -54,6 +51,8 @@ struct TCB {
   TCB* next;
 };
 
+void del(TCB* node, TCB_ll* ll);
+void insert(TCB* node, TCB_ll* ll);
 
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 typedef enum {MEAS, ANUN} menu;

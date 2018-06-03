@@ -1,7 +1,10 @@
 #include "DataStructs.h"
+#include <arduino.h>
 
 void WarningAlarm (void* data) {
   WarningAlarmData* warningAlarmData = (WarningAlarmData*) data;
+
+  Serial.print('g');
 
   unsigned int temp = warningAlarmData->temperatureRawBuf[tRawId];
   unsigned int sysPress = warningAlarmData->bloodPressRawBuf[bp1RawId];
