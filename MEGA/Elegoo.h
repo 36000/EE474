@@ -87,11 +87,11 @@
 #define XP 9   // can be a digital pin
 
 //Touch For New ILI9341 TP
-#define TS_MINX 70
-#define TS_MAXX 920
+#define TS_MINX 110
+#define TS_MAXX 990
 
-#define TS_MINY 120
-#define TS_MAXY 900
+#define TS_MINY 135
+#define TS_MAXY 910
 // We have a status line for like, is FONA working
 #define STATUS_X 65
 #define STATUS_Y 10
