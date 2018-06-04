@@ -10,10 +10,8 @@ void Measure (void* data) {
         //Serial.print(*(dt*)current->taskDataPtr);
         break;
       case BLOOD1:
-        bp1RawId++; bp1RawId %= 8;
         break;
       case BLOOD2:
-        bp2RawId++; bp2RawId %= 8;
         break;
       case TEMP:
         tRawId++; tRawId %= 8;
