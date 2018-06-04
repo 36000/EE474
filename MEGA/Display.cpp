@@ -17,8 +17,6 @@ void Display (void* data) {
   // each character is 12 pixels wide
   //tft.fillRect(x,y,width,height,color);
 
-  tft.setCursor(0, 0);
-  tft.setTextSize(2);
 
   // When battery dies only print "Battery Dead"
   if (batteryDead) {
@@ -32,10 +30,12 @@ void Display (void* data) {
     tft.fillScreen(BLACK);
     // re-draw buttons
     for (int i = 0; i < 5; i++){
-    buttons[i].drawButton();
-  }
+      buttons[i].drawButton();
+    }
   }
 
+  tft.setCursor(0, 0);
+  tft.setTextSize(2);
   tft.setTextColor(CYAN);
   // Print header and title
   tft.print(" Pocket Doctor (TM)\n");
