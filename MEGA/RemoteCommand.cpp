@@ -6,7 +6,6 @@ void RemoteCommand (void* data) {
   char c = '\0';
 
   if (Serial.available() > 0) {
-    //Serial.println(" ");
     c = Serial.read();
     Serial.print((int) c);
     switch(c) { // I, S , P, D, M, W
@@ -40,7 +39,7 @@ void RemoteCommand (void* data) {
     }
   }
   
-  while (Serial1.available() > 0) {
+  while (Serial.available() > 0) {
     Serial.read();
   }
 }

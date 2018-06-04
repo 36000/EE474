@@ -28,8 +28,10 @@ void Schedule(TCB* taskList) {
   taskFlags[2] = taskFlags[3] = taskFlags[4] = taskFlags[7] = TRUE;
 
   for (int i = 0; i < taskNumber; i++)
-    if (taskFlags[i] == TRUE)
+    if (taskFlags[i] == TRUE) {
       insert(&taskList[i], &llTCB);
+      taskFlags[i] = FALSE;
+    }
     
   TCB* current = llTCB.head;
   do {
@@ -39,7 +41,6 @@ void Schedule(TCB* taskList) {
 
   for (int i = 0; i < taskNumber; i++) {
     del(&taskList[i], &llTCB);
-    taskFlags[i] = FALSE;
   }
 }
 
