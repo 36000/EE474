@@ -1,8 +1,33 @@
 #include "DataStructs.h"
 #include <arduino.h>
+//#include <complex>
+#include "complex.h"
+#include <stdlib.h>
+#define MAX 200
+
+using namespace std;
 
 void EKGProcess (void* data) {
-  EKGData* eKGData = (EKGData*) data;  
+  EKGData* eKGData = (EKGData*) data; 
+
+   int n = 256;  
+  double samplingStep = 0.05; // should be brought into question
+  
+  complex<double> vec[MAX];
+  cout << "specify the array" << endl;
+  for(int i = 0; i < n; i++) {
+    vec[i] = eKGData->EKGRawBuff[i];
+  }
+  FFT(vec, n, samplingStep);
+  
+  double frequency = 0.0;
+  double returnVal = 0.0;
+  double highestMagnitude = 0.0;
+  for(int j = 0; j < n; j++)
+    frequency += samplingStep;
+    double currentMag = vec[j];
+    cout << vec[j] << endl;
+  
 }
 
 /*
@@ -19,12 +44,8 @@ void EKGProcess (void* data) {
  * 
  * 
  */
-/*
-#include <iostream>
-#include <complex>
-#define MAX 200
 
-using namespace std;
+
 
 #define M_PI 3.1415926535897932384
 
@@ -94,27 +115,4 @@ void FFT(complex<double>* f, int N, double d)
     f[i] *= d; //multiplying by step
 }
 
-int main()
-{
-  int n;
-  do {
-    cout << "specify array dimension (MUST be power of 2)" << endl;
-    cin >> n;
-  } while(!check(n));
-  double d;
-  cout << "specify sampling step" << endl; //just write 1 in order to have the same results of matlab fft(.)
-  cin >> d;
-  complex<double> vec[MAX];
-  cout << "specify the array" << endl;
-  for(int i = 0; i < n; i++) {
-    cout << "specify element number: " << i << endl;
-    cin >> vec[i];
-  }
-  FFT(vec, n, d);
-  cout << "...printing the FFT of the array specified" << endl;
-  for(int j = 0; j < n; j++)
-    cout << vec[j] << endl;
-  return 0;
-}
 
-*/
