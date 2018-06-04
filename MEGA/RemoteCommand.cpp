@@ -3,7 +3,7 @@
 
 void RemoteCommand (void* data) {
   RemoteCommData* remoteCommandData = (RemoteCommData*) data;
-  if (Serial.available() > 1) {
+  if (Serial.available() > 0) {
     //Serial.println(" ");
     switch((char) Serial.read()) { // I, S , P, D, M, W
       case 'I':
@@ -36,7 +36,7 @@ void RemoteCommand (void* data) {
     }
   }
   
-  while (Serial1.available() > 1) {
+  while (Serial1.available() > 0) {
     Serial.read();
   }
 }

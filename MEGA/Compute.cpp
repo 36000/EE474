@@ -17,6 +17,7 @@ void Compute (void* data) {
       case NONE:
         return;
       case TEMP:
+        Serial.print("T ");
         tCorrId++; tCorrId %= 8;
         itoa(computeData->tempCorrectedBuff, (unsigned int) (computeData->temperatureRawBuf[tRawId]*(500 - 250)/128 + 250), tCorrId * 3);
         return;
@@ -31,10 +32,12 @@ void Compute (void* data) {
         itoa(computeData->bloodPressCorrectedBuf, (unsigned int) (computeData->bloodPressRawBuf[8 + bp2RawId]*(100 - 50)/128 + 50), bp2CorrId * 3 + 8 * 3);
         return;
       case PULSE:
+        Serial.print("P ");
         prCorrId++; prCorrId %= 8;
         itoa(computeData->pulseRateCorrectedBuf, computeData->pulseRateRawBuf[prRawId]*12, prCorrId * 3);   
         return;    
       case RESP:
+        Serial.print("R ");
         rrCorrId++; rrCorrId %= 8;
         itoa(computeData->respRateCorrectedBuf, computeData->respRateRawBuf[rrRawId]*12, rrCorrId * 3);   
         return;
