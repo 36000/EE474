@@ -7,7 +7,6 @@ void RemoteCommand (void* data) {
 
   if (Serial.available() > 0) {
     c = Serial.read();
-    Serial.print((int) c);
     switch(c) { // I, S , P, D, M, W
       case 'I':
         commSig = I;

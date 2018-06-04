@@ -4,9 +4,6 @@
 void RemoteDisp (void* data) {
   RemoteDispData* remoteDispData = (RemoteDispData*) data;
   char values[4];
-
-  if (systemTimeBase % 10 != 0)
-    return;
   
   Serial.println("\n\n\n\n");
   
