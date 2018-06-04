@@ -3,7 +3,7 @@
 
 #include "Boolean.h"
 
-#define taskNumber 10
+#define taskNumber 11
 
 void Communicate(void* data); // for measure
 
@@ -54,7 +54,10 @@ void insert(TCB* node, TCB_ll* ll);
 bool check(TCB* node, TCB_ll* ll);
 
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
+typedef enum {NON, I, S, P, M, W} sig;
 typedef enum {MEAS, ANUN} menu;
+
+extern sig commSig;
 
 extern unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId, rrCorrId;
 

@@ -81,6 +81,8 @@ static StatusData statusData;
 static KeypadData keypadData;
 static EKGData eKGData;
 
+sig commSig;
+
 void ElegooSetup();
 
 void setup() {
@@ -88,6 +90,8 @@ void setup() {
 
   menuMeas = TEMP;
   Menu = MEAS;
+
+  commSig = NON;
 
   isCuffReady = 0;
   
@@ -105,6 +109,7 @@ void setup() {
   taskFlags[0] = taskFlags[1] = FALSE;
   taskFlags[8] = FALSE;
   taskFlags[9] = FALSE;
+  taskFlags[10] = FALSE;
 
   bpHigh1 = FALSE;
   bpHigh2 = FALSE;
@@ -195,6 +200,7 @@ void setup() {
   taskList[7].taskDataPtr = &keypadData;
   taskList[8].taskDataPtr = &eKGData;
   taskList[9].taskDataPtr = &eKGData;
+  taskList[10].taskDataPtr = &keypadData;
 
   taskList[0].myTask = &Measure;
   taskList[1].myTask = &Compute;
@@ -206,6 +212,7 @@ void setup() {
   taskList[7].myTask = &RemoteCommand;
   taskList[8].myTask = &EKGCapture;
   taskList[9].myTask = &EKGProcess;
+  taskList[10].myTask = &RemoteComm;
 
   for (int i = 0; i < 6; i++) {
     taskList[i].next = NULL;
