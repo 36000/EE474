@@ -212,5 +212,9 @@ void Display (void* data) {
   tft.print("Cuff Inflation: ");
   tft.print(cuffInflation);
   tft.print("0%");
+
+  tft.fillRect(16 * 12, 14 * 16, 4 * 12, 1 * 16, BLACK);
+  tft.print("EKG Frequency:  ");
+  tft.print(displayData->EKGFreqBuff[EKGId]);
 }
 
