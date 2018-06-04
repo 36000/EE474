@@ -227,6 +227,10 @@ void setup() {
   for (int i = 0; i < 5; i++){
     buttons[i].drawButton();
   }
+
+  while (Serial.available() > 0) {
+    Serial.read();
+  }
 }
 
 
