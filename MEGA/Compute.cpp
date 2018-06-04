@@ -12,37 +12,31 @@ void Compute (void* data) {
 
   TCB* current = llData.head;
   while (current != NULL) {
-    Serial.print("x ");
     switch (*(dt*)current->taskDataPtr) {
       case NONE:
-        return;
+        break;
       case TEMP:
-        Serial.print("T ");
         tCorrId++; tCorrId %= 8;
         itoa(computeData->tempCorrectedBuff, (unsigned int) (computeData->temperatureRawBuf[tRawId]*(500 - 250)/128 + 250), tCorrId * 3);
-        return;
+        break;
       case BLOOD1:
         bp1CorrId++; bp1CorrId %= 8;
-        Serial.println(computeData->bloodPressRawBuf[bp1RawId]);
         itoa(computeData->bloodPressCorrectedBuf, (unsigned int) (computeData->bloodPressRawBuf[bp1RawId]*(150 - 100)/128 + 100), bp1CorrId * 3);
-        return;
+        break;
       case BLOOD2:
         bp2CorrId++; bp2CorrId %= 8;
-        Serial.println(computeData->bloodPressRawBuf[8 + bp2RawId]);
         itoa(computeData->bloodPressCorrectedBuf, (unsigned int) (computeData->bloodPressRawBuf[8 + bp2RawId]*(100 - 50)/128 + 50), bp2CorrId * 3 + 8 * 3);
-        return;
+        break;
       case PULSE:
-        Serial.print("P ");
         prCorrId++; prCorrId %= 8;
         itoa(computeData->pulseRateCorrectedBuf, computeData->pulseRateRawBuf[prRawId]*12, prCorrId * 3);   
-        return;    
+        break;    
       case RESP:
-        Serial.print("R ");
         rrCorrId++; rrCorrId %= 8;
         itoa(computeData->respRateCorrectedBuf, computeData->respRateRawBuf[rrRawId]*12, rrCorrId * 3);   
-        return;
+        break;
       default:
-        return;
+        break;
     }
     current = current->next;
   }
