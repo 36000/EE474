@@ -35,6 +35,11 @@ void Schedule(TCB* taskList) {
     insert(&taskList[6], &llTCB);
   if(remoteCommandFlag == TRUE)
     insert(&taskList[7], &llTCB);
+  if(EKGCaptureFlag == TRUE)
+    insert(&taskList[8], &llTCB);
+  if(EKGProcessFlag == TRUE)
+    insert(&taskList[9], &llTCB);
+
     
   TCB* current = llTCB.head;
   do {
@@ -72,6 +77,12 @@ void Schedule(TCB* taskList) {
   }
   if (remoteCommandFlag == TRUE) {
     del(&taskList[7], &llTCB);
+  }  
+  if(EKGCaptureFlag == TRUE){
+    del(&taskList[8], &llTCB);
+  }
+  if(EKGProcessFlag == TRUE){
+    del(&taskList[9], &llTCB);
   }
 }
 

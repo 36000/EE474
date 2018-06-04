@@ -38,6 +38,8 @@ Bool statusFlag;
 Bool keypadFlag;
 Bool remoteDispFlag;
 Bool remoteCommandFlag;
+Bool EKGCaptureFlag;
+Bool EKGProcessFlag;
 
 unsigned long debounce;
 
@@ -116,7 +118,9 @@ void setup() {
   statusFlag = TRUE;
   keypadFlag = TRUE;
   remoteDispFlag = TRUE;
-  remoteCommandFlag = TRUE;
+  remoteCommandFlag = TRUE;  
+  EKGCaptureFlag = FALSE;
+  EKGProcessFlag = FALSE;
 
   bpHigh1 = FALSE;
   bpHigh2 = FALSE;

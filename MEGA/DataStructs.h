@@ -24,6 +24,8 @@ extern Bool statusFlag;
 extern Bool keypadFlag;
 extern Bool remoteDispFlag;
 extern Bool remoteCommandFlag;
+extern Bool EKGCaptureFlag;
+extern Bool EKGProcessFlag;
 
 extern Bool batteryLow;
 extern Bool batteryDead;
