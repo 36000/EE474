@@ -8,12 +8,12 @@ unsigned long systemTimeBaseOld[1];
 void Schedule(TCB* taskList) {
   systemTimeBase = (millis() - startingTime) / 500;
 
-  if (taskFlag[5] == FALSE && millis() > debounce + 250) {
+  if (taskFlags[5] == FALSE && millis() > debounce + 250) {
     debounce = 0;
-    taskFlag[5] = TRUE;
+    taskFlags[5] = TRUE;
   }
 
-  if (taskFlag[5] == TRUE)
+  if (taskFlags[5] == TRUE)
     taskList[5].myTask(taskList[5].taskDataPtr);
 
   if (systemTimeBase > systemTimeBaseOld[0])
@@ -22,10 +22,10 @@ void Schedule(TCB* taskList) {
     return;
 
   // turn on certain tasks no matter what
-  taskFlag[0] = taskFlag[1] = taskFlag[2] = taskFlag[3] = taskFlag[4] = taskFlag[7] = TRUE;
+  taskFlags[0] = taskFlags[1] = taskFlags[2] = taskFlags[3] = taskFlags[4] = taskFlags[7] = TRUE;
 
   for (int i = 0; i < taskNumber; i++)
-    if (taskFlag[i] == TRUE)
+    if (taskFlags[i] == TRUE)
       insert(&taskList[i], &llTCB);
     
   TCB* current = llTCB.head;
@@ -36,7 +36,7 @@ void Schedule(TCB* taskList) {
 
   for (int i = 0; i < taskNumber; i++) {
     del(&taskList[i], &llTCB);
-    taskFlag[i] = FALSE;
+    taskFlags[i] = FALSE;
   }
 }
 
