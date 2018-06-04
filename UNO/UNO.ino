@@ -33,7 +33,9 @@ void setup()
 
   attachInterrupt(pinPulse, incrementPulse, RISING);
   attachInterrupt(pinResp, incrementResp, RISING);
-
+  attachInterrupt(pinPulse, lowPulse, FALLING);
+  attachInterrupt(pinResp, lowResp, FALLING);
+  
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
   temperatureRawBuf[0] = 0;
@@ -48,11 +50,15 @@ void setup()
 
 int prcount = 0;
 int rrcount = 0;
+int prRising = 0;
+int rrRising = 0;
 int prfreq = 0;
 int rrfreq = 0;
 
-void incrementPulse() { prcount++; }
-void incrementResp() { rrcount++; }
+void incrementPulse() { if (prRising == 0) prcount++; prRising = 1; }
+void incrementResp() { if (rrRising == 0) rrcount++; rrRising = 1; }
+void lowPulse() { prRising = 0; }
+void lowResp() { rrRising = 0; }
 
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 
@@ -66,6 +72,8 @@ void loop()
   if (currentTime - lastFreqtime > 5000) {
     prfreq = prcount;
     rrfreq = rrcount;
+    prRising = 0;
+    rrRising = 0;
     prcount = 0;
     rrcount = 0;
     lastFreqtime = currentTime;
