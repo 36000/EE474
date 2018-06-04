@@ -32,6 +32,7 @@ void RemoteCommand (void* data) {
         taskFlags[10] = TRUE;
         break;
       default:
+        Serial.println(" ");
         Serial.println("E");
         Serial.print("Next Command: ");
         break;
