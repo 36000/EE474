@@ -27,10 +27,12 @@ void Communicate(void* data) {
     
     cuffInflation = Serial1.read();
     if (cuffInflation >= 10) {
+      delay(5);
       isCuffReady = 1;
       communicateData->bloodPressRawBuf[bp1RawId] = (unsigned int) Serial1.read();
       Serial1.read();
     } else if ((isCuffReady == 1) && (cuffInflation <= 3)) {
+      delay(5);
       isCuffReady = 0;
       Serial1.read();
       communicateData->bloodPressRawBuf[bp2RawId + 8] = (unsigned int) Serial1.read();
