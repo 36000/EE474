@@ -24,4 +24,6 @@ void EKGProcess (void* data);
 
 void RemoteCommand (void* data);
 
+void RemoteComm (void* data);
+
 #endif // _TASKS_H_
