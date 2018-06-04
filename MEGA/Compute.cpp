@@ -12,6 +12,7 @@ void Compute (void* data) {
 
   TCB* current = llData.head;
   while (current != NULL) {
+    Serial.print("x ");
     switch (*(dt*)current->taskDataPtr) {
       case NONE:
         return;
@@ -21,10 +22,12 @@ void Compute (void* data) {
         return;
       case BLOOD1:
         bp1CorrId++; bp1CorrId %= 8;
+        Serial.println(computeData->bloodPressRawBuf[bp1RawId]);
         itoa(computeData->bloodPressCorrectedBuf, (unsigned int) (computeData->bloodPressRawBuf[bp1RawId]*(150 - 100)/128 + 100), bp1CorrId * 3);
         return;
       case BLOOD2:
         bp2CorrId++; bp2CorrId %= 8;
+        Serial.println(computeData->bloodPressRawBuf[8 + bp2RawId]);
         itoa(computeData->bloodPressCorrectedBuf, (unsigned int) (computeData->bloodPressRawBuf[8 + bp2RawId]*(100 - 50)/128 + 50), bp2CorrId * 3 + 8 * 3);
         return;
       case PULSE:
