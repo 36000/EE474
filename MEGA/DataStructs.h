@@ -23,6 +23,7 @@ extern Bool warningAlarmFlag;
 extern Bool statusFlag;
 extern Bool keypadFlag;
 extern Bool remoteDispFlag;
+extern Bool remoteCommandFlag;
 
 extern Bool batteryLow;
 extern Bool batteryDead;
@@ -39,7 +40,7 @@ typedef struct TCB TCB;
 typedef struct TCB_ll TCB_ll;
 extern TCB_ll llTCB;
 extern TCB_ll llData;
-extern TCB dataList[7];
+extern TCB dataList[6];
 
 struct TCB_ll {
   TCB* head;
@@ -120,10 +121,7 @@ typedef struct {
   dt* alarmAcknowledge;
 } KeypadData;
 
-typedef struct {
-  dt* measurementSelection;
-  dt* alarmAcknowledge;
-} remoteCommData;
+typedef KeypadData RemoteCommData;
 
 typedef struct {
   unsigned int* EKGRawBuff;

@@ -11,6 +11,7 @@ int isCuffReady;
 void Communicate(void* data) {
   CommunicateData* communicateData = (CommunicateData*) data;
 
+  insert(&dataList[0], &llData); // fetch pressure data
   TCB* current = llData.head;
   while (current != NULL) {
     char select = (char) *(dt*)current->taskDataPtr;
@@ -90,6 +91,7 @@ void Communicate(void* data) {
       Serial.print("Message Validation Error");
     current = current->next;
   }
+  del(&dataList[0], &llData); 
 }
 
 

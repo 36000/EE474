@@ -33,6 +33,8 @@ void Schedule(TCB* taskList) {
     insert(&taskList[4], &llTCB);
   if(remoteDispFlag == TRUE)
     insert(&taskList[6], &llTCB);
+  if(remoteCommandFlag == TRUE)
+    insert(&taskList[7], &llTCB);
     
   TCB* current = llTCB.head;
   do {
@@ -67,6 +69,9 @@ void Schedule(TCB* taskList) {
   }
   if (remoteDispFlag == TRUE) {
     del(&taskList[6], &llTCB);
+  }
+  if (remoteCommandFlag == TRUE) {
+    del(&taskList[7], &llTCB);
   }
 }
 
