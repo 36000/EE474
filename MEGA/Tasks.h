@@ -18,4 +18,6 @@ void Schedule (TCB* taskList);
 
 void RemoteDisp (void* data);
 
+void RemoteCommand (void* data);
+
 #endif // _SCHEDULE_H_

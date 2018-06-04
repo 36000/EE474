@@ -37,6 +37,7 @@ Bool warningAlarmFlag;
 Bool statusFlag;
 Bool keypadFlag;
 Bool remoteDispFlag;
+Bool remoteCommandFlag;
 
 unsigned long debounce;
 
@@ -57,7 +58,7 @@ unsigned char respOutOfRange;
 unsigned long systemTimeBase;
 unsigned long startingTime;
 
-static TCB taskList[7];
+static TCB taskList[8];
 TCB dataList[6];
 static dt data[6];
 
@@ -111,6 +112,7 @@ void setup() {
   statusFlag = TRUE;
   keypadFlag = TRUE;
   remoteDispFlag = TRUE;
+  remoteCommandFlag = TRUE;
 
   bpHigh1 = FALSE;
   bpHigh2 = FALSE;
@@ -193,6 +195,7 @@ void setup() {
   taskList[4].taskDataPtr = &statusData;
   taskList[5].taskDataPtr = &keypadData;
   taskList[6].taskDataPtr = &displayData;
+  taskList[7].taskDataPtr = &keypadData;
 
   taskList[0].myTask = &Measure;
   taskList[1].myTask = &Compute;
@@ -201,6 +204,7 @@ void setup() {
   taskList[4].myTask = &Status;
   taskList[5].myTask = &Keypad;
   taskList[6].myTask = &RemoteDisp;
+  taskList[7].myTask = &RemoteCommand;
 
   for (int i = 0; i < 6; i++) {
     taskList[i].next = NULL;

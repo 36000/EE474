@@ -23,6 +23,7 @@ extern Bool warningAlarmFlag;
 extern Bool statusFlag;
 extern Bool keypadFlag;
 extern Bool remoteDispFlag;
+extern Bool remoteCommandFlag;
 
 extern Bool batteryLow;
 extern Bool batteryDead;
@@ -120,10 +121,7 @@ typedef struct {
   dt* alarmAcknowledge;
 } KeypadData;
 
-typedef struct {
-  dt* measurementSelection;
-  dt* alarmAcknowledge;
-} remoteCommData;
+typedef KeypadData RemoteCommData;
 
 #endif // _DATA_STRUCTS_H_
 
