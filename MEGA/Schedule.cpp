@@ -21,8 +21,11 @@ void Schedule(TCB* taskList) {
   else
     return;
 
-  // turn on certain tasks no matter what
-  taskFlags[0] = taskFlags[1] = taskFlags[2] = taskFlags[3] = taskFlags[4] = taskFlags[7] = TRUE;
+  if (llData.head != NULL)
+    taskFlags[0] = taskFlags[1] = TRUE;
+
+  // turn on certain tasks no matter what (display, alarms, status, remote commands
+  taskFlags[2] = taskFlags[3] = taskFlags[4] = taskFlags[7] = TRUE;
 
   for (int i = 0; i < taskNumber; i++)
     if (taskFlags[i] == TRUE)

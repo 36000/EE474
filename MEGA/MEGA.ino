@@ -102,6 +102,7 @@ void setup() {
 
   for(int i = 0; i < taskNumber; i++)
     taskFlags[i] = TRUE;
+  taskFlags[0] = taskFlags[1] = FALSE;
   taskFlags[8] = FALSE;
   taskFlags[9] = FALSE;
 
