@@ -6,6 +6,7 @@
 dt prevMenuMeas = TEMP;
 menu prevMenu = MEAS;
 Bool hasChanged = FALSE;
+Bool prevOff = FALSE;
 
 void Display (void* data) {
   Bool anyAlarm = FALSE;
@@ -25,7 +26,14 @@ void Display (void* data) {
     tft.fillScreen(BLACK);
     tft.setTextColor(WHITE);
     tft.print("Screen Off \nDue To: \nBattery Dead or \nScreen Turned Off");
+    prevOff = TRUE;
     return;
+  }
+
+  if (prevOff) {
+    prevOff = FALSE;
+    tft.fillScreen(BLACK);
+    tft.setTextColor(CYAN);
   }
 
   // Print header and title

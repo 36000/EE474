@@ -24,6 +24,7 @@ void RemoteComm (void* data) {
         batteryDead = TRUE;
       break;
     case W:
+      Serial.println(" ");
       Serial.print("WARNINGS: ");
       if (tempHigh) {
         Serial.print("TEMPERATURE, ");

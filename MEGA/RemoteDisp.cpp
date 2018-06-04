@@ -19,6 +19,7 @@ void RemoteDisp (void* data) {
   Serial.print("    Temperature: "); for (int i = 0; i < 4; i++) Serial.print(values[i]); Serial.println(" C");
   for (int i = 0; i < 3; i++)
     values[i] = (char) remoteDispData->bloodPressCorrectedBuf[bp1CorrId * 3 + i];
+  values[3] = ' ';
   Serial.print("    Systolic pressure: "); for (int i = 0; i < 4; i++) Serial.print(values[i]); Serial.println(" mm Hg");
   for (int i = 0; i < 3; i++)
     values[i] = (char) remoteDispData->bloodPressCorrectedBuf[bp2CorrId * 3 + i + 8 * 3];

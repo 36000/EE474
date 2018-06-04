@@ -109,7 +109,7 @@ void setup() {
   taskFlags[0] = taskFlags[1] = FALSE;
   taskFlags[8] = FALSE;
   taskFlags[9] = FALSE;
-  taskFlags[10] = FALSE;
+  taskFlags[10] taskFlags[6] = FALSE;
 
   bpHigh1 = FALSE;
   bpHigh2 = FALSE;
