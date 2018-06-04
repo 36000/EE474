@@ -4,8 +4,6 @@
 #define FREQ_PIN 15
 // Generates sinusoidal signal for EKG process to perform FFT of
 
-double samplingRate;
-
 double sine(double freq, double t) {
   Serial.print("s-");
   return sin(t*freq*2.0*PI);
@@ -18,7 +16,6 @@ void EKGCapture (void* data) {
   Serial.print("Frequency: ");
   Serial.println(analogRead(FREQ_PIN));
   double freq = (double) map(analogRead(FREQ_PIN), 0, 1023, 35, 3750); // Hz
-  samplingRate = freq * 10 * EULER + 1;
   Serial.println(freq);
   for(int i = 0; i < 256; i++){
     double t = ((double) i) / samplingRate;

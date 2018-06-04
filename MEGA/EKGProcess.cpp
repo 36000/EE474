@@ -14,7 +14,7 @@ using namespace std;
 
 arduinoFFT FFT = arduinoFFT();
 
-unsigned int sampling_period_us;
+//unsigned int sampling_period_us;
 unsigned long microseconds;
 
 double vReal[SAMPLES];
@@ -23,7 +23,7 @@ double vImag[SAMPLES];
 void EKGProcess (void* data) {
   EKGData* eKGData = (EKGData*) data;
 
-  sampling_period_us = round(1000000 * (1.0 / SAMPLING_FREQUENCY));
+  //sampling_period_us = round(1000000 * (1.0 / SAMPLING_FREQUENCY));
   //SAMPLING
   for (int i = 0; i < SAMPLES; i++)
   {

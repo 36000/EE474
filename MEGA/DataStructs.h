@@ -4,6 +4,8 @@
 #include "Boolean.h"
 
 #define taskNumber 11
+#define EULER 2.718281828459045235360287471352
+#define samplingRate ((int) (3750.0*EULER))
 
 void Communicate(void* data); // for measure
 
@@ -122,8 +124,6 @@ typedef struct {
 } KeypadData;
 
 typedef KeypadData RemoteCommData;
-extern double samplingRate;
-#define EULER 2.718281828459045235360287471352
 typedef struct {
   double* EKGRawBuff;
   unsigned int* EKGFreqBuff;
