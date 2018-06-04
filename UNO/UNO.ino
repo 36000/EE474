@@ -64,14 +64,14 @@ void setup()
 void incrementPulse() {
   if (prRising == 0) prcount++;
   prRising = 1;
-  Serial.print("U");
+  //Serial.print("U");
 }
 void incrementResp() {
   if (rrRising == 0) rrcount++;
   rrRising = 1;
 }
 void lowPulse() {
-  Serial.print("D");
+  //Serial.print("D");
   prRising = 0;
 }
 void lowResp() {
