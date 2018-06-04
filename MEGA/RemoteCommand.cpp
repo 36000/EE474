@@ -3,11 +3,12 @@
 
 void RemoteCommand (void* data) {
   RemoteCommData* remoteCommandData = (RemoteCommData*) data;
+  char c = '\0';
 
-  Serial.print(Serial.available());
   if (Serial.available() > 0) {
     //Serial.println(" ");
-    switch((char) Serial.read()) { // I, S , P, D, M, W
+    c = Serial.read();
+    switch(c) { // I, S , P, D, M, W
       case 'I':
         commSig = I;
         taskFlags[10] = TRUE;
@@ -32,6 +33,7 @@ void RemoteCommand (void* data) {
         taskFlags[10] = TRUE;
         break;
       default:
+        Serial.print(c);
         Serial.println("E");
         Serial.print("Next Command: ");
         break;
