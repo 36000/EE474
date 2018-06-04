@@ -17,7 +17,8 @@ void Display (void* data) {
   // each character is 12 pixels wide
   //tft.fillRect(x,y,width,height,color);
 
-
+  tft.setCursor(0, 0);
+  tft.setTextSize(2);
   // When battery dies only print "Battery Dead"
   if (batteryDead) {
     tft.fillScreen(BLACK);
