@@ -1,13 +1,18 @@
 #include "DataStructs.h"
 #include <arduino.h>
 
-unsigned long DELAY_BETWEEN_SAMPLES = 50;
+// Generates sinusoidal signal for EKG process to perform FFT of
+unsigned long SAMPLING_FREQUENCY = 50;
 
 void EKGCapture (void* data) {
   EKGData* eKGData = (EKGData*) data;
+  
+  
+  
+  /*
   unsigned long currentTime = millis();
   for(int i = 0; i++; i < 256){
-    while(millis() - currentTime < DELAY_BETWEEN_SAMPLES)
+    while(millis() - currentTime < (1000/SAMPLING_FREQUENCY)
     {
       delay(1);  
     }
@@ -15,6 +20,7 @@ void EKGCapture (void* data) {
     unsigned int val = (unsigned int) valf;
     eKGData->EKGRawBuff[i] = val;
   }
+  */
   
 }
 
