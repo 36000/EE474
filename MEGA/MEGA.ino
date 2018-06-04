@@ -57,9 +57,9 @@ unsigned char respOutOfRange;
 unsigned long systemTimeBase;
 unsigned long startingTime;
 
-static TCB taskList[7];
-TCB dataList[6];
-static dt data[6];
+static TCB taskList[8];
+TCB dataList[7];
+static dt data[7];
 
 unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId, rrCorrId;
 
@@ -67,6 +67,9 @@ static unsigned int temperatureRawBuf[8];
 static unsigned int bloodPressRawBuf[16];
 static unsigned int pulseRateRawBuf[8];
 static unsigned int respRateRawBuf[8];
+
+static unsigned int EKGRawBuff[256];
+static unsigned int EKGFreqBuff[16];
 
 static unsigned char tempCorrectedBuff[8 * 3];
 static unsigned char bloodPressCorrectedBuf[16 * 3];
@@ -84,6 +87,7 @@ static DisplayData displayData;
 static WarningAlarmData warningAlarmData;
 static StatusData statusData;
 static KeypadData keypadData;
+static EKGData eKGData;
 
 void ElegooSetup();
 
@@ -178,7 +182,10 @@ void setup() {
   keypadData.measurementSelection = &measurementSelection;
   keypadData.alarmAcknowledge = &alarmAcknowledge;
 
-  for (int i = 0; i < 6; i++) {
+  eKGData.EKGRawBuff = EKGRawBuff;
+  eKGData.EKGFreqBuff = EKGFreqBuff;
+
+  for (int i = 0; i < 7; i++) {
     data[i] = (dt) i;
     dataList[i].taskDataPtr = &data[i];
     dataList[i].next = NULL;
@@ -193,6 +200,7 @@ void setup() {
   taskList[4].taskDataPtr = &statusData;
   taskList[5].taskDataPtr = &keypadData;
   taskList[6].taskDataPtr = &displayData;
+  taskList[7].taskDataPtr = &eKGData;
 
   taskList[0].myTask = &Measure;
   taskList[1].myTask = &Compute;
@@ -201,6 +209,7 @@ void setup() {
   taskList[4].myTask = &Status;
   taskList[5].myTask = &Keypad;
   taskList[6].myTask = &RemoteDisp;
+  taskList[7].myTask = &EKGCapture;
 
   for (int i = 0; i < 6; i++) {
     taskList[i].next = NULL;

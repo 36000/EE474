@@ -39,7 +39,7 @@ typedef struct TCB TCB;
 typedef struct TCB_ll TCB_ll;
 extern TCB_ll llTCB;
 extern TCB_ll llData;
-extern TCB dataList[6];
+extern TCB dataList[7];
 
 struct TCB_ll {
   TCB* head;
@@ -124,6 +124,11 @@ typedef struct {
   dt* measurementSelection;
   dt* alarmAcknowledge;
 } remoteCommData;
+
+typedef struct {
+  unsigned int* EKGRawBuff;
+  unsigned int* EKGFreqBuff;
+} EKGData;
 
 #endif // _DATA_STRUCTS_H_
 
