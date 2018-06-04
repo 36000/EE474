@@ -11,6 +11,7 @@ void RemoteComm (void* data) {
     case I:
       break;
     case S:
+      taskFlags[8] = TRUE;      
       for (int i = 1; i < 6; i++)
         insert(&dataList[i], &llData);
       break;
