@@ -25,8 +25,21 @@ const char pinResp = 1;
 
 void Measure();
 
+int prcount;
+int rrcount;
+int prRising;
+int rrRising;
+int prfreq;
+int rrfreq;
+
 void setup()
 {
+  prcount = 0;
+  rrcount = 0;
+  prRising = 0;
+  rrRising = 0;
+  prfreq = 0;
+  rrfreq = 0;
   // running on the uno - connect to tx1 and rx1 on the mega and to rx and tx on the uno
   // start serial port at 9600 bps and wait for serial port on the uno to open:
   Serial.begin(9600);
@@ -35,7 +48,7 @@ void setup()
   attachInterrupt(pinResp, incrementResp, RISING);
   attachInterrupt(pinPulse, lowPulse, FALLING);
   attachInterrupt(pinResp, lowResp, FALLING);
-  
+
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
   temperatureRawBuf[0] = 0;
@@ -48,17 +61,22 @@ void setup()
   cuffDeflatingRapidly = FALSE;
 }
 
-int prcount = 0;
-int rrcount = 0;
-int prRising = 0;
-int rrRising = 0;
-int prfreq = 0;
-int rrfreq = 0;
-
-void incrementPulse() { if (prRising == 0) prcount++; prRising = 1; }
-void incrementResp() { if (rrRising == 0) rrcount++; rrRising = 1; }
-void lowPulse() { prRising = 0; }
-void lowResp() { rrRising = 0; }
+void incrementPulse() {
+  if (prRising == 0) prcount++;
+  prRising = 1;
+  Serial.print("U");
+}
+void incrementResp() {
+  if (rrRising == 0) rrcount++;
+  rrRising = 1;
+}
+void lowPulse() {
+  Serial.print("D");
+  prRising = 0;
+}
+void lowResp() {
+  rrRising = 0;
+}
 
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
 
@@ -124,19 +142,19 @@ void loop()
 void Measure () {
   float cuffButton = analogRead(4);
   float cuffSwitch = analogRead(5);
-  
-  if(cuffDeflatingRapidly && cuffInflation > 0)
+
+  if (cuffDeflatingRapidly && cuffInflation > 0)
     cuffInflation--;
-  
-  if(cuffInflation == 0)
+
+  if (cuffInflation == 0)
     cuffDeflatingRapidly = FALSE;
-    
+
   if (cuffButton < 200 && !cuffDeflatingRapidly) {
     if ((cuffSwitch < 200) && (cuffInflation > 0))
       cuffInflation--;
-    else if ((cuffSwitch >= 200) && (cuffInflation < 10)){
+    else if ((cuffSwitch >= 200) && (cuffInflation < 10)) {
       cuffInflation++;
-      if(cuffInflation == 10){
+      if (cuffInflation == 10) {
         cuffDeflatingRapidly = TRUE;
       }
     }
