@@ -45,74 +45,59 @@ void EKGProcess (void* data) {
  * 
  */
 
-/*
 
-#define M_PI 3.1415926535897932384
-
-int log2(int N)    //*function to calculate the log2(.) of int numbers
-{
-  int k = N, i = 0;
-  while(k) {
-    k >>= 1;
-    i++;
-  }
-  return i - 1;
+#include "arduinoFFT.h"
+ 
+#define SAMPLES 128             //Must be a power of 2
+#define SAMPLING_FREQUENCY 1000 //Hz, must be less than 10000 due to ADC
+ 
+arduinoFFT FFT = arduinoFFT();
+ 
+unsigned int sampling_period_us;
+unsigned long microseconds;
+ 
+double vReal[SAMPLES];
+double vImag[SAMPLES];
+ 
+void setup1() {
+    Serial.begin(115200);
+ 
+    sampling_period_us = round(1000000*(1.0/SAMPLING_FREQUENCY));
 }
-
-int check(int n)    //checking if the number of element is a power of 2
-{
-  return n > 0 && (n & (n - 1)) == 0;
-}
-
-int reverse(int N, int n)    //calculating revers number
-{
-  int j, p = 0;
-  for(j = 1; j <= log2(N); j++) {
-    if(n & (1 << (log2(N) - j)))
-      p |= 1 << (j - 1);
-  }
-  return p;
-}
-
-void ordina(complex<double>* f1, int N) //using the reverse order in the array
-{
-  complex<double> f2[MAX];
-  for(int i = 0; i < N; i++)
-    f2[i] = f1[reverse(N, i)];
-  for(int j = 0; j < N; j++)
-    f1[j] = f2[j];
-}
-
-void transform(complex<double>* f, int N) //
-{
-  ordina(f, N);    //first: reverse order
-  complex<double> *W;
-  W = (complex<double> *)malloc(N / 2 * sizeof(complex<double>));
-  W[1] = polar(1., -2. * M_PI / N);
-  W[0] = 1;
-  for(int i = 2; i < N / 2; i++)
-    W[i] = pow(W[1], i);
-  int n = 1;
-  int a = N / 2;
-  for(int j = 0; j < log2(N); j++) {
-    for(int i = 0; i < N; i++) {
-      if(!(i & n)) {
-        complex<double> temp = f[i];
-        complex<double> Temp = W[(i * a) % (n * a)] * f[i + n];
-        f[i] = temp + Temp;
-        f[i + n] = temp - Temp;
-      }
+ 
+void loop1() {
+   
+    //SAMPLING
+    for(int i=0; i<SAMPLES; i++)
+    {
+        microseconds = micros();    //Overflows after around 70 minutes!
+     
+        vReal[i] = analogRead(0);
+        vImag[i] = 0;
+     
+        while(micros() < (microseconds + sampling_period_us)){
+        }
     }
-    n *= 2;
-    a = a / 2;
-  }
+ 
+    //FFT
+    FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
+    FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
+    FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
+    double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
+ 
+    //PRINT RESULTS/
+    //Serial.println(peak);     //Print out what frequency is the most dominant.
+ 
+    for(int i=0; i<(SAMPLES/2); i++)
+    {
+        //View all these three lines in serial terminal to see which frequencies has which amplitudes/
+         
+        //Serial.print((i * 1.0 * SAMPLING_FREQUENCY) / SAMPLES, 1);
+        //Serial.print(" ");
+        Serial.println(vReal[i], 1);    //View only this line in serial plotter to visualize the bins
+    }
+ 
+    //delay(1000);  //Repeat the process every second OR:
+    while(1);       //Run code once
 }
-
-void FFT(complex<double>* f, int N, double d)
-{
-  transform(f, N);
-  for(int i = 0; i < N; i++)
-    f[i] *= d; //multiplying by step
-}
-*/
 
