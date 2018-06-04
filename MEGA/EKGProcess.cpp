@@ -27,7 +27,7 @@ void EKGProcess (void* data) {
   //SAMPLING
   for (int i = 0; i < SAMPLES; i++)
   {
-    vReal[i] = (double)eKGData.EKGRawBuff[i];
+    vReal[i] = (double)eKGData->EKGRawBuff[i];
     vImag[i] = 0;
 
     
@@ -49,7 +49,9 @@ void EKGProcess (void* data) {
   FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
   double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
 
-  eKGData.EKGFreqBuff[];
+  EKGId++;
+  EKGId = EKGId % 16;
+  eKGData->EKGFreqBuff[EKGId] = (unsigned int) peak;
 /*
   //PRINT RESULTS/
   //Serial.println(peak);     //Print out what frequency is the most dominant.
