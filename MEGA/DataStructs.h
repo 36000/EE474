@@ -123,10 +123,12 @@ typedef struct {
 
 typedef KeypadData RemoteCommData;
 
+#define EULER 2.718281828459045235360287471352
 typedef struct {
-  unsigned int* EKGRawBuff;
+  double* EKGRawBuff;
   unsigned int* EKGFreqBuff;
 } EKGData;
+
 
 #endif // _DATA_STRUCTS_H_
 

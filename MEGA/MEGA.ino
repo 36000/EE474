@@ -60,7 +60,7 @@ static unsigned int bloodPressRawBuf[16];
 static unsigned int pulseRateRawBuf[8];
 static unsigned int respRateRawBuf[8];
 
-static unsigned int EKGRawBuff[256];
+static double EKGRawBuff[256];
 static unsigned int EKGFreqBuff[16];
 
 static unsigned char tempCorrectedBuff[8 * 3];
