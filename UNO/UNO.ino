@@ -72,8 +72,8 @@ void loop()
   unsigned long currentTime = millis();
 
   if (currentTime - lastFreqtime > 5000) {
-    prfreq = prcount/2;
-    rrfreq = rrcount/2;
+    prfreq = prcount;
+    rrfreq = rrcount;
     prcount = 0;
     rrcount = 0;
     lastFreqtime = currentTime;
