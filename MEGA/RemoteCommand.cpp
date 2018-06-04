@@ -19,11 +19,11 @@ void RemoteCommand (void* data) {
         taskFlags[10] = TRUE;
         break;
       case 'D':
-        taskFlags[6] = TRUE;
-        break;
-      case 'M':
         commSig = M;
         taskFlags[10] = TRUE;
+        break;
+      case 'M':
+        taskFlags[6] = TRUE;
         break;
       case 'W':
         commSig = W;

@@ -24,7 +24,7 @@ void Display (void* data) {
   if (batteryDead) {
     tft.fillScreen(BLACK);
     tft.setTextColor(WHITE);
-    tft.print("Battery Dead");
+    tft.print("Screen Off (Battery Dead or Turned Off)");
     return;
   }
 
