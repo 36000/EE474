@@ -65,6 +65,7 @@ void RemoteComm (void* data) {
     default:
       return;
   }
-  Serial.println("Task Completed");
+  if (commSig != I)
+    Serial.println("Task Completed");
   Serial.print("Next Command: ");
 }
