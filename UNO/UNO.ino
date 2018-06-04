@@ -16,8 +16,8 @@ Bool commError;
 Bool cuffDeflatingRapidly;
 
 const char pinTemp = 3;
-const char pinPulse = 0;
-const char pinResp = 1;
+const char pinPulse = 2;
+const char pinResp = 3;
 // 4 is cuff bulb, 5 is cuff switcher
 
 //AudioFrequencyMeter meterp;
@@ -27,8 +27,6 @@ void Measure();
 
 int prcount;
 int rrcount;
-int prRising;
-int rrRising;
 int prfreq;
 int rrfreq;
 
@@ -36,18 +34,14 @@ void setup()
 {
   prcount = 0;
   rrcount = 0;
-  prRising = 0;
-  rrRising = 0;
   prfreq = 0;
   rrfreq = 0;
   // running on the uno - connect to tx1 and rx1 on the mega and to rx and tx on the uno
   // start serial port at 9600 bps and wait for serial port on the uno to open:
   Serial.begin(9600);
 
-  attachInterrupt(pinPulse, incrementPulse, RISING);
-  attachInterrupt(pinResp, incrementResp, RISING);
-  attachInterrupt(pinPulse, lowPulse, FALLING);
-  attachInterrupt(pinResp, lowResp, FALLING);
+  //attachInterrupt(digitalPinToInterrupt(pinPulse), incrementPulse, RISING);
+  //attachInterrupt(digitalPinToInterrupt(pinResp), incrementResp, RISING);
 
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
@@ -62,20 +56,10 @@ void setup()
 }
 
 void incrementPulse() {
-  if (prRising == 0) prcount++;
-  prRising = 1;
-  //Serial.print("U");
+  prcount++;
 }
 void incrementResp() {
-  if (rrRising == 0) rrcount++;
-  rrRising = 1;
-}
-void lowPulse() {
-  //Serial.print("D");
-  prRising = 0;
-}
-void lowResp() {
-  rrRising = 0;
+  rrcount++;
 }
 
 typedef enum {NONE, TEMP, BLOOD1, BLOOD2, PULSE, RESP} dt;
@@ -90,8 +74,6 @@ void loop()
   if (currentTime - lastFreqtime > 5000) {
     prfreq = prcount;
     rrfreq = rrcount;
-    prRising = 0;
-    rrRising = 0;
     prcount = 0;
     rrcount = 0;
     lastFreqtime = currentTime;
