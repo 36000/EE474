@@ -93,6 +93,7 @@ typedef struct {
   unsigned char* bloodPressCorrectedBuf;
   unsigned char* pulseRateCorrectedBuf;
   unsigned char* respRateCorrectedBuf;
+  unsigned int* EKGFreqBuff;
   unsigned short* batteryState;
 } DisplayData;
 
@@ -103,6 +104,7 @@ typedef struct {
   unsigned int* bloodPressRawBuf;
   unsigned int* pulseRateRawBuf;
   unsigned int* respRateRawBuf;
+  unsigned int* EKGFreqBuff;
   unsigned short* batteryState;
   dt* alarmAcknowledge;
 } WarningAlarmData;

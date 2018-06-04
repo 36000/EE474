@@ -158,12 +158,14 @@ void setup() {
   displayData.bloodPressCorrectedBuf = bloodPressCorrectedBuf;
   displayData.pulseRateCorrectedBuf = pulseRateCorrectedBuf;
   displayData.respRateCorrectedBuf = respRateCorrectedBuf;
+  displayData.EKGFreqBuff = EKGFreqBuff;
   displayData.batteryState = &batteryState;
 
   warningAlarmData.temperatureRawBuf = temperatureRawBuf;
   warningAlarmData.bloodPressRawBuf = bloodPressRawBuf;
   warningAlarmData.pulseRateRawBuf = pulseRateRawBuf;
   warningAlarmData.respRateRawBuf = respRateRawBuf;
+  warningAlarmData.EKGFreqBuff = EKGFreqBuff;
   warningAlarmData.batteryState = &batteryState;
   warningAlarmData.alarmAcknowledge = &alarmAcknowledge;
 
