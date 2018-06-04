@@ -16,7 +16,7 @@ Bool commError;
 Bool cuffDeflatingRapidly;
 
 const char pinTemp = 3;
-const char pinPulse = 2;
+const char pinPulse = 3;
 const char pinResp = 3;
 // 4 is cuff bulb, 5 is cuff switcher
 
@@ -41,7 +41,6 @@ void setup()
   Serial.begin(9600);
 
   attachInterrupt(digitalPinToInterrupt(pinPulse), incrementPulse, RISING);
-  attachInterrupt(digitalPinToInterrupt(pinResp), incrementResp, RISING);
 
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
@@ -57,8 +56,6 @@ void setup()
 
 void incrementPulse() {
   prcount++;
-}
-void incrementResp() {
   rrcount++;
 }
 
