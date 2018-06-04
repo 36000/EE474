@@ -53,7 +53,7 @@ Bool taskFlags[taskNumber];
 TCB dataList[6];
 static dt data[6];
 
-unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId, rrCorrId;
+unsigned int tRawId, bp1RawId, bp2RawId, prRawId, rrRawId, tCorrId, bp1CorrId, bp2CorrId, prCorrId, rrCorrId, EKGId;
 
 static unsigned int temperatureRawBuf[8];
 static unsigned int bloodPressRawBuf[16];
@@ -124,7 +124,7 @@ void setup() {
   pulseOutOfRange = 0;
   respOutOfRange = 0;
 
-  tRawId = bp1RawId = bp2RawId = prRawId = rrRawId = tCorrId = bp1CorrId = bp2CorrId = prCorrId = rrCorrId = 0;
+  tRawId = bp1RawId = bp2RawId = prRawId = rrRawId = tCorrId = bp1CorrId = bp2CorrId = prCorrId = rrCorrId = EKGId = 0;
 
   temperatureRawBuf[0] = 75;
   bloodPressRawBuf[0] = 80;
@@ -226,10 +226,6 @@ void setup() {
   buttons[4].initButton(&tft, 160, 113, 80, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[4], BUTTON_TEXTSIZE);
   for (int i = 0; i < 5; i++){
     buttons[i].drawButton();
-  }
-
-  while (Serial.available() > 0) {
-    Serial.read();
   }
 }
 
