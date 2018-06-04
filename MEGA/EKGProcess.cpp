@@ -1,7 +1,7 @@
 #include "DataStructs.h"
 #include <arduino.h>
 //#include <complex>
-#include "complex.h"
+//#include "complex.h"
 #include <stdlib.h>
 #define MAX 200
 
@@ -9,7 +9,7 @@ using namespace std;
 
 void EKGProcess (void* data) {
   EKGData* eKGData = (EKGData*) data; 
-
+/*
    int n = 256;  
   double samplingStep = 0.05; // should be brought into question
   
@@ -26,7 +26,7 @@ void EKGProcess (void* data) {
   for(int j = 0; j < n; j++)
     frequency += samplingStep;
     double currentMag = vec[j];
-    cout << vec[j] << endl;
+    cout << vec[j] << endl;*/
   
 }
 
@@ -45,7 +45,7 @@ void EKGProcess (void* data) {
  * 
  */
 
-
+/*
 
 #define M_PI 3.1415926535897932384
 
@@ -114,5 +114,5 @@ void FFT(complex<double>* f, int N, double d)
   for(int i = 0; i < N; i++)
     f[i] *= d; //multiplying by step
 }
-
+*/
 
