@@ -4,6 +4,21 @@
 void EKGProcess (void* data) {
   EKGData* eKGData = (EKGData*) data;  
 }
+
+/*
+ * double frequency
+ * double returnval
+ * for the first half of the array{
+ * double + (some small value)
+ *  magnitude = first part of vector ^2 + second part of vector ^2
+ *  if (magnitude is the greates magnitude seen so far)
+ *    returnval = frequency
+ * 
+ * 
+ * }
+ * 
+ * 
+ */
 /*
 #include <iostream>
 #include <complex>

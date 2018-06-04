@@ -33,12 +33,14 @@ void Communicate(void* data) {
       bp1RawId++; bp1RawId %= 8;
       communicateData->bloodPressRawBuf[bp1RawId] = (unsigned int) Serial1.read();
       Serial1.read();
+      insert(&dataList[BLOOD1], &llData);
     } else if ((isCuffReady == 1) && (cuffInflation <= 3)) {
       delay(5);
       isCuffReady = 0;
       Serial1.read();
       bp2RawId++; bp2RawId %= 8;
       communicateData->bloodPressRawBuf[bp2RawId + 8] = (unsigned int) Serial1.read();
+      insert(&dataList[BLOOD2], &llData);
     } else {
       Serial1.read();
       Serial1.read();
