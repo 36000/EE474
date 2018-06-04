@@ -72,8 +72,8 @@ void loop()
   unsigned long currentTime = millis();
 
   if (currentTime - lastFreqtime > 5000) {
-    prfreq = prcount;
-    rrfreq = rrcount;
+    prfreq = prcount/2;
+    rrfreq = rrcount/2;
     prcount = 0;
     rrcount = 0;
     lastFreqtime = currentTime;
@@ -84,7 +84,7 @@ void loop()
     //Serial.println(cuffInflation);
     lastTime = currentTime;
   }
-
+  
   //  read incoming byte from the mega
   if (Serial.read() != startOfMessage) return;
   while (Serial.available() < 4);
