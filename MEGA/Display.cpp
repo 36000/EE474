@@ -18,7 +18,6 @@ void Display (void* data) {
   //tft.fillRect(x,y,width,height,color);
 
   tft.setCursor(0, 0);
-  tft.setTextColor(CYAN);
   tft.setTextSize(2);
 
   // When battery dies only print "Battery Dead"
@@ -28,14 +27,16 @@ void Display (void* data) {
     tft.print("Screen Off \nDue To: \nBattery Dead or \nScreen Turned Off");
     prevOff = TRUE;
     return;
-  }
-
-  if (prevOff) {
+  } else if (prevOff) {
     prevOff = FALSE;
     tft.fillScreen(BLACK);
-    tft.setTextColor(CYAN);
+    // re-draw buttons
+    for (int i = 0; i < 5; i++){
+    buttons[i].drawButton();
+  }
   }
 
+  tft.setTextColor(CYAN);
   // Print header and title
   tft.print(" Pocket Doctor (TM)\n");
   tft.print("--------------------\n");
