@@ -88,6 +88,8 @@ void ElegooSetup();
 void setup() {
   ElegooSetup();
 
+  samplingRate = 0.0;
+
   menuMeas = TEMP;
   Menu = MEAS;
 

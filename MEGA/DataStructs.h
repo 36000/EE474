@@ -122,7 +122,7 @@ typedef struct {
 } KeypadData;
 
 typedef KeypadData RemoteCommData;
-
+extern double samplingRate;
 #define EULER 2.718281828459045235360287471352
 typedef struct {
   double* EKGRawBuff;

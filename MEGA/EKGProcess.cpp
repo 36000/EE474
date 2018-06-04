@@ -10,7 +10,7 @@ using namespace std;
 #include "arduinoFFT.h"
 
 #define SAMPLES 256             //Must be a power of 2
-#define SAMPLING_FREQUENCY 1000 //Hz, must be less than 10000 due to ADC
+#define SAMPLING_FREQUENCY samplingRate //Hz, must be less than 10000 due to ADC
 
 arduinoFFT FFT = arduinoFFT();
 
@@ -47,7 +47,7 @@ void EKGProcess (void* data) {
   FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
   FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
   FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
-  double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
+  double peak = FFT.MajorPeak(vReal, SAMPLES, (int)SAMPLING_FREQUENCY);
 
   EKGId++;
   EKGId = EKGId % 16;
