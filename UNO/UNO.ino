@@ -40,8 +40,8 @@ void setup()
   // start serial port at 9600 bps and wait for serial port on the uno to open:
   Serial.begin(9600);
 
-  //attachInterrupt(digitalPinToInterrupt(pinPulse), incrementPulse, RISING);
-  //attachInterrupt(digitalPinToInterrupt(pinResp), incrementResp, RISING);
+  attachInterrupt(digitalPinToInterrupt(pinPulse), incrementPulse, RISING);
+  attachInterrupt(digitalPinToInterrupt(pinResp), incrementResp, RISING);
 
   tRawId, bp1RawId, bp2RawId, prRawId, rrRawId = 0;
 
