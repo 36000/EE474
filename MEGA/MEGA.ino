@@ -58,7 +58,7 @@ unsigned char respOutOfRange;
 unsigned long systemTimeBase;
 unsigned long startingTime;
 
-static TCB taskList[9];
+static TCB taskList[10];
 TCB dataList[6];
 static dt data[6];
 
@@ -204,6 +204,7 @@ void setup() {
   taskList[6].taskDataPtr = &displayData;
   taskList[7].taskDataPtr = &keypadData;
   taskList[8].taskDataPtr = &eKGData;
+  taskList[9].taskDataPtr = &eKGData;
 
   taskList[0].myTask = &Measure;
   taskList[1].myTask = &Compute;
@@ -214,6 +215,7 @@ void setup() {
   taskList[6].myTask = &RemoteDisp;
   taskList[7].myTask = &RemoteCommand;
   taskList[8].myTask = &EKGCapture;
+  taskList[9].myTask = &EKGProcess;
 
   for (int i = 0; i < 6; i++) {
     taskList[i].next = NULL;

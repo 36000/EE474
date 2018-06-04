@@ -1,3 +1,9 @@
+#include "DataStructs.h"
+#include <arduino.h>
+
+void EKGProcess (void* data) {
+  EKGData* eKGData = (EKGData*) data;  
+}
 /*
 #include <iostream>
 #include <complex>

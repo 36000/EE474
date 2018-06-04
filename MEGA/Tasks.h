@@ -20,6 +20,8 @@ void RemoteDisp (void* data);
 
 void EKGCapture (void* data);
 
+void EKGProcess (void* data);
+
 void RemoteCommand (void* data);
 
 #endif // _TASKS_H_
