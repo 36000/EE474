@@ -56,6 +56,8 @@ bool check(TCB* node, TCB_ll* ll) {
 void insert(TCB* node, TCB_ll* ll) {
   if(check(node, ll))
     return;
+  node->next = NULL;
+  node->prev = NULL;
   if (ll->tail == NULL || ll->head == NULL) {
     ll->head = node;
     ll->tail = node;

@@ -6,10 +6,19 @@ void RemoteComm (void* data) {
   
   switch(commSig) {
     case I:
+      break;
     case S:
+      for (int i = 1; i < 6; i++)
+        insert(&dataList[i], &llData);
+      break;
     case P:
+      llData.head = NULL;
+      break;
     case M:
     case W:
-    return;
+    default:
+      return;
   }
+
+  Serial.print("Next Command: ");
 }
