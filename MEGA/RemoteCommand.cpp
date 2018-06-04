@@ -3,6 +3,8 @@
 
 void RemoteCommand (void* data) {
   RemoteCommData* remoteCommandData = (RemoteCommData*) data;
+
+  Serial.print(Serial.available());
   if (Serial.available() > 0) {
     //Serial.println(" ");
     switch((char) Serial.read()) { // I, S , P, D, M, W
