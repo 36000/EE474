@@ -29,18 +29,6 @@ Bool respLow;
 Bool batteryLow;
 Bool batteryDead;
 
-// scheduler flags
-Bool measureFlag;
-Bool computeFlag;
-Bool displayFlag;
-Bool warningAlarmFlag;
-Bool statusFlag;
-Bool keypadFlag;
-Bool remoteDispFlag;
-Bool remoteCommandFlag;
-Bool EKGCaptureFlag;
-Bool EKGProcessFlag;
-
 unsigned long debounce;
 
 unsigned char cuffInflation;
@@ -60,7 +48,8 @@ unsigned char respOutOfRange;
 unsigned long systemTimeBase;
 unsigned long startingTime;
 
-static TCB taskList[10];
+static TCB taskList[taskNumber];
+Bool taskFlags[taskNumber];
 TCB dataList[6];
 static dt data[6];
 
@@ -111,16 +100,10 @@ void setup() {
   systemTimeBase = 0;
   debounce = 0;
 
-  measureFlag = TRUE;
-  computeFlag = TRUE;
-  displayFlag = TRUE;
-  warningAlarmFlag = TRUE;
-  statusFlag = TRUE;
-  keypadFlag = TRUE;
-  remoteDispFlag = TRUE;
-  remoteCommandFlag = TRUE;  
-  EKGCaptureFlag = FALSE;
-  EKGProcessFlag = FALSE;
+  for(int i = 0; i < taskNumber; i++)
+    taskFlags[i] = TRUE;
+  taskFlags[8] = FALSE;
+  taskFlags[9] = FALSE;
 
   bpHigh1 = FALSE;
   bpHigh2 = FALSE;
@@ -225,7 +208,7 @@ void setup() {
     taskList[i].next = NULL;
     taskList[i].prev = NULL;
   }
-  
+
   buttons[0].initButton(&tft, 160, 80, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[0], BUTTON_TEXTSIZE);
   buttons[1].initButton(&tft, 160, 146, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[1], BUTTON_TEXTSIZE);
   buttons[2].initButton(&tft, 90, 113, 40, 25, ILI9341_WHITE, ILI9341_BLUE, ILI9341_WHITE, buttonlabels[2], BUTTON_TEXTSIZE);

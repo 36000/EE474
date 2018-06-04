@@ -76,18 +76,18 @@ void Keypad (void* data) {
                 del(&dataList[menuMeas], &llData);
               else
                 insert(&dataList[menuMeas], &llData);
-              measureFlag = TRUE;
-              computeFlag = TRUE;
-              warningAlarmFlag = TRUE;
+              taskFlags[0] = TRUE;
+              taskFlags[1] = TRUE;
+              taskFlags[3] = TRUE;
             } else {
               *keypadData->alarmAcknowledge = menuMeas;
-              warningAlarmFlag = TRUE;
+              taskFlags[3] = TRUE;
             }
             break;
           default:
             break;
         }
-        keypadFlag = FALSE;
+        taskFlags[5] = FALSE;
         debounce = millis();
     }
   }

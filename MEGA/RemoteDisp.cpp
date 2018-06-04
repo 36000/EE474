@@ -32,5 +32,7 @@ void RemoteDisp (void* data) {
   values[0] = values[1] = values[2] = values[3] = '0';
   Serial.print("    EKG: "); for (int i = 0; i < 4; i++) Serial.print(values[i]); Serial.println(" Hz");
   Serial.print("    Battery: "); if (*remoteDispData->batteryState < 100) Serial.print("0"); Serial.print(*remoteDispData->batteryState); Serial.println("/200");
+  Serial.println(" ");
+  Serial.print("Next Command: ");
 }
 

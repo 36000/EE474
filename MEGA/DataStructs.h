@@ -3,6 +3,8 @@
 
 #include "Boolean.h"
 
+#define taskNumber 10
+
 void Communicate(void* data); // for measure
 
 extern unsigned long startingTime;
@@ -16,16 +18,7 @@ extern Bool tempHigh;
 extern Bool pulseLow;
 extern Bool respLow;
 
-extern Bool measureFlag;
-extern Bool computeFlag;
-extern Bool displayFlag;
-extern Bool warningAlarmFlag;
-extern Bool statusFlag;
-extern Bool keypadFlag;
-extern Bool remoteDispFlag;
-extern Bool remoteCommandFlag;
-extern Bool EKGCaptureFlag;
-extern Bool EKGProcessFlag;
+extern Bool taskFlags[taskNumber];
 
 extern Bool batteryLow;
 extern Bool batteryDead;

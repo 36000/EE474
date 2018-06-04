@@ -8,12 +8,12 @@ unsigned long systemTimeBaseOld[1];
 void Schedule(TCB* taskList) {
   systemTimeBase = (millis() - startingTime) / 500;
 
-  if (keypadFlag == FALSE && millis() > debounce + 250) {
+  if (taskFlag[5] == FALSE && millis() > debounce + 250) {
     debounce = 0;
-    keypadFlag = TRUE;
+    taskFlag[5] = TRUE;
   }
 
-  if (keypadFlag == TRUE)
+  if (taskFlag[5] == TRUE)
     taskList[5].myTask(taskList[5].taskDataPtr);
 
   if (systemTimeBase > systemTimeBaseOld[0])
@@ -21,68 +21,22 @@ void Schedule(TCB* taskList) {
   else
     return;
 
-  if (measureFlag == TRUE)
-    insert(&taskList[0], &llTCB);
-  if (computeFlag == TRUE)
-    insert(&taskList[1], &llTCB);
-  if (warningAlarmFlag == TRUE)
-    insert(&taskList[3], &llTCB);
-  if (displayFlag == TRUE)
-    insert(&taskList[2], &llTCB);
-  if (statusFlag == TRUE)
-    insert(&taskList[4], &llTCB);
-  if(remoteDispFlag == TRUE)
-    insert(&taskList[6], &llTCB);
-  if(remoteCommandFlag == TRUE)
-    insert(&taskList[7], &llTCB);
-  if(EKGCaptureFlag == TRUE)
-    insert(&taskList[8], &llTCB);
-  if(EKGProcessFlag == TRUE)
-    insert(&taskList[9], &llTCB);
+  // turn on certain tasks no matter what
+  taskFlag[0] = taskFlag[1] = taskFlag[2] = taskFlag[3] = taskFlag[4] = taskFlag[7] = TRUE;
 
+  for (int i = 0; i < taskNumber; i++)
+    if (taskFlag[i] == TRUE)
+      insert(&taskList[i], &llTCB);
     
   TCB* current = llTCB.head;
   do {
     current->myTask(current->taskDataPtr);
-    /*Serial.println(computeData.temperatureRawBuf[tRawId]);
-    /Serial.println(computeData.bloodPressRawBuf[bp1RawId]);
-    Serial.println(computeData.bloodPressRawBuf[bp2RawId + 8]);
-    Serial.println(computeData.pulseRateRawBuf[prRawId]);
-    Serial.println(computeData.tempCorrectedBuff[tCorrId * 3]);
-    Serial.println(computeData.bloodPressCorrectedBuf[bp1CorrId * 3]);
-    Serial.println(computeData.bloodPressCorrectedBuf[bp2CorrId * 3 + 8 * 3]);
-    Serial.println(computeData.pulseRateCorrectedBuf[prCorrId * 3]);
-    Serial.println(*computeData.measurementSelection);
-    Serial.println();*/
   }
   while ((current = current->next) != NULL);
-  
-  if (measureFlag == TRUE) {
-    del(&taskList[0], &llTCB);
-  }
-  if (computeFlag == TRUE) {
-    del(&taskList[1], &llTCB);
-  }
-  if (displayFlag == TRUE) {
-    del(&taskList[2], &llTCB);
-  }
-  if (warningAlarmFlag == TRUE) {
-    del(&taskList[3], &llTCB);
-  }
-  if (statusFlag == TRUE) {
-    del(&taskList[4], &llTCB);
-  }
-  if (remoteDispFlag == TRUE) {
-    del(&taskList[6], &llTCB);
-  }
-  if (remoteCommandFlag == TRUE) {
-    del(&taskList[7], &llTCB);
-  }  
-  if(EKGCaptureFlag == TRUE){
-    del(&taskList[8], &llTCB);
-  }
-  if(EKGProcessFlag == TRUE){
-    del(&taskList[9], &llTCB);
+
+  for (int i = 0; i < taskNumber; i++) {
+    del(&taskList[i], &llTCB);
+    taskFlag[i] = FALSE;
   }
 }
 
